@@ -1,0 +1,1300 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="了解SQL术语 
+    RDBMS       Relational Database Management System - 关系数据库管理系统
+    DBMS        Database Management System - 数据库管理系统
+    database    数据库 - 保存有组织的数据的容器（通常是一个文件或一组文件）
+    table       表 - 某种特定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL-笔记">
+<meta property="og:url" content="http://blog.uiideas.com/2016/08/03/MySQL-笔记/index.html">
+<meta property="og:site_name" content="Uiideas Blog">
+<meta property="og:description" content="了解SQL术语 
+    RDBMS       Relational Database Management System - 关系数据库管理系统
+    DBMS        Database Management System - 数据库管理系统
+    database    数据库 - 保存有组织的数据的容器（通常是一个文件或一组文件）
+    table       表 - 某种特定">
+<meta property="og:updated_time" content="2016-11-08T07:27:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL-笔记">
+<meta name="twitter:description" content="了解SQL术语 
+    RDBMS       Relational Database Management System - 关系数据库管理系统
+    DBMS        Database Management System - 数据库管理系统
+    database    数据库 - 保存有组织的数据的容器（通常是一个文件或一组文件）
+    table       表 - 某种特定">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> MySQL-笔记 | Uiideas Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?559798d21c881907a6a2339e025bbc03";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Uiideas Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章列表
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                MySQL-笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-03T11:47:52+08:00" content="2016-08-03">
+              2016-08-03
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="了解SQL"><a href="#了解SQL" class="headerlink" title="了解SQL"></a>了解SQL</h2><pre><code>术语 
+    RDBMS       Relational Database Management System - 关系数据库管理系统
+    DBMS        Database Management System - 数据库管理系统
+    database    数据库 - 保存有组织的数据的容器（通常是一个文件或一组文件）
+    table       表 - 某种特定类型数据的结构化清单
+    schema      模式 - 关于数据库和表的布局及特性的信息
+    column      列 - 表中的一个字段。所有表都是由一个或多个列组成的。
+    datatype    数据类型 - 每个表列都有相应的数据类型，它限制（或容许）该列中存储的数据
+    row         行 - 表中的一个记录
+    primarykey  主键 - 一列（或一组列），其值能够唯一区分表中每个行
+    foreignkey  外键 - 为某个表中的一列，它包含另一个表的主键值，定义了两个表之间的关系
+    SQL         Structured Query Language - 一种专门用来与数据库通信的语言
+
+SQL优点
+    不是某个特定数据库供应商专有的语言。几乎所有重要的DBMS都支持SQL。
+    简单易学。它的语句全都是由描述性很强的英语单词组成，而且这些单词的数目不多。
+    灵活使用其语言元素，可以进行非常复杂和高级的数据库操作。
+</code></pre><h2 id="Linux安装"><a href="#Linux安装" class="headerlink" title="Linux安装"></a>Linux安装</h2><pre><code>相关软件包
+    mysql-server    MySQL服务器。
+    mysql-client    MySQL 客户端程序，用于连接并操作Mysql服务器。
+    mysql-devel     库和包含文件，如需编译其它MySQL客户端，例如Perl模块，需要安装该RPM
+    mysql-shared    该软件包包含某些语言和应用程序需要动态装载的共享库(libmysqlclient.so*)
+    mysql-bench     MySQL数据库服务器的基准和性能测试工具
+
+安装命令
+    apt-get install mysql-server
+
+开启服务（三种方式）
+    systemctl start mysql
+    mysql.server start
+    mysqld 
+        --safe-mode   装载减去某些最佳配置的服务器；
+        --verbose     显示全文本消息（为获得更详细的帮助消息与--help联合使用）；
+        --version     显示版本信息然后退出。
+
+验证
+    mysqladmin --version
+    mysql -u root -p
+
+配置文件
+    /etc/my.cnf
+</code></pre><h2 id="Linux-安装"><a href="#Linux-安装" class="headerlink" title="Linux 安装"></a>Linux 安装</h2><pre><code>相关软件包
+    mysql-server    MySQL服务器。
+    mysql-devel     库和包含文件，如需编译其它MySQL客户端，例如Perl模块，需要安装该RPM
+    mysql-shared    包包含某些语言和应用程序需要动态装载的共享库(libmysqlclient.so*)
+    mysql-bench     MySQL数据库服务器的基准和性能测试工具
+
+安装命令
+    apt-get install mysql-server
+
+开启服务
+    systemctl start mysql
+    mysql.server start
+
+验证
+    mysqladmin --version
+    mysql -u root -p
+
+配置文件
+    /etc/my.cnf
+</code></pre><h2 id="MySQL简介"><a href="#MySQL简介" class="headerlink" title="MySQL简介"></a>MySQL简介</h2><pre><code>特点
+    成本 - MySQL是开放源代码的，一般可以免费使用（甚至可以免费修改）
+    性能 - MySQL执行很快（非常快）
+    可信赖 - 某些非常重要和声望很高的公司都用MySQL来处理自己的重要数据
+    简单 - MySQL很容易安装和使用
+
+mysql - MySQL command-line tool
+    选项参数
+        -u &lt;user&gt;        用户名
+        -p &lt;password&gt;    密码
+        -h &lt;host&gt;        主机
+        -P &lt;port&gt;        端口
+    命令
+        HELP [command]              显示[指定命令]的帮助
+        USE &lt;database&gt;              选择数据库
+        SHOW DATABASES              显示数据库
+        SHOW TABLES                 获得一个数据库内的表的列表
+        SHOW COLUMNS FROM &lt;table&gt;   显示表的列的描述信息
+        DESCRIBE &lt;table&gt;            显示表的列的描述信息
+        SHOW STATUS                 用于显示广泛的服务器状态信息
+        SHOW CREATE DATA BASE       显示创建特定数据库
+        SHOW CREATE TABLE           显示创建特定数据表
+        SHOW GRANTS                 用来显示授予用户的安全权限
+        SHOW ERRORS                 用来显示服务器错误消息
+        SHOW WARNINGS               用来显示服务器警告消息
+        INFORMATION_SCHEMA          获得和过滤模式信息。
+
+mysqladmin - MySQL Administrator MySQL服务器的管理器
+    选项和参数
+        -u &lt;user&gt;                  用户名
+        -p &lt;password&gt;              密码
+    命令
+        create databasename        创建一个新数据库
+        drop databasename          删除一个数据库及其所有表
+        extended-status            给出服务器的一个扩展状态消息
+        flush-hosts                洗掉所有缓存的主机
+        flush-logs                 洗掉所有日志 
+        flush-tables               洗掉所有表 
+        flush-privileges           再次装载授权表(同reload) 
+        kill id,id,...             杀死mysql线程 
+        password                   新口令，将老口令改为新口令
+        ping                       检查mysqld是否活着 
+        processlist                显示服务其中活跃线程列表
+        reload                     重载授权表 
+        refresh                    洗掉所有表并关闭和打开日志文件
+        shutdown                   关掉服务器 
+        status                     给出服务器的简短状态消息
+        variables                  打印出可用变量
+        version                    得到服务器的版本信息
+</code></pre><h2 id="检索数据-SELECT"><a href="#检索数据-SELECT" class="headerlink" title="检索数据 SELECT"></a>检索数据 SELECT</h2><pre><code>例：
+    SELECT &lt;column&gt; FROM &lt;table&gt;                检索指定的列
+    SELECT &lt;column_1,column_2&gt; FROM &lt;table&gt;     检索多个指定的列
+    SELECT * FROM &lt;table&gt;                       检索所有的列
+    SELECT DISTINCT &lt;column&gt; FROM &lt;table&gt;       检索指定的列，只返回不同的值
+    SELECT &lt;column&gt; FROM &lt;table&gt; LIMIT 5        检索指定的列中前5行
+    SELECT &lt;column&gt; FROM &lt;table&gt; LIMIT 5,4      检索指定的列中第5行之后的4行
+    SELECT last_insert_id()                     获取最后通过自动增量生成的值
+
+子句及其顺序
+    SELECT              要返回的列或表达式
+    FROM                从中检索数据的表(仅在从表选择数据时使用)
+    WHERE               行级过滤
+    GROUP BY            分组说明(仅在按组计算聚集时使用)
+    HAVING              组级过滤
+    ORDER BY            输出排序顺序
+    LIMIT               要检索的行数
+</code></pre><h2 id="排序-ORDER-BY"><a href="#排序-ORDER-BY" class="headerlink" title="排序 ORDER BY"></a>排序 ORDER BY</h2><pre><code>ORDER BY &lt;column&gt;                           排序
+ORDER BY &lt;column_1,column_2&gt;                按照多个列排序
+ORDER BY &lt;column&gt; DESC                      按照降序排序
+ORDER BY &lt;column_1&gt; DESC, &lt;column_2&gt;        对column_1降序排序在以column_2排序
+</code></pre><h2 id="过滤数据-WHERE"><a href="#过滤数据-WHERE" class="headerlink" title="过滤数据 WHERE"></a>过滤数据 WHERE</h2><pre><code>WHERE &lt;condition&gt;                           依据条件对数据进行筛选
+WHERE &lt;condition_1&gt; AND &lt;condition_2&gt;       两个条件需同时满足
+WHERE &lt;condition_1&gt; OR &lt;condition_2&gt;        匹配任意条件
+WHERE &lt;column&gt; IN &lt;value_1,value_2&gt;         值为value_1,value_2其中之一
+WHERE NOT &lt;condition&gt;                       否定之后的条件
+WHERE &lt;column&gt; IS NULL                      筛选column为NULL的数据
+
+支持的条件操作符
+    =                                       等于
+    &lt;&gt;                                      不等于
+    !=                                      不等于
+    &lt;                                       小于
+    &lt;=                                      小于等于
+    &gt;                                       大于
+    &gt;=                                      大于等于
+    BETWEEN 5 AND 10                        在指定的两个值之间
+</code></pre><h2 id="通配符-Like"><a href="#通配符-Like" class="headerlink" title="通配符 Like"></a>通配符 Like</h2><pre><code>通配符:
+    %         匹配任意字符出现任意次数
+    _         匹配任意字符一次
+
+例
+    WHERE &lt;column&gt; LIKE &apos;word%&apos; 
+</code></pre><h2 id="正则表达式-REGEXP"><a href="#正则表达式-REGEXP" class="headerlink" title="正则表达式 REGEXP"></a>正则表达式 REGEXP</h2><pre><code>例
+    WHERE prod_name REGEXP &apos;1000&apos;           列中包含1000
+    WHERE prod_name REGEXP &apos;.000&apos;           . 匹配任意字符
+    WHERE prod_name REGEXP &apos;1000|2000&apos;      | 为或者
+    WHERE prod_name REGEXP &apos;[123] Ton&apos;      匹配 [] 内的几个字符之一 
+    WHERE prod_name REGEXP &apos;[1-5] Ton&apos;      范围匹配
+    WHERE vend_name REGEXP &apos;\\.&apos;            \\为转义字符,匹配后面的特殊字符
+
+字符类
+    [:alnum:]     任意字母和数字（同[a-zA-Z0-9]）
+    [:alpha:]     任意字符（同[a-zA-Z]）
+    [:blank:]     空格和制表（同[\\t]）
+    [:cntrl:]     ASCII控制字符（ASCII 0到31和127）
+    [:digit:]     任意数字（同[0-9]）
+    [:graph:]     与[:print:]相同，但不包括空格
+    [:lower:]     任意小写字母（同[a-z]）
+    [:print:]     任意可打印字符
+    [:punct:]     既不在[:alnum:]又不在[:cntrl:]中的任意字符
+    [:space:]     包括空格在内的任意空白字符（同[\\f\\n\\r\\t\\v]）
+    [:upper:]     任意大写字母（同[A-Z]）
+    [:xdigit:]    任意十六进制数字（同[a-fA-F0-9]）
+
+重复元字符
+    -             0个或多个匹配
+    *             1个或多个匹配（等于{1,}）
+    ?             0个或1个匹配（等于{0,1}）
+    {n}           指定数目的匹配
+    {n,}          不少于指定数目的匹配
+    {n,m}         匹配数目的范围（m不超过255）
+
+定位符
+    ^             文本的开始
+    $             文本的结尾
+    [[:           词的开始
+    [[:&gt;:]]       词的结尾
+</code></pre><h2 id="计算字段"><a href="#计算字段" class="headerlink" title="计算字段"></a>计算字段</h2><pre><code>相关函数
+    Concat()          拼接
+    RTrim()           去掉右边空格
+    LTrim()           去掉左边空格
+    Trim()            去空格
+    Now()             返回当前日期和时间
+
+别名
+    AS &lt;alias&gt;        给予列一个别名,可用于 列 和 表
+
+算术操作符
+    +      加
+    -     减
+    *     乘
+    /      除
+
+例
+    SELECT Concat(column_1,column_2,...) FROM vendors
+    SELECT column_1,column_2,column_1 * column_2 AS alias FROM table
+    SELECT column AS alias FROM table AS t
+</code></pre><h2 id="数据处理函数"><a href="#数据处理函数" class="headerlink" title="数据处理函数"></a>数据处理函数</h2><pre><code>文本处理函数
+    Left()                返回串左边的字符
+    Length()              返回串的长度
+    Locate()              找出串的一个子串
+    Lower()               将串转换为小写
+    LTrim()               去掉串左边的空格
+    Right()               返回串右边的字符
+    RTrim()               去掉串右边的空格
+    Soundex()             返回串的SOUNDEX值
+    SubString()           返回子串的字符
+    Upper()               将串转换为大写
+    Convert()             转换字符集
+
+日期和时间处理函数
+    AddDate()             增加一个日期（天、周等）
+    AddTime()             增加一个时间（时、分等）
+    CurDate()             返回当前日期
+    CurTime()             返回当前时间
+    Date()                返回日期时间的日期部分
+    DateDiff()            计算两个日期之差
+    Date_Add()            高度灵活的日期运算函数
+    Date_Format()         返回一个格式化的日期或时间串
+    Day()                 返回一个日期的天数部分
+    DayOfWeek()           对于一个日期，返回对应的星期几
+    Hour()                返回一个时间的小时部分
+    Minute()              返回一个时间的分钟部分
+    Month()               返回一个日期的月份部分
+    Now()                 返回当前日期和时间
+    Second()              返回一个时间的秒部分
+    Time()                返回一个日期时间的时间部分
+    Year()                返回一个日期的年份部分
+
+数值处理函数
+    Abs()                 返回一个数的绝对值
+    Cos()                 返回一个角度的余弦
+    Exp()                 返回一个数的指数值
+    Mod()                 返回除操作的余数
+    Pi()                  返回圆周率
+    Rand()                返回一个随机数
+    Sin()                 返回一个角度的正弦
+    Sqrt()                返回一个数的平方根
+    Tan()                 返回一个角度的正切
+</code></pre><h2 id="聚集函数"><a href="#聚集函数" class="headerlink" title="聚集函数"></a>聚集函数</h2><pre><code>聚集函数
+    AVG()                 返回某列的平均值
+    COUNT()               返回某列的行数，除COUNT(*)外忽略NULL值
+    MAX()                 返回某列的最大值
+    MIN()                 返回某列的最小值
+    SUM()                 返回某列值之和
+
+DISTINCT 只聚集不同的值
+    例: SELECT AVG(DISTINCT &lt;column&gt;) FROM &lt;table&gt;;
+</code></pre><h2 id="分组数据"><a href="#分组数据" class="headerlink" title="分组数据"></a>分组数据</h2><pre><code>GROUP BY  分组
+    例: SELECT &lt;column&gt;, COUNT(*) FROM &lt;table&gt; GROUP BY &lt;column&gt;;
+    GROUP BY &lt;column&gt; WITH ROLLUP  可得到每个分组以及每个分组汇总级别的值
+
+HAVING  在分组后进行过滤
+    例: SELECT &lt;column&gt; FROM &lt;table&gt; GROUP BY &lt;column&gt; HAVING &lt;condition&gt;;
+</code></pre><h2 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h2><pre><code>例: SELECT &lt;column&gt; FROM &lt;table&gt; WHERE &lt;column&gt; IN (SELECT ...);
+</code></pre><h2 id="联结表"><a href="#联结表" class="headerlink" title="联结表"></a>联结表</h2><pre><code>概念 
+    内部联结: 也称为等值联结（equijoin），它基于两个表之间的相等测试。
+    外部联结: 连接时需要包含没有关联行的那些行，分为左外部联结和右外部联结
+    自然联结: 排除多次重复的列出现，使每个列只返回一次。
+
+关键字
+    INNER JOIN ON               内部联结
+    LEFT OUTER JOIN ON          左外部联结
+    RIGHT OUTER JOIN            右外部联结
+
+例: 
+    SELECT &lt;column-1&gt;,&lt;column-2&gt; FROM &lt;table-1&gt; INNER JOIN &lt;table-2&gt; ON table-1.column = table-2.column
+例:
+    SELECT &lt;column-1&gt;,&lt;column-2&gt; FROM &lt;table-1&gt;, &lt;table-2&gt; WHERE table-1.column = table-2.column
+例:
+    SELECT &lt;column-1&gt;,&lt;column-2&gt; FROM &lt;table-1&gt; LEFT OUTER JOIN &lt;table-2&gt; ON table-1.column = table-2.column
+例:
+    SELECT &lt;column-1&gt;,&lt;column-2&gt; FROM &lt;table-1&gt; RIGHT OUTER JOIN &lt;table-2&gt; ON table-1.column = table-2.column
+</code></pre><h2 id="组合查询-UNION"><a href="#组合查询-UNION" class="headerlink" title="组合查询 UNION"></a>组合查询 UNION</h2><pre><code>概念: 
+    执行多个查询（多条SELECT语句），并将结果作为单个查询结果集返回。通常称为并（union）或复合查询（compoundquery）。
+
+UNION规则:
+    UNION必须由两条或两条以上的SELECT语句组成，语句之间用关键字UNION分隔
+    UNION中的每个查询必须包含相同的列、表达式或聚集函数
+    列数据类型必须兼容：类型不必完全相同，但必须是DBMS可以隐含地转换的类型
+    只能使用一条ORDER BY子句，它必须出现在最后一条SELECT语句之后
+    UNION 会自动去除重复的行，UNION ALL 不会
+
+例: 
+    SELECT &lt;column&gt; FROM &lt;table&gt; UNION SELECT &lt;column&gt; FROM &lt;table&gt;;
+例:
+    SELECT &lt;column&gt; FROM &lt;table&gt; UNION ALL SELECT &lt;column&gt; FROM &lt;table&gt;;
+</code></pre><h2 id="全文本搜索"><a href="#全文本搜索" class="headerlink" title="全文本搜索"></a>全文本搜索</h2><pre><code>支持引擎: MyISAM 支持全文搜索，但 InnoDB 不支持
+
+如何启用: CREATE 创建表时，通过 FULLTEXT(&lt;column&gt;) 指定须全文搜索的列，可多个。
+
+等级值与排序
+    全文搜索 相对与 LIKE 会对结果进行排序，排序依赖与计算出的等级值
+    Match()和Against()用来建立一个计算列-搜索计算出的等级值 
+    SELECT &lt;column&gt; Match(&lt;column&gt;) Against(&lt;text&gt;) AS &lt;alias&gt; FROM &lt;table&gt;
+
+忽略的词
+    短词被忽略且从索引中排除。短词定义为那些具有3个或3个以下字符的词，可修改。
+    MySQL带有一个内建的非用词（stopword）列表，这些词被忽略，可覆盖。
+    如果一个词出现在50%以上的行中，则将它作为一个非用词忽略，不适用IN BOOLEAN MODE
+    如果表中的行数少于3行，则全文本搜索不返回结果，因为50%规则
+    忽略词中的单引号。例如，don&apos;t 索引为 dont
+    不具有词分隔符（包括日语和汉语）的语言不能恰当地返回全文本搜索结果
+
+相关函数
+    Match()        指定被搜索的列，传递给Match()的值必须与FULLTEXT()定义中的相同
+    Against()      指定要使用的搜索表达式，除BINARY方式，否则不区分大小写
+
+例:
+    SELECT &lt;column&gt; FROM &lt;table&gt; WHERE Match(&lt;column&gt;) Against(&lt;text&gt;)
+
+查询扩展
+    概念: 基于所查询出来的行内的的关键字进行再次查询，扩展出更多的结果。
+    关键字: WITH QUERY EXPANSION
+    例: 
+        SELECT &lt;column&gt; FROM &lt;table&gt; WHERE Match(&lt;column&gt;) Against(&lt;text&gt;,WITH QUERY EXPANSION)
+
+布尔文本搜索
+    概念: 可实现要匹配的词，要排斥的词，排列提示，表达式分组等，无FULLTEXT索引也可使用
+    关键字: IN BOOLEAN MODE
+    全文本布尔操作符
+        +       包含，词必须存在
+        -       排除，词必须不出现
+        &gt;       包含，而且增加等级值
+        &lt;       包含，且减少等级值
+        ()      把词组成子表达式（允许这些子表达式作为一个组被包含、排除、排列等）
+        ~       取消一个词的排序值
+        *       词尾的通配符
+        &quot;&quot;      定义一个短语（与单个词的列表不一样，它匹配整个短语以便包含或排除这个短语）
+    例:
+        SELECT &lt;column&gt; FROM &lt;table&gt; WHERE Match(&lt;column&gt;) Against(&lt;text&gt;,IN BOOLEAN MODE)
+    例 包含text1,排除text2开头的行:
+        SELECT &lt;column&gt; FROM &lt;table&gt; WHERE Match(&lt;column&gt;) Against(&apos;text1 -text2*&apos;,IN BOOLEAN MODE)
+    例 包含text1 和 text2 的行:
+        SELECT &lt;column&gt; FROM &lt;table&gt; WHERE Match(&lt;column&gt;) Against(&apos;+text1 +text2&apos;,IN BOOLEAN MODE)
+    例 包含text1 或 text2 的行:
+        SELECT &lt;column&gt; FROM &lt;table&gt; WHERE Match(&lt;column&gt;) Against(&apos;text1 text2&apos;,IN BOOLEAN MODE)
+    例 包含text1 text2 的行:
+        SELECT &lt;column&gt; FROM &lt;table&gt; WHERE Match(&lt;column&gt;) Against(&apos;&quot;text1 text2&quot;&apos;,IN BOOLEAN MODE)
+    例 包含text1 或 text2 增加前者的等级，降低后者的等级:
+        SELECT &lt;column&gt; FROM &lt;table&gt; WHERE Match(&lt;column&gt;) Against(&apos;&gt;text1 &lt;text2&apos;,IN BOOLEAN MODE)
+</code></pre><h2 id="数据插入-INSERT"><a href="#数据插入-INSERT" class="headerlink" title="数据插入 INSERT"></a>数据插入 INSERT</h2><pre><code>插入完整的行
+    两种语法
+        INSERT INTO &lt;table&gt; VALUES(value-1,value2);
+        INSERT INTO &lt;table&gt;(column-1,column-2) VALUES(value-1,value2);
+    省略列
+        该列定义为允许NULL值（无值或空值）
+        在表定义中给出默认值。这表示如果不给出值，将使用默认值
+    降低优先级
+        INSERT LOW_PRIORITY INTO
+
+插入多个行
+    INSERT INTO &lt;table&gt;(column-1,column-2) VALUES(value-1,value2),(value-1,value2);
+
+插入检索出的数据
+    INSERT INTO &lt;table-1&gt;(column-1,column-2) SELECT column-1,column-2 FROM &lt;table-2&gt;;
+</code></pre><h2 id="更新数据"><a href="#更新数据" class="headerlink" title="更新数据"></a>更新数据</h2><pre><code>更新特定行
+    UPDATE &lt;table&gt; SET column-1=value-1,column-2=value-2 WHERE &lt;condition&gt;;
+
+更新所有行
+    UPDATE &lt;table&gt; SET column-1=value-1,column-2=value-2;
+
+或略发生错误
+    UPDATE IGNORE &lt;table&gt; ...
+</code></pre><h2 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h2><pre><code>删除特定的行
+    DELETE FROM &lt;table&gt; WHERE &lt;condition&gt;;
+
+删除所有行
+    DELETE FROM &lt;table&gt;;
+
+更快的删除(删除原表，重建新表) 
+    TRUNCATE TABLE ...
+</code></pre><h2 id="创建和操纵表"><a href="#创建和操纵表" class="headerlink" title="创建和操纵表"></a>创建和操纵表</h2><pre><code>关键字
+    AUTO_INCREMENT                   自动增量
+    NOT NULL                         不允许NULL值
+    NULL                             允许NULL值
+    PRIMARY KEY (column[,column-1])  主键，可指定多个列
+    DEFAULT &lt;value&gt;                  指定默认值
+    ENGINE=&lt;engine-type&gt;             指定引擎类型
+
+引擎类型
+    InnoDB   可靠的事务处理引擎，不支持全文本搜索；
+    MEMORY   在功能等同于MyISAM，数据存储在内存中，速度很快，适合于临时表
+    MyISAM   是一个性能极高的引擎，它支持全文本搜索，但不支持事务处理。
+
+创建表 例
+    CREATE TABLE &lt;table&gt;
+    (
+      column-1   int            NOT NULL AUTO_INCREMENT,
+      column-2   char(50)       NOT NULL ,
+      column-4   decimal(8,2)   NULL  DEFAULT 1,
+      PRIMARY KEY (column-1, column-2)
+      ...
+    ) ENGINE=InnoDB;
+
+更新表
+    增加列
+        ALTER TABLE &lt;table&gt; ADD &lt;column&gt; &lt;datatype&gt;;
+    删除列
+        ALTER TABLE &lt;table&gt; DROP COLUMN &lt;column&gt;;
+
+删除表
+    DROP TABLE &lt;table&gt;;
+
+重命名表
+    重命名一个表
+        RENAME TABLE &lt;old-table&gt; TO &lt;new-table&gt;;
+    重命名多个表
+        RENAME TABLE &lt;old-table&gt; TO &lt;new-table&gt;,&lt;old-table&gt; TO &lt;new-table&gt;;
+</code></pre><h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2><pre><code>概念:
+    视图是虚拟的表。与包含数据的表不一样，视图只包含使用时动态检索数据的查询。
+
+为什么使用视图:
+    重用SQL语句。
+    简化复杂的SQL操作。在编写查询后，可以方便地重用它而不必知道它的基本查询细节。
+    使用表的组成部分而不是整个表。
+    保护数据。可以给用户授予表的特定部分的访问权限而不是整个表的访问权限。
+    更改数据格式和表示。视图可返回与底层表的表示和格式不同的数据。
+
+视图的规则和限制
+    与表一样，视图必须唯一命名（不能给视图取与别的视图或表相同的名字）。
+    对于可以创建的视图数目没有限制。
+    为了创建视图，必须具有足够的访问权限。这些限制通常由数据库管理人员授予。
+    视图可以嵌套，即可以利用从其他视图中检索数据的查询来构造一个视图。
+    ORDER BY可以用在视图中
+    视图不能索引，也不能有关联的触发器或默认值。
+    视图可以和表一起使用。例如，编写一条联结表和视图的SELECT语句。
+
+语法
+    CREATE VIEW &lt;viewname&gt; AS ...    创建视图
+    SHOW CREATE VIEW &lt;viewname&gt;;     查看创建视图的语句
+    DROP VIEW &lt;viewname&gt;;            删除视图
+    CREATE OR REPLACE VIEW           创建或更新视图
+
+如下情况下视图无法被更新
+    分组（使用GROUP BY和HAVING）；
+    联结；
+    子查询；
+    并；
+    聚集函数（Min()、Count()、Sum()等）；
+    DISTINCT；
+    导出（计算）列。
+</code></pre><h2 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h2><pre><code>执行存储过程
+    语法
+        CALL &lt;procedure&gt;([@param[,...]])
+
+创建存储过程
+    语法
+        CREATE PROCEDURE &lt;procedure&gt;([[IN|OUT|INOUT] param datatype [,..]])
+        BEGIN
+           ...
+        END;
+    命令行存储过程中的语句包含分隔符
+        原理: DELIMITER 可临时修改语句分隔符
+        例:
+            DELIMITER //
+            CREATE PROCEDURE productpricing()
+            BEGIN
+               SELECT Avg(prod_price) AS priceaverage
+               FROM products;
+            END //
+            DELIMITER ;
+
+删除存储过程
+    DROP PROCEDURE &lt;procedure&gt;
+
+变量
+    规则
+        变量名必须以 @ 开始
+    关键字
+        IN       传递给存储过程
+        OUT      从存储过程传出，如这里所用
+        INOUT    对存储过程传入和传出
+    调用变量 例:
+        SELECT @&lt;param&gt;;
+    创建存储过程中使用变量 例:
+        CREATE PROCEDURE &lt;procedure&gt;(
+           OUT &lt;param&gt; INT
+        )
+        BEGIN
+           SELECT &lt;column&gt; INTO param FROM &lt;table&gt;;
+        END;
+
+检查存储过程
+    SHOW CREATE PROCEDURE &lt;procedure&gt;;
+</code></pre><h2 id="游标"><a href="#游标" class="headerlink" title="游标"></a>游标</h2><pre><code>概念  
+    在存储了游标之后，应用程序可以根据需要滚动或浏览其中的数据。
+    只能用于存储过程（和函数）
+
+使用步骤
+    创建游标 --&gt; 打开游标 --&gt; 检索各行 --&gt; 关闭游标
+
+创建游标
+    语法:
+        DECLARE &lt;cursor_name&gt; CURSOR FOR &lt;select_statement&gt;
+    例:
+        CREATE PROCEDURE &lt;procedure&gt;()
+        BEGIN
+           DECLARE &lt;cursor_name&gt; CURSOR
+           FOR
+           SELECT &lt;column&gt; FROM &lt;table&gt;;
+        END;
+
+打开游标
+    OPEN &lt;cursor_name&gt;;
+
+关闭游标
+    CLOSE &lt;cursor_name&gt;;
+
+使用游标数据
+    FETCH [[NEXT] FROM] &lt;cursor_name&gt; INTO &lt;var_name&gt;; 
+</code></pre><h2 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h2><pre><code>支持触发器的语句
+    DELETE; INSERT; UPDATE; BEGIN ... END;
+
+创建触发器
+    Tip
+        仅支持表 只有表才支持触发器，视图和临时表不支持。
+        每个表每个事件每次只允许一个触发器
+        如果BEFORE触发器失败，MySQL将不执行请求的操作
+    需要信息
+        trigger_name     触发器名
+        trigger_time     { BEFORE | AFTER }
+        trigger_event    { INSERT | UPDATE | DELETE }
+        trigger_order    { FOLLOWS | PRECEDES } other_trigger_name
+    语法
+        CREATE TRIGGER &lt;trigger_name&gt;
+            &lt;trigger_time&gt; &lt;trigger_event&gt; ON &lt;table&gt;
+            FOR EACH ROW
+            [trigger_order]
+            &lt;rigger_body&gt;
+
+删除触发器
+    Tip
+        触发器不能更新或覆盖。只能删除后重新创建。
+    语法
+        DROP TRIGGER &lt;trigger_name&gt;;
+
+使用触发器
+    INSERT触发器
+        在INSERT触发器代码内，可引用一个名为NEW的虚拟表，访问被插入的行
+        在BEFORE INSERT触发器中，NEW中的值也可以被更新（允许更改被插入的值）
+        AUTO_INCREMENT列:NEW在INSERT之前包含0，INSERT之后包含新的自动生成值
+    DELETE触发器
+        可以引用一个名为OLD的虚拟表，访问被删除的行
+        OLD中的值全都是只读的，不能更新
+    UPDATE触发器
+        可以引用一个名为OLD的虚拟表访问更新之前的值，名为NEW的虚拟表访问新更新的值
+        在BEFORE UPDATE触发器中，NEW中的值可能也被更新
+        OLD中的值全都是只读的，不能更新
+</code></pre><h2 id="事务处理"><a href="#事务处理" class="headerlink" title="事务处理"></a>事务处理</h2><pre><code>概念
+    用来维护数据库的完整性，它保证成批的MySQL操作要么完全执行，要么完全不执行。
+
+事物开始
+    START TRANSACTION
+
+回滚
+    ROLLBACK
+
+提交
+    概念
+        一般的MySQL语句都是直接针对数据库表执行和编写的，提交（写或保存）操作是自动进行的
+        在事务处理块中，提交不会隐含地进行。为进行明确的提交，使用COMMIT语句
+        当COMMIT或ROLLBACK语句执行后，事务会自动关闭
+    例:
+        START TRANSACTION;
+        DELETE FROM &lt;table&gt;;
+        COMMIT;
+
+保留点
+    创建保留点
+        SAVEPOINT &lt;identifier&gt;;
+    回滚至保留点
+        ROLLBACK TO &lt;identifier&gt;;
+    释放保留点
+        自动释放
+            保留点在事务处理完成（执行一条ROLLBACK或COMMIT）后自动释放
+        明确释放
+            RELEASE SAVEPOINT
+
+设置默认提交
+    SET autocommit=[0|1];
+</code></pre><h2 id="字符集和语言"><a href="#字符集和语言" class="headerlink" title="字符集和语言"></a>字符集和语言</h2><pre><code>相关概念
+    字符集   字母和符号的集合
+    编码　   某个字符集成员的内部表示
+    校对　   规定字符如何比较的指令
+
+查看支持的字符集列表
+    SHOW CHARACTER SET;
+
+查看所支持校对的完整列表
+    SHOW COLLATION;
+        _cs  区分大小写
+        _ci  不区分大小写
+
+查看正在使用的字符集
+    SHOW VARIABLES LIKE &apos;character%&apos;;
+
+查看正在使用的校对
+    SHOW VARIABLES LIKE &apos;collation%&apos;;
+
+创建表时指定字符集和校对
+    CREATE TABLE &lt;table&gt;
+    (
+        ...
+    ) DEFAULT CHARACTER SET hebrew
+      COLLATE hebrew_general_ci;
+
+为每个列单独设置校对
+    CREATE TABLE &lt;table&gt;
+    (
+       columnn1   INT,
+       columnn2    VARCHAR(10) CHARACTER SET latin1 COLLATE latin1_general_ci
+    ) DEFAULT CHARACTER SET hebrew
+      COLLATE hebrew_general_ci;
+
+在语句中指定校对
+    SELECT * FROM &lt;table&gt; ORDER BY &lt;column&gt; COLLATE latin1_general_cs;
+</code></pre><h2 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h2><pre><code>Tip:
+    帐号信息存储在 mysql 数据库中
+
+获取所有帐号密码
+    SELECT user FROM user;
+
+创建帐号
+    CREATE USER &lt;username&gt; IDENTIFIED BY &lt;password&gt;;
+
+重命名帐号
+    RENAME USER &lt;username&gt; TO &lt;newUserName&gt;;
+
+修改自己的密码
+    SET PASSWORD = Password(&lt;password&gt;);
+
+修改其他用户密码
+    SET PASSWORD FOR &lt;username&gt; = Password(&lt;password&gt;);
+
+删除用户账号
+    DROP USER &lt;username&gt;;
+
+查看账户权限
+    SHOW GRANTS FOR &lt;username&gt;;
+
+设置权限
+    语法
+        GRANT &lt;priv_type&gt; ON &lt;priv_level&gt; TO &lt;username&gt;;
+    例 允许用户user在db数据库中的所有表中使用SELECT:
+        GRANT SELECT ON db.* TO user;
+
+取消权限
+    语法
+        REVOKE &lt;priv_type&gt; ON &lt;priv_level&gt; FROM &lt;username&gt;;
+
+权限说明
+    ALL                        除GRANT OPTION外的所有权限
+    ALTER                      使用ALTER TABLE
+    ALTER ROUTINE              使用ALTER PROCEDURE和DROP PROCEDURE
+    CREATE                     使用CREATE TABLE
+    CREATE ROUTINE             使用CREATE PROCEDURE
+    CREATE TEMPORARY TABLES    使用CREATE TEMPORARY TABLE
+    CREATE USER                使用CREATE USER、DROP USER、RENAME USER
+                               和REVOKE ALL PRIVILEGES
+    CREATE VIEW                使用CREATE VIEW
+    DELETE                     使用DELETE
+    DROP                       使用DROP TABLE
+    EXECUTE                    使用CALL和存储过程
+    FILE                       使用SELECT INTO OUTFILE和LOAD DATA INFILE
+    GRANT OPTION               使用GRANT和REVOKE
+    INDEX                      使用CREATE INDEX和DROP INDEX
+    INSERT                     使用INSERT
+    LOCK TABLES                使用LOCK TABLES
+    PROCESS                    使用SHOW FULL PROCESSLIST
+    RELOAD                     使用FLUSH
+    REPLICATION CLIENT         服务器位置的访问
+    REPLICATION SLAVE          由复制从属使用
+    SELECT                     使用SELECT
+    SHOW DATABASES             使用SHOW DATABASES
+    SHOW VIEW                  使用SHOW CREATE VIEW
+    SHUTDOWN                   使用mysqladmin shutdown（用来关闭MySQL）
+    SUPER                      使用CHANGE MASTER、KILL、LOGS、PURGE、MASTER
+                               和SET GLOBAL。还允许mysqladmin调试登录
+    UPDATE                     使用UPDATE
+    USAGE                      无访问权限
+</code></pre><h2 id="数据库维护"><a href="#数据库维护" class="headerlink" title="数据库维护"></a>数据库维护</h2><pre><code>备份数据库
+    Tip:
+        由于数据库文件总是处于打开和使用状态，普通的文件备份不一定总是有效
+        为了保证所有数据被写到磁盘，可能需要在进行备份前使用FLUSH TABLES语句
+    命令行工具
+        mysqldump             转存所有的数据库至外部文件
+        mysqlhotcopy          从一个数据库复制所有工具
+    MySQL命令
+        BACKUP TABLE          转储所有数据到某个外部文件
+        SELECT INTO OUTFILE   转储所有数据到某个外部文件
+        RESTORE TABLE         复原数据
+
+进行数据库维护
+    检查表键是否正确
+        ANALYZE TABLE &lt;table&gt;;
+    针对更多问题对表进行检查
+        语法
+            CHECK TABLE &lt;table&gt; ... [option] ...;
+        支持的检查方式
+            QUICK        只进行快速扫描
+            FAST         只检查未正常关闭的表
+            MEDIUM       检查所有被删除的链接并进行键检验
+            EXTENDED     执行最彻底的检查
+            CHANGED      检查自最后一次检查以来改动过的表
+    修复表(不应经常使用)
+        REPAIR TABLE
+    回收删除大量数据后的空间
+        OPTIMIZE TABLE
+
+查看日志文件
+    日志类型
+        错误日志
+            包含启动和关闭问题以及任意关键错误的细节。此日志通常名为hostname.err，位于data目录中。此日志名可用--log-error命令行选项更改。
+        查询日志
+            记录所有MySQL活动，在诊断问题时非常有用。此日志文件可能会很快地变得非常大，因此不应该长期使用它。此日志通常名为hostname.log，位于data目录中。此名字可以用--log命令行选项更改。
+        二进制日志
+            它记录更新过数据（或者可能更新过数据）的所有语句。此日志通常名为hostname-bin，位于data目录内。此名字可以用--log-bin命令行选项更改。注意，这个日志文件是MySQL 5中添加的，以前的MySQL版本中使用的是更新日志。
+        缓慢查询日志
+            顾名思义，此日志记录执行缓慢的任何查询。这个日志在确定数据库何处需要优化很有用。此日志通常名为hostname-slow.log，位于data目录中。此名字可以用--log-slow-queries命令行选项更改。
+    刷新日志
+        FLUSH LOGS
+</code></pre><h2 id="性能相关"><a href="#性能相关" class="headerlink" title="性能相关"></a>性能相关</h2><pre><code>查看配置
+    SHOW VARIABLES;
+    SHOW STATUS;
+
+进程
+    显示活动的进程
+        SHOW PROCESS LIST
+    杀掉进程
+        KILL
+
+推迟执行关键字
+    DELAYED
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/12/MongoDB-笔记/" rel="next" title="MongoDB-笔记">
+                <i class="fa fa-chevron-left"></i> MongoDB-笔记
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/11/Objective-C-笔记/" rel="prev" title="Objective-C-笔记">
+                Objective-C-笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Cao Zheng" />
+          <p class="site-author-name" itemprop="name">Cao Zheng</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#了解SQL"><span class="nav-number">1.</span> <span class="nav-text">了解SQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux安装"><span class="nav-number">2.</span> <span class="nav-text">Linux安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-安装"><span class="nav-number">3.</span> <span class="nav-text">Linux 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL简介"><span class="nav-number">4.</span> <span class="nav-text">MySQL简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#检索数据-SELECT"><span class="nav-number">5.</span> <span class="nav-text">检索数据 SELECT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排序-ORDER-BY"><span class="nav-number">6.</span> <span class="nav-text">排序 ORDER BY</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过滤数据-WHERE"><span class="nav-number">7.</span> <span class="nav-text">过滤数据 WHERE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通配符-Like"><span class="nav-number">8.</span> <span class="nav-text">通配符 Like</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正则表达式-REGEXP"><span class="nav-number">9.</span> <span class="nav-text">正则表达式 REGEXP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算字段"><span class="nav-number">10.</span> <span class="nav-text">计算字段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据处理函数"><span class="nav-number">11.</span> <span class="nav-text">数据处理函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚集函数"><span class="nav-number">12.</span> <span class="nav-text">聚集函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分组数据"><span class="nav-number">13.</span> <span class="nav-text">分组数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子查询"><span class="nav-number">14.</span> <span class="nav-text">子查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#联结表"><span class="nav-number">15.</span> <span class="nav-text">联结表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组合查询-UNION"><span class="nav-number">16.</span> <span class="nav-text">组合查询 UNION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全文本搜索"><span class="nav-number">17.</span> <span class="nav-text">全文本搜索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据插入-INSERT"><span class="nav-number">18.</span> <span class="nav-text">数据插入 INSERT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新数据"><span class="nav-number">19.</span> <span class="nav-text">更新数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除数据"><span class="nav-number">20.</span> <span class="nav-text">删除数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建和操纵表"><span class="nav-number">21.</span> <span class="nav-text">创建和操纵表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#视图"><span class="nav-number">22.</span> <span class="nav-text">视图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储过程"><span class="nav-number">23.</span> <span class="nav-text">存储过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#游标"><span class="nav-number">24.</span> <span class="nav-text">游标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#触发器"><span class="nav-number">25.</span> <span class="nav-text">触发器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务处理"><span class="nav-number">26.</span> <span class="nav-text">事务处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符集和语言"><span class="nav-number">27.</span> <span class="nav-text">字符集和语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户管理"><span class="nav-number">28.</span> <span class="nav-text">用户管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库维护"><span class="nav-number">29.</span> <span class="nav-text">数据库维护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能相关"><span class="nav-number">30.</span> <span class="nav-text">性能相关</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cao Zheng</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

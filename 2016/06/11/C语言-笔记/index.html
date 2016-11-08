@@ -1,0 +1,1501 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="C语言执行流程源程序.C --&amp;gt; 编译 --&amp;gt; 目标程序.o --&amp;gt; 链接 --&amp;gt; 可执行文件.out
+编译：把源代码翻译成0,1，声称一个.o目标文件
+链接：把目标文件和库函数整合成一个.out可执行文件
+
+.h (header)文件作用
+    方法的声明，但是不能实现方法
+    声明变量
+    声明结构体
+C语言数据类型基本类型
+    整型
+        短整">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C语言-笔记">
+<meta property="og:url" content="http://blog.uiideas.com/2016/06/11/C语言-笔记/index.html">
+<meta property="og:site_name" content="Uiideas Blog">
+<meta property="og:description" content="C语言执行流程源程序.C --&amp;gt; 编译 --&amp;gt; 目标程序.o --&amp;gt; 链接 --&amp;gt; 可执行文件.out
+编译：把源代码翻译成0,1，声称一个.o目标文件
+链接：把目标文件和库函数整合成一个.out可执行文件
+
+.h (header)文件作用
+    方法的声明，但是不能实现方法
+    声明变量
+    声明结构体
+C语言数据类型基本类型
+    整型
+        短整">
+<meta property="og:updated_time" content="2016-11-08T07:21:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C语言-笔记">
+<meta name="twitter:description" content="C语言执行流程源程序.C --&amp;gt; 编译 --&amp;gt; 目标程序.o --&amp;gt; 链接 --&amp;gt; 可执行文件.out
+编译：把源代码翻译成0,1，声称一个.o目标文件
+链接：把目标文件和库函数整合成一个.out可执行文件
+
+.h (header)文件作用
+    方法的声明，但是不能实现方法
+    声明变量
+    声明结构体
+C语言数据类型基本类型
+    整型
+        短整">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> C语言-笔记 | Uiideas Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?559798d21c881907a6a2339e025bbc03";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Uiideas Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章列表
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                C语言-笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-11T15:47:52+08:00" content="2016-06-11">
+              2016-06-11
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="C语言执行流程"><a href="#C语言执行流程" class="headerlink" title="C语言执行流程"></a>C语言执行流程</h2><pre><code>源程序.C --&gt; 编译 --&gt; 目标程序.o --&gt; 链接 --&gt; 可执行文件.out
+编译：把源代码翻译成0,1，声称一个.o目标文件
+链接：把目标文件和库函数整合成一个.out可执行文件
+
+.h (header)文件作用
+    方法的声明，但是不能实现方法
+    声明变量
+    声明结构体
+</code></pre><h2 id="C语言数据类型"><a href="#C语言数据类型" class="headerlink" title="C语言数据类型"></a>C语言数据类型</h2><pre><code>基本类型
+    整型
+        短整形short
+        整形int
+        长整型long
+    字符型char
+    实型
+        单精度型float
+        双精度型double
+构造类型
+    数组
+    结构体struct
+    公用型union
+    枚举类型enum
+指针类型
+空类型void
+定义类型typedef
+
+不同的数据类型占用的存储空间
+                   16位编译器    32位编译器    64位编译器
+    char             1             1            1
+    int              2             4            4
+    float            4             44           4
+    double           8             8            8
+    short            2             2            2
+    long             4             4            8
+    long long        8             8            8
+    void*(指针变量)    2             4            8
+
+数组
+    一维数组定义
+        格式
+            类型说明符 数据名[常量表达式];
+        范例
+            int arr[4];
+            float f[10];
+            char ch[5+3];
+    一维数组初始化
+        Tip
+            部分初始化的数据的其他值默认为0
+            未初始化的数组，数组内元素的值为垃圾数
+            元素类型为char类型的数组，部分初始化后其他元素的值为ASCII 0
+        格式
+            类型说明符 数据名[常量表达式] = {值,值,值....};
+        范例
+            int arr[4] = {1,2,3,4};
+            int arr[3] = {1,2};             只初始化部分元素，未初始化的值默认为0
+            int arr[] = {1,2,3};            数据长度根据元素个数决定
+            int arr[10] = {[3]=23,[8]=24};  部分初始化，只初始化了下标为3和8的元素
+            int arr[4];arr[0] = 1;          先定义再初始化
+    在内存中的存储方式
+        计算机会给数组分配一块连续的存储空间
+        数组名代表数组的首地址，从首地址位置，一次存入数组的每个元素
+        每个元素占用相同的字节数（取决于数组类型）
+        元素之间的地址是连续的
+        数组名代表了数组的首地址 等于数组第一个元素的地址
+        数组名是一个常量，存储的就是数组的首地址
+    数组计算
+        sizeof(数组变量名)                   计算数组占用的总字节数
+        sizeof(数组变量名)／sizeof(数组类型)   计算数组长度
+    二纬数组
+        定义
+            int arr[2][3];
+        初始化
+            int arr[2][3] = {{2,3,4},{1,2,3}};
+            int arr[2][3] = {1,2,3,4,5,6};
+            int arr[][3] = {{2,3,4},{1,2,3}};
+            int arr[][3] = {1,2,3,4,5,6};
+        部分初始化
+            int arr[2][3] = {1};
+            int arr[2][3] = {{1},{2}};
+
+字符串
+    Tip
+        C语言中没有字符串类型，需用字符数组来存储字符串
+        字符串在内存中存储时，以 \0 (ASCII中0代表的字符) 结尾
+        因字符串结尾符号，字符串的长度须至少比内容长度多1位
+    初始化
+        char ch[5] = {&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;};
+        char ch[] = {&apos;a&apos;,&apos;b&apos;,&apos;c&apos;};
+        char str[6] = {&quot;abcde&quot;};
+        char str[6] = &quot;abcde&quot;;
+        char str[] = &quot;abcde&quot;;
+    处理函数
+        stdio.h
+            puts(str)              输出一个字符串
+            gets(str)              输入一个字符串
+        string.h
+            strcat(str,str1)       连接str1至str
+            strcpy(oldSte,newStr)  拷贝函数，拷贝newStr覆盖odlStr
+            strcmp(str1,str2)      按照ASCII比较两个字符串大小，str1大时返回值&gt;0
+            strlen(str)            计算字符串长度，不包含/0
+
+二纬字符数组
+    范例
+        char str[2][4] = {{'a','b','c'},{'d','e','f'}};
+        char str[2][4] = {&apos;abc&apos;,&apos;def&apos;};
+
+const
+    说明
+        常量类型修饰符，一般用来修饰基本变量或指针变量。
+        被const修饰的变量是只读的。
+    与宏的区别
+        编译时刻 宏:预编译 const:编译
+        编译检查 宏:没有编译检查 const:有变异检查
+        宏的好处 可以把任意字符串转换为为宏 如:[class method]
+        宏的坏处 大量使用时会导致预编译时间过长
+    范例
+        const int i = 10;
+        int i = 10; const int ＊p = &amp;i;         指向可以变，指向变量的值不可以改变
+        int i = 10; int ＊ const p = &amp;i;        指向变量的值可以改变。指向不可以变
+        int i = 10; const int ＊ const p = &amp;i;  指向变量的值和指向都不可以变
+
+static
+    说明
+        内部变量修饰符，只能在当前文件使用
+        延长局部变量的生命周期，从程序启动到程序退出，但并不改变变量作用域
+        定义变量的代码在整个程序运行期间仅仅会执行一次
+        被static修饰的局部变量只会分配一次内存
+        被static修饰的局部变量在程序一运行就会分配内存
+        被static修饰的全局变量，作用域会被修改，只能在当前文件内使用。
+    范例
+        static int i = 10;
+
+extern
+    说明
+        extern修饰的变量，可在其他源文件中使用
+        无法修饰局部变量
+        extern修饰的全局变量在不同文件中不能同名
+        函数声明时默认为extern方式
+        extern只能用来生命，而不能用来定义。
+
+构造类型
+    说明
+        构造数据类型是根据已定义的一个或多个数据类型用构造的方法定义的
+        一个构造类型的值可以分解成若干个“成员”或“元素” 
+        每个元素都是一个基本数据类型或又是一个构造类型
+    构造类型种类
+        数组类型
+        结构体类型
+        共用体(联合)类型
+    结构体
+        说明
+            由若干个元素组成，每个元素可以是一个基本数据类型或又是一个构造类型
+            和数组的区别是数组内元素的数据类型必须相同，结构体内的元素类型可以不同
+        格式
+            struct 结构名{
+                成员列表
+            };
+        占用内存
+            对齐模数是结构体中基本数据类型占用内存最大的元素的字节数
+            计算所有元素的字节数和
+            依次填充对齐模数大小的空间，剩余空间不够下个元素存储时，重新分配模数对应字节数的内存空间
+        范例
+            先定义结构体，再定义结构体变量
+                struct Student{
+                    int num;
+                    char name[20];
+                    char sex;
+                    float score;
+                };
+                struct Student stu1={314159,&quot;张柏芝&quot;,&apos;Y&apos;,100};
+                struct Student stu2={.name=&quot;张柏芝&quot;};
+            定义结构体的同时，定义结构体变量
+                struct Student{
+                    int num;
+                    char name[20];
+                    char sex;
+                    float score;
+                }stu1,stu2,stu3;
+                stu1.num = 314159;
+                strcpy(stu1.name,&quot;张柏芝&quot;);
+            使用匿名结构体，定义定义结构体变量
+                struct{
+                    int num;
+                    char name[20];
+                    char sex;
+                    float score;
+                }stu1,stu2,stu3;
+    结构体数组
+        说明
+            结构数组的每一个元素都是具有相同结构类型的下标结构变量
+        格式
+            struct 结构名{
+                成员列表
+            }数组名[数组长度];
+        范例
+            定义结构体的同时定义数组
+                struct Student{
+                    char *name;
+                    int age;
+                }boys[5]={{"A",19},{"B",18},{"C",20}};
+                struct Student girls = {{"E",19},{"F",18},{"G",20}};
+            先定义结构体再定义数组
+                struct Student{
+                    char *name;
+                    int age;
+                };
+                struct Student stu[5];
+                stu[0] = (struct Student){&quot;E&quot;,19};
+                stu[1].name = &quot;ZhangShan&quot;;
+    结构体嵌套
+        说明
+            结构体定义中，结构体的成员为其他结构体变量
+            结构体不可以嵌套自己变量，可以嵌套指向自己这种类型的指针
+        范例
+            struct Date{
+                int month;
+                int day;
+                int year;
+            }
+            struct Student{
+                char *name;
+                int num;
+                struct Date birth;
+            }
+            struct Student stu = {&quot;Z&quot;,1001,{12,01,1087}};
+            stu.birth.day = 02;
+    结构体指针作为函数参数
+        注意
+            结构体指针作文函数参数时，函数内可修改结构体变量的值
+            结构体变量和结构体变量成员做为函数参数时，函数内不可修改结构体变量的值
+        范例
+            struct Date{
+                int month;
+                int day;
+                int year;
+            }
+            struct Date date = {12,01,1087};
+            void modifiy(struct Date *date1){
+                *date1.month = 11;
+                return 0;
+            }
+            modifiy(&amp;date);
+
+枚举类型
+    说明
+        是一种基本数据类型而非构造类型，因为它不能再分解为各种基本类型
+        在枚举类型的定义中列举出了所有可能的取值
+        被说名为该枚举类型的变量的值不能超过定义的取值范围
+        枚举类型定义后，系统会自动给每个元素赋值，初始默认为0，每个元素为上个元素+1
+    格式
+        enum 枚举类型名{ 枚举值列表 };
+    范例
+        enum weekday {sun,mon,tue=10,wed,thu,fri,sat};
+        enum weekday day1,day2;
+        day1 = sun;
+
+定义类型
+    说明
+        C语言中允许为数据类型起别名
+    格式
+        typedef 原类型名 新类型名;
+    范例
+        用于基本数据类型
+            typedef int NUMBER;
+            NUMBER i = 10;
+            NUMBER *p = &amp;i;
+        用于数组
+            typedef int ARRAY[5];
+            ARRAY arr = {1,2,3,4,5};
+        用于结构体
+            先定义结构体再定义别名
+                struct Person{
+                    char *name;
+                    int age;
+                };
+                struct Person man = {&quot;Z&quot;,18};
+                typedef struct Person P;
+                P woman = {&quot;A&quot;,24};
+            定义结构体的同时定义别名
+                typedef struct Person{
+                    char *name;
+                    int age;
+                }PERSON;
+                PERSON woman = {&quot;A&quot;,24};
+            为匿名结构体起别名
+                typedef struct{
+                    char *name;
+                    int age;
+                }PERSON;
+                PERSON woman = {&quot;A&quot;,24};
+        用于枚举
+            先定义枚举类型再定义别名
+                enum color = {white,black,green};
+                typedef enum color COLOR;
+            定义枚举类型时同时定义别名
+                typedef enum color = {white,black,green} COLOR;
+        用于函数指针
+            int sum(int a, int b){return a+b;};
+            typedef int (*FUN)(int,int);
+            FUN f = sum;
+            f(1,2);
+</code></pre><h2 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h2><pre><code>说明
+    指针为内存单元的编号也称为地址，通过地址可找到对应内存单元存储的数据。
+
+指针变量
+    说明
+        C语言中，允许使用一个变量来存放指针，这种变量称为指针变量。
+        指针本身是不可变的，但指针变量的值可变
+        *加指针变量可获取指针变量指向的内容
+    定义格式
+        类型说明符 *变量名;
+    范例
+        int *pi;
+        long *pl;
+        float *pl;
+        char *pc;
+    初始化
+        int *p = &amp;a;
+        int *p = NULL;
+        int *p = 0;
+    使用
+        int a = 0,*p = &amp;a;
+        *加指针变量可获取指针变量指向的存储单元
+        此时p为a的内存地址，*p为a的值
+
+二级指针
+    说明
+        一个指针变量存放的另外一个指针变量的地址
+    范例
+        int a = 1,
+            *p = &amp;a,
+            **p1 = &amp;p;
+        此时 *p1的值为&amp;a，**p1的值为1
+
+数组指针
+    说明
+        一个指针变量指向一个数组元素，指向数组元素的指针
+    范例
+        int a[4] = {1,2,3,4}, *p = a;
+    使用
+        p + 1      指向数组下一个元素, 数组下一个元素的地址
+        p - 1      指向数组上一个元素, 数组下一个元素的地址
+        *(p + 1)   获取数据下一个元素的值
+        *(p - 1)   获取数据上一个元素的值
+        p++        改变p变量的值为指向数组下一个元素
+        p--        改变p变量的值为指向数组上一个元素
+
+一维指针数组
+    说明
+        数组的元素的值为指针的数组，
+    格式
+        类型说明符 *数组名[数组长度]
+    范例
+        int a = 1, b = 2, c = 3, *p[3] = {&amp;a,&amp;b,&amp;c};
+    指针变量运算
+        两个指针相减，结果是两个指针说指数组元素之间相差的个数
+
+二纬数组行指针
+    说明
+        也称为行指针，用来指向二纬数组每一行，存放的是行的首地址
+    格式
+        数据类型 (*指针变量名)[数组第二纬长度];
+    范例
+        int a[3][4], (*p)[4] = a;
+    使用范例
+        *(*(p+i)+j)
+
+字符串指针
+    说明
+        用来保存字符串
+        字符数组保存的数据是在内存栈中，字符串内容可修改，例 str[2]=&apos;W&apos;
+        字符串指针保存的是字符串常量的首地址，字符串内容不可修改但可充新指向
+    格式
+        char *变量名 = &quot;字符串内容&quot;;
+    范例
+        chr *str = &quot;C Program&quot;
+
+字符串指针数组
+    说明
+        和二纬数组相比，数组元素长度没有限制，但元素内容不可修改
+    范例
+        char *str[] = {&quot;aaa&quot;,&quot;bbb&quot;,&quot;ccc&quot;};
+
+结构指针变量
+    说明
+        指向结构体变量的指针，结构指针变量中的值指向结构变量的首地址
+    格式
+        struct 结构名 *结构指针变量名
+    范例
+        struct Student{
+            int num;
+            char *name;
+            char sex;
+            float score;
+        };
+        struct Student stu={314159,&quot;张柏芝&quot;,&apos;Y&apos;,100};
+        struct Student *pstu = &amp;stu;
+        (*pstu).num = 1001;
+        pstu-&gt;score = 80;
+</code></pre><h2 id="函数库"><a href="#函数库" class="headerlink" title="函数库"></a>函数库</h2><pre><code>printf
+    格式
+        printf(&quot;格式控制字符串&quot;，变量列表)
+    格式控制符
+        %d        输出一个10进制的整数
+        %ld       输出double（实型）类型的实型数值
+        %md       设置域宽（位数）为m，m&gt;0左侧补空白，m&lt;0右侧补空白
+                  m&lt;数字位数 按照实际位数输出
+        %0md      设置域宽（位数）为m，m&gt;0左侧补0，m&lt;0右侧补0
+                  m&lt;数字位数 按照实际位数输出
+        %f        输出一个实数类型的数据（不能输出整形数据）默认输出6位小数 不足补0
+        %.2f      输出2位小数
+        %m.nf     m表示总的位数 n表示小数点后的位数 .也算一位 不足左补0
+        %-m.nf    不足右补0
+        %c        输出一个字符
+        %s        输出一个字符串
+        %o        以8进制输出一个数
+        %x        以16进制输出一个数
+        %p        输出一个变量的地址
+
+scanf
+    介绍
+        包含在 stdio.h 中，用来接受键盘输入的内容，为阻塞式函数
+    Tip
+        C语言中，变量的地址可通过符号 &amp; 来获取，例如 &amp;a 表示变量a的地址
+        可是控制符中 允许%mf，不允许%m.nf
+        接受单个变量值时，输入值前，Tab 回车 都会被忽略
+        scanf中如果是用了\n,在输入值后再次输入内控
+    格式
+        scanf(&quot;格式控制字符串&quot;,输入项地址列表)
+    格式控制符
+        %d          输入一个十进制整数
+        %o          输入一个八进制整数
+        %x          输入一个十六进制整数
+        %i          输入一个有符号或无符号的十进制，八进制，十六进制整数
+        %u          输入一个无符号十进制整数
+        %f,e,E,g,G  输入一个小鼠形式或指数形式的浮点数
+        %c          输入一个字符
+        %s          输入一个字符串
+    范例
+        scanf(&quot;%d&quot;,&amp;age);
+        scanf(&quot;%f,%f&quot;,&amp;a,&amp;b);
+
+    修饰符
+        域宽
+        *        跳过输入，不复制给变量
+        l,h      输入长整形，双精度型或短整形数据
+    范例
+        scanf(&quot;%d,%*d,%d&quot;,&amp;a,&amp;b);
+</code></pre><h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2><pre><code>功能分类
+    算数运算符
+        +      双目运算符，左结合性
+        -      双目运算符，作为负值运算法时为单目运算符
+        *      双目运算符，左结合性
+        /      参与运算量均为整形时，结果为整型，如果有一个为实型，则结果为双精度实型
+        %      求余，要求参与运算量均为整形
+    关系运算符
+    逻辑运算符
+    按位运算符
+
+按操作数运算符
+    单目运算符      i++ ! sizeof 
+    双目运算符      a+b
+    三目运算符      a &gt; b ? 1 : 0
+
+运算符表
+    [C和C++运算符](https://zh.wikipedia.org/wiki/C%E5%92%8CC%2B%2B%E9%81%8B%E7%AE%97%E5%AD%90)
+
+类型转换
+    转换规则
+        char|short -&gt; int -&gt; float -&gt; unsigned -&gt; long -&gt; double
+    隐式转换
+        int + float 时 int 隐式转换为float
+    显式转换
+        语法
+            (要转换的类型)要转换的变量或表达式
+        范例
+            (int)f
+            (int)(f + i)
+
+sizeof
+    作用
+        以字节的形式给出操作数的存储大小，是操作符而不是函数
+    Tip
+        char类型常量为4个字节（存储时会转换为int类型数数字），char类型变量为1个字节。
+        用于常量和变量时，可省略括号。
+    语法
+        sizeof(常量|变灵|数据类型)
+    范例
+        sizeof(1)
+        sizeof(3.14f)      计算float类型值在内存中占用的字节
+        sizeof(3.14)       计算double类型在内存中占用的字节
+        sizeof 3.14
+        sizeof(int)
+
+逗号运算符
+    格式
+        表达式1,表达式2
+    Tip
+        逗号运算符可嵌套使用
+        定义变量时无法使用逗号表达式
+    范例
+        a = (a+b,c+2)
+    求值过程
+        分别求每个表达式的值，并以最后表达式的值作为整个表达式的值
+
+关系运算符
+    真假性
+        在C语言中所有的数值都有真假性，非0为真，关系运算符返回真或假
+    关系运算符
+        &gt;,&lt;,&gt;=,&lt;=,==,!=
+
+
+逻辑表达式
+    Tip
+        逻辑表达式返回真或假
+    逻辑运算符
+        &amp;&amp;      与运算
+        ||      或运算
+        !       非运算
+
+三木运算符
+    格式
+        表达式1 ? 表达式2 : 表达式3
+</code></pre><h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><pre><code>分类
+    库函数
+    用户定义函数
+
+自定义函数
+    步骤
+        定义 -&gt; 声明 -&gt; 调用
+    格式
+        返回值类型 函数名称(函数参数){
+            函数体
+        }
+    函数声明作用
+        告诉编译器被调函数已经存在和函数返回值类型，已便主调函数处理被调函数返回数据
+    函数声明注意事项
+        如果函数的返回类型为int，此时可以不用声明
+        如果被调函数写在主调函数之前，此时可以不用声明
+        可写成全局声明，声明在main函数之前
+
+指针函数
+    说明
+        返回指针值的函数称为指针型函数
+    格式
+        类型说明符 * 函数名(形参表){
+            函数体
+            return 地址;
+        }
+
+函数指针
+    说明
+        函数名是函数所做占用内存去的首地址
+        把函数首地址赋予一个指针变量，这个指向函数的指针变量称为函数指针变量。
+        定义函数指针时，可省略形参名
+    格式
+        类型说明符(*变量名)(函数的参数);
+    例子
+        int sum(int x,int y){
+            return x+y
+        }; 
+        int(*p)(int x,int y);
+        p = sum;
+        p(1,2);
+</code></pre><h2 id="预处理指令"><a href="#预处理指令" class="headerlink" title="预处理指令"></a>预处理指令</h2><pre><code>#include  文件包含
+    Tip
+        include实质为把文件内容拷贝至include语句位置
+        不一定要写在第一行
+    类型
+        #include &lt;...&gt;    包含系统库
+        #include &quot;...&quot;    包含用户定义的文件，可以是头文件也可以是普通文件
+    文件搜索顺序
+        #include &lt;...&gt;    编译器目录 -&gt; 系统目录
+        #include &quot;...&quot;    当前目录 -&gt; 编译器目录 -&gt; 系统目录
+    系统include目录
+        /usr/include
+        /usr/local/include
+    Xcode 编译器目录
+        /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include
+    清除缓存两种方式
+        Xcode菜单
+            Product -&gt; Clean
+        删除如下目录内缓存
+            /Users/caozheng/Library/Developer/Xcode/DerivedData
+
+#define  宏
+    说明
+        源程序在编译之前，犹预处理程序对我们写的源代码进行处理
+        对源码中所有的宏名用宏定义中的字符串替换
+        宏是预处理指令而非语句，所以不需要分号结束
+        在字符串中出现的宏名不会被替换
+        宏是有作作用域的，通过 #undef 可取消宏定义
+        宏分为有参数和无参数两种
+    无参数宏
+        格式
+            #define 表示符 字符串
+        范例
+            简单应用
+                #define PI 3.14
+            宏嵌套定义
+                #define R 4
+                #define PI 3.14
+                #define AREA PI*R*R
+            使用宏起别名
+                #define INT int
+                #define P struct Person
+    有参数宏
+        说明
+            对带参数的宏，在调用中，不仅要宏展开，且要用实参代换形参
+            有参宏定义中，形参之间可以出现空格，但是宏名和形参表之间不能有空格
+        格式
+            #define 宏名(形参表) 字符串
+        范例
+            #define SUM(a,b) a+b
+            int main(){
+                int resurt = SUM(3,4);
+                return 0;
+            }
+
+条件编译
+    #if #elif #else #endif
+        说明
+            按照不同的条件编译不同的程序部分，因而产生不同的目标代码文件
+        格式
+            #if 常量表达式
+                程序段1
+            #elif
+                程序段2
+            #else
+                程序段3
+            #endif
+        范例
+            #define I 0
+            #if I == 1
+                printf(&quot;OK&quot;);
+            #else
+                printf(&quot;NOTOK&quot;);
+            #endif
+    #ifdef
+        说明
+            判断某个宏是否定义
+        范例
+            #define DEBUGGER 1
+            int main(){
+                #ifdef DEBUGGER
+                    printf(&quot;YES&quot;);
+                #else
+                    printf(&quot;NOT&quot;);
+                #endif
+                return 0;
+            }
+    #ifndef
+        说明
+            判断某个宏是否定义, 如果没有定义返回 真
+        范例
+            #define DEBUGGER 1
+            int main(){
+                #ifndef DEBUGGER
+                    printf(&quot;YES&quot;);
+                #else
+                    printf(&quot;NOT&quot;);
+                #endif
+                return 0;
+            }
+</code></pre><h2 id="进制"><a href="#进制" class="headerlink" title="进制"></a>进制</h2><pre><code>Tip
+    计算机存储的二进制数据为补码
+    为了计算机电路设计简洁，计算机只能计算加法，所以引入补码
+
+各进制格式
+    2进制       0b00101
+    8进制       045
+    16进制      0xaf0d
+
+源码反码补码
+    源码
+        正数: 一个数绝对值的二进制表示，最高位(最左侧)为0
+        负数: 一个数绝对值的二进制表示，最高位(最左侧)为1
+    反码
+        正数: 和源码相同
+        负数: 除符号位不变，其他逐位取反(1-&gt;0,0-&gt;1)
+    补码
+        正数: 和源码相同
+        负数: 反码 + 1
+
+位运算符
+    &amp;     按位与　     同1为1, 有0为0
+    |     按位或　     有1为1
+    ~     按位取反     1-&gt;0, 0-&gt;1
+    ^     按位异或     相同为0, 不通为1
+    &gt;&gt;    右移位　     每一位向右移动n位, 高位补符号位, 低位丢弃,
+    &lt;&lt;    左移位　     每一位向左移动n位, 高位丢弃, 低位补0, 正数时相当原数*2的n次方
+
+内存地址
+    内存忧若干个1Byte的内存单元构成，每个内存单元有唯一的地址
+    计算机分配内存时，由高地址向低地址分配
+    两个连续定义的变量的内存地址不一定是连续的
+    值在内存中存储时，二进制低位存储在低地址，高位存储在高地址
+    &amp;获取的是变量的首地址(变量在内存中占用的存储单元地址最小的地址)
+    可用符号*获取内存地址中的字节 
+</code></pre><h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><pre><code>三种内存分配方式
+    从静态存储区分配
+        内存在程序编译时就已经分配好，这块内存仔程序运行期间始终存在
+        例如全局变量,static变量。
+    在栈上创建
+        在执行函数时，函数内部局部变量的存储单元都可以在栈上创建。函数之行后释放。
+        栈内存分配运算内治愈处理器指令集中，效率很高，但分配的内存容量有限
+    从堆上分配，亦称为动态内存分配
+        程序仔运行过程中使用malloc或new申请任人意多少的内存，
+        程序议案自己负责在何时使用free或delete释放内存。
+
+内存分区（高地址向低地址排序）
+    栈       运行时分配    存放程序临时创建的临时变量 
+    堆       运行时分配    存放被动态分配的内存段
+    BSS端    编译器分配    存放未初始化的全局变量和静态变量
+    数据段    编译器分配    存放已经初始化的全局变量和静态变量和字符串常量等
+    代码段    编译器分配    存放程序执行的编译后的代码
+
+动态内存分配函数
+    malooc
+        说明
+            包含在stdlib.h中，在内存的堆区分配一个大小为size的连续内存空间。
+            如果分配成功，函数返回心分配内存的首地址，否则返回NULL 
+            malooc申请的空间如果不赋值，存放的是垃圾数
+        格式
+            void * malloc(unsigned size)
+        范例
+            int *p = (int *)malloc(4 * sizeof(int));
+    calloc
+        说明
+            分配制定长度和块数的内存空间。
+            如果申请的空间如果不赋值，会初始化为0
+        格式
+            void * calloc(内存块数, 长度)
+        范例
+            int *p = (int *)calloc(4, sizeof(int));
+    realloc
+        说明
+            可以给已经存在的空间扩充大小
+            会先检测和原内存空间是否有足够相邻空间，如果没有则把原数据重新分配新内存空间
+        格式
+            void * calloc(内存地址, 长度)
+        范例
+            int *p = (int *)malloc(4 * sizeof(int));
+            p = realloc(p, 10 * sizeof(int));
+
+内存泄漏
+    说明
+        在函数内通过malooc申请的空间如果在函数释放时不释放，会造成内存泄露
+    free
+        作用
+            释放内存空间，包含子啊stdlib.h头文件中
+        格式
+            free(要释放的空间首地址)
+</code></pre><h2 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h2><pre><code>说明
+    文件是指存储在外部介质上数据的集合，这个数据集有一个名称叫文件名
+
+文件的分类
+    用户角度分类
+        普通文件
+        设备文件
+    文件编码方式分类
+        ASCII码文件
+        二进制文件
+
+文件操作步骤
+    1. 引入头文件 stdio.h
+    2. 定义文件指针
+    3. 打开文件
+    4. 文件读写
+    5. 关闭文件
+
+文件读写函数
+    fgetc   fputc      字符读写函数
+    fgets   fputs      字符串读写函数
+    freed   fwrite     数据块读写函数
+    fscanf  fprintf    格式化读写函数
+
+文件指针
+    说明
+        在C语言中用一个指针变量指向一个文件，这个指针称为文件指针
+    格式
+        FILE *指针变量标识符;
+    范例
+        FILE *fp = NULL;
+
+文件打开 fopen
+    格式
+        文件指针变量名 = fopen(文件名,操作方式);
+        操作方式
+            r      打开一个已存在文件，只能读取数据
+            w      创建一个新文件，只能写入数据，如文件存在则删除后新建
+            a      打开一个已存在的文件，并在文件末尾追加数据，文件不存在则新建
+            r+     打开一个已存在文件，读写数据
+            w+     创建一个新文件，读写数据，如文件存在则删除后新建
+            a+     等价与a，并可读取数据
+            t      打开一个文本文件
+            b      打开一个二进制文件
+    范例
+        FILE *fp = NULL;
+        fp = fopen(&quot;a.txt&quot;,&quot;r&quot;);
+
+文件关闭 fclose
+    格式
+        fclose(文件指针);
+    范例
+        FILE *fp = NULL;
+        fp = fopen(&quot;a.txt&quot;,&quot;r&quot;);
+        fclose(fp);
+
+字符写入函数 fputc
+    说明
+        fputc可把一个字符写入到文件中
+        字符读写函数是以字节问单位的读写函数，每次从文件写入一个字符
+    格式
+        fputc(字符,文件指针);
+    范例
+        FILE *fp = fopen(&quot;tmp.txt&quot;, &quot;a+&quot;);
+        fputc(&apos;a&apos;, fp);
+
+字符读取函数 fgetc
+    说明
+        读取一个字符到变量中
+        字符读写函数是以字节问单位的读写函数，每次从文件读取一个字符
+    格式
+        fgetc(文件指针);
+    范例
+        FILE *fp = fopen(&quot;tmp.txt&quot;, &quot;r&quot;);
+        printf(&quot;%c\n&quot;,fgetc(fp));
+
+字符串写入函数 fputs
+    说明
+        该函数是一个文件操作相关函数，可把字符串输出到指定文件中
+        函数执行后返回写入字符串的长度
+    格式
+        fputs(字符串,文件指针);
+    范例
+        FILE *fp = fopen(&quot;tmp.txt&quot;, &quot;a+&quot;);
+        fputs(&quot;ABCDE&quot;, fp);
+
+字符串读取函数 fgets
+    说明
+        该函数是一个文件操作相关函数，也可从键盘接受字符串保存至变量中
+        scanf无法接受字符串，gets因为不限制字符串长度不安全
+        使用fgets时，会依据字符串变量长度做限制，并在结尾保存 \0
+        当遇到 \n 或者 EOF 时，读取结束
+        使用stdin时，当输入字符串长度小于数组长度时，fgets会接受回车符
+    格式
+        char* fgets(char＊ s, int n, FILE* fp);
+    范例
+        FILE *fp = fopen(&quot;tmp.txt&quot;, &quot;r&quot;);
+        char ch[10];
+        fgets(ch, sizeof(ch), fp);
+
+数据块读取函数 fread
+    说明
+        用于整块数据的读取
+    格式
+        fread(buffer,size,count,fp)
+        buffer   是一个指针，在fread函数中表示存放输入数据的首地址
+        size     表示数据块的字节数 
+        count    表示读取多少块 
+        fp       文件指针
+    范例
+        FILE *fp = fopen(&quot;tmp.txt&quot;, &quot;r&quot;);
+        char str[10];
+        fread(str, sizeof(str), 1, fp);
+
+数据块写入函数 fwrite
+    说明
+        用于整块数据的写入
+    格式
+        fwrite(buffer,size,count,fp)
+    范例
+        FILE *fp = fopen(&quot;tmp.txt&quot;, &quot;w&quot;);
+        char str[] = &quot;Hello World!&quot;;
+        fwrite(str, sizeof(str), 1, fp);
+
+格式化读取函数 fscanf
+    说明
+        与scanf类似，接受的对象的磁盘文件
+    格式
+        fscanf(文件指针,格式化字符串,输入列表);
+    范例
+        FILE *fp = fopen(&quot;tmp.txt&quot;, &quot;r&quot;);
+        int a,b;
+        fscanf(fp,&quot;%d----%d&quot;,&amp;a,&amp;b);
+
+格式化写入函数 fprintf
+    说明
+        与printf类似，输出对象是磁盘文件
+    格式
+        fprintf(文件指针,格式化字符串,输出列表);
+    范例
+        FILE *fp = fopen(&quot;tmp.txt&quot;, &quot;w&quot;);
+        int a = 1,b = 2;
+        fprintf(fp,&quot;%d----%d&quot;,a,b);
+
+文件定位
+    rewind
+        说明
+            移动文件指针至文件头
+        格式
+            rewind(FILE *)
+    fseek
+        说明
+            移动文件至指定位置
+        格式
+            fseek(文件指针,位移量,起始点);
+                位移量    移动的字节数,long类型数据
+                起始点    表示从何处计算位移量
+                    文件起始   SEEK_SET  0
+                    当前位置   SEEK_CUR  1
+                    文件末尾   SEEK_END  2
+
+文件监测函数 
+    feof
+        说明
+            监测文件是否处于文件结束的位置，如果结束返回1，否则返回0
+        格式
+            feof(FILE *);
+    ferror
+        说明
+            判断文件是否读取出错
+        格式
+            ferror(FILE *);
+</code></pre><h2 id="终端编译"><a href="#终端编译" class="headerlink" title="终端编译"></a>终端编译</h2><pre><code>cc -c &lt;file&gt;  编译文件，生成 file.o 文件
+cc &lt;file.o&gt;   连接，生成 file.out 可执行文件
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/26/Git-笔记/" rel="next" title="Git-笔记">
+                <i class="fa fa-chevron-left"></i> Git-笔记
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/12/MongoDB-笔记/" rel="prev" title="MongoDB-笔记">
+                MongoDB-笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Cao Zheng" />
+          <p class="site-author-name" itemprop="name">Cao Zheng</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#C语言执行流程"><span class="nav-number">1.</span> <span class="nav-text">C语言执行流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C语言数据类型"><span class="nav-number">2.</span> <span class="nav-text">C语言数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针"><span class="nav-number">3.</span> <span class="nav-text">指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数库"><span class="nav-number">4.</span> <span class="nav-text">函数库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运算符"><span class="nav-number">5.</span> <span class="nav-text">运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数"><span class="nav-number">6.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预处理指令"><span class="nav-number">7.</span> <span class="nav-text">预处理指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进制"><span class="nav-number">8.</span> <span class="nav-text">进制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存管理"><span class="nav-number">9.</span> <span class="nav-text">内存管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件"><span class="nav-number">10.</span> <span class="nav-text">文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#终端编译"><span class="nav-number">11.</span> <span class="nav-text">终端编译</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cao Zheng</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

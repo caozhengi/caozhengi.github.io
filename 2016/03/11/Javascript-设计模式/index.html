@@ -1,0 +1,964 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="单体模式说明
+    单体(Singleton)模式的思想在于保证一个特性的类仅有一个实例。
+    实现的方式有多种方案，主要思路为判断实例是否存在，下面是其中两种常见的方式。
+    第一种是通过类的静态属性保存实例，缺点是静态属性可改写。
+    第二种是通过闭包内的局部变量存储实例，缺点是会带来闭包的格外开销。
+范例
+    类属性方式
+        function Person(){">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Javascript-设计模式.md">
+<meta property="og:url" content="http://blog.uiideas.com/2016/03/11/Javascript-设计模式/index.html">
+<meta property="og:site_name" content="Uiideas Blog">
+<meta property="og:description" content="单体模式说明
+    单体(Singleton)模式的思想在于保证一个特性的类仅有一个实例。
+    实现的方式有多种方案，主要思路为判断实例是否存在，下面是其中两种常见的方式。
+    第一种是通过类的静态属性保存实例，缺点是静态属性可改写。
+    第二种是通过闭包内的局部变量存储实例，缺点是会带来闭包的格外开销。
+范例
+    类属性方式
+        function Person(){">
+<meta property="og:updated_time" content="2016-11-08T08:34:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Javascript-设计模式.md">
+<meta name="twitter:description" content="单体模式说明
+    单体(Singleton)模式的思想在于保证一个特性的类仅有一个实例。
+    实现的方式有多种方案，主要思路为判断实例是否存在，下面是其中两种常见的方式。
+    第一种是通过类的静态属性保存实例，缺点是静态属性可改写。
+    第二种是通过闭包内的局部变量存储实例，缺点是会带来闭包的格外开销。
+范例
+    类属性方式
+        function Person(){">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Javascript-设计模式.md | Uiideas Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?559798d21c881907a6a2339e025bbc03";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Uiideas Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章列表
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Javascript-设计模式.md
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-03-11T11:47:52+08:00" content="2016-03-11">
+              2016-03-11
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="单体模式"><a href="#单体模式" class="headerlink" title="单体模式"></a>单体模式</h2><pre><code>说明
+    单体(Singleton)模式的思想在于保证一个特性的类仅有一个实例。
+    实现的方式有多种方案，主要思路为判断实例是否存在，下面是其中两种常见的方式。
+    第一种是通过类的静态属性保存实例，缺点是静态属性可改写。
+    第二种是通过闭包内的局部变量存储实例，缺点是会带来闭包的格外开销。
+范例
+    类属性方式
+        function Person(){
+            // 判断是否类的静态属性instance是否存在
+            if(typeof Person.instance === &quot;object&quot;){
+                return Person.instance;
+            }
+            this.name = &quot;Jack&quot;;
+            this.age = 18;
+            // 通过构造函数创建实例时，把实例的引用保存在Person的静态属性中
+            Person.instance = this;
+        }
+        var p1 = new Person;
+        var p2 = new Person;
+        p1===p2;  //true
+    闭包方式
+        var Person = (function () {
+            var instance;
+            var Person = function Person() {
+                if(instance){
+                    return instance;
+                }
+                this.name = &quot;Jack&quot;;
+                this.age = 18;
+                instance = this;
+            }
+            return Person
+        }())
+        Person.prototype.nothing = true;
+        var p1 = new Person;
+        Person.prototype.everything = true;
+        var p2 = new Person;
+        p1===p2;  //true
+        p1.nothing &amp;&amp; p2.nothing &amp;&amp; p1.everything &amp;&amp; p2.everything //true
+        p1.name //&quot;Jack&quot;
+        p1.constructor === Person //true
+</code></pre><h2 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h2><pre><code>说明
+    工厂模式的目的主要为了创建对象，通常在类的静态方法中实现。
+    许多类型对象的创造需要一系列的步骤，比如设置属性，位置，选择为哪个子类的实例等。 
+    这一系列的重复操作类似类似工厂一样。
+    可以给类添加一个工厂方法，只需要一个参数，便能完成这些不同类型的实例的设置。
+    全局Object构造函数就是一个工厂模式的例子，可以通过传递不同的参数生成不同类型的实例。
+    工厂模式又区分简单工厂模式和抽象工厂模式，下面范例为抽象工厂模式。
+
+范例
+    // Vehicle为父类用来派生子类
+    var Vehicle = function(){};
+    Vehicle.prototype.drive = function () {
+        console.log(&quot;I have &quot; + this.doors + &quot; doors&quot;);
+    }
+    // 定义工厂方法
+    Vehicle.factory = function(type){
+        var newcar;
+        // 如果不存在对应的之类则抛出错误
+        if(typeof Vehicle[type] !== &quot;function&quot;){
+            throw{
+                name:&quot;Error&quot;,
+                message:type + &quot;doesn&apos;s exist&quot;
+            }
+        };
+        // 用于给子类设置原型为父类的实例，并只设置一次
+        if(typeof Vehicle[type].prototype !== &quot;function&quot;){
+            Vehicle[type].prototype = new Vehicle();
+        };
+        // 创建一个新的实例
+        newcar = new Vehicle[type]();
+        // 可以做一些其他操作并返回...
+        return newcar;
+    }
+    // 下面是特定类型的实例的构造函数
+    Vehicle.Micro = function(){
+        this.doors = 2;
+    };
+    Vehicle.Compact = function(){
+        this.doors = 4;
+    };
+    Vehicle.SUV = function(){
+        this.doors = 8;
+    };
+    // 通过工厂方法创建实例
+    var micro = Vehicle.factory(&quot;Micro&quot;);
+    micro.drive();    //I have 2 doors
+    var compact = Vehicle.factory(&quot;Compact&quot;);
+    compact.drive();  //I have 4 doors
+    var suv = Vehicle.factory(&quot;SUV&quot;);
+    suv.drive();      //I have 8 doors
+</code></pre><h2 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h2><pre><code>说明
+    迭代器模式中，通常有一个包含某种数据集合的对象。
+    该数据可在存储在一个复杂数据结构的内部，需要提供一个简单的方法来访问数据中的每个元素。
+    对象的使用者不需要知道对象内部如何组织数据，仅需要使用对象提供的方法取出数据使用。
+    通常对象需要提供一个next方法，依次调用next()必须返回下一个连续的元素。
+    在特定的数据结构中，next方法所返回的&quot;下一个&quot;元素可由您来使用。
+
+范例
+    var generator = (function(){
+        var index = 0,
+            data = [1,2,3,4,5],
+            length = data.length;
+        return {
+            // 取出下一个元素
+            next: function(){
+                var element;
+                if(!this.hasNext()){
+                    return null;
+                }
+                element = data[index];
+                index ++;
+                return element;
+            },
+            // 检测是否到最后一个元素
+            hasNext: function(){
+                return index &lt; length
+            },
+            // 重置指针到初始位置
+            rewind: function(){
+                index = 0;
+            },
+            // 返回当前元素
+            current: function(){
+                return data[index &lt; length ? index : length - 1];
+            }
+        }
+    }());
+    var arr = [];
+    while(generator.hasNext()){
+        arr.push(generator.next());
+    }
+    arr  // [1,2,3,4,5]
+    generator.current()) // 5
+    generator.rewind()
+    generator.current()) // 1
+</code></pre><h2 id="装饰者模式"><a href="#装饰者模式" class="headerlink" title="装饰者模式"></a>装饰者模式</h2><pre><code>说明
+    在装饰者模式中，可以在运行时动态添加附件功能到对象中。
+    因JavaScript的对象是可边的，添加功能到对象的过程非常容易。
+
+范例
+    // 货币的构造函数
+    function Money(amount){
+        this.amount = amount || 100;
+        this.decoratorsList = [];
+    }
+    // 装饰方法
+    Money.prototype.decorate = function(decorater){
+        this.decoratorsList.push(decorater)
+    };
+    // 获取处理后的金额
+    Money.prototype.getAmount = function(){
+        var amount = this.amount,
+            name;
+        for(var i = 0; i &lt; this.decoratorsList.length; i++){
+            var key = this.decoratorsList[i];
+            amount = Money.decorators[key].getAmount(amount) ;
+        }
+        return amount;
+    };
+    // 装饰者列表
+    Money.decorators = {}
+    // 货币转换
+    Money.decorators.toUSD = {
+        getAmount: function(amount){
+            return amount * 0.8;
+        }
+    }
+    // 加上额外的货币转换手续费
+    Money.decorators.addTax = {
+        getAmount: function(amount){
+            return amount * 1.01;
+        }
+    }
+    // 使用
+    var m = new Money(100);
+    m.decorate(&quot;toUSD&quot;);
+    m.decorate(&quot;addTax&quot;);
+    m.getAmount(); // 80.8
+</code></pre><h2 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h2><pre><code>说明
+    策略模式支持在运行时选择算法。目的是把程序的接口和算法解耦。
+    常见的例子是表单验证的方法，可根据数据类型的不同选择不同的验证规则。
+
+范例
+    var validator = {
+        // 对不同数据的验证配置
+        config: {
+            name: &quot;isNonEmpty&quot;,
+            age: &quot;isNumber&quot;,
+            email: &quot;isEmail&quot;
+        },
+        // 验证后的错误信息列表
+        messages: [],
+        // 验证方法
+        types: {
+            isNonEmpty: {
+                validate: function(value){
+                    return value !== &quot;&quot;;
+                },
+                errMsg:&quot;the value cannot be empty&quot;
+            },
+            isNumber: {
+                validate: function(value){
+                    return !isNaN(value);
+                },
+                errMsg:&quot;the value can only be a number&quot;
+            },
+            isEmail: {
+                validate: function(value){
+                    var reg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+                    return reg.test(value)
+                },
+                errMsg:&quot;the value can only be a email&quot;
+            }
+        },
+        // 验证方法
+        validate: function(data){
+            var i, msg, type, checker, resultOk;
+            // 重置所有消息
+            this.messages = [];
+            // 对所有字段进行校验
+            for(i in data){
+                type = this.config[i];
+                checker = this.types[type];
+                resultOk = checker.validate(data[i]);
+                if(!resultOk){
+                    msg = checker.errMsg;
+                    this.messages.push(msg)
+                }
+            }
+            return this.hasError();
+        },
+        // 数据是否有错误
+        hasError: function(){
+            return this.messages.length !== 0;
+        }
+    };
+    var data = {
+        name: &quot;&quot;,
+        age: &quot;err&quot;,
+        email: &quot;name@gamil.com&quot;
+    }
+    var hasError = validator.validate(data);
+    console.log(hasError) //true
+    console.log(validator.messages.join(&quot;,&quot;))
+    //&quot;the value cannot be empty,the value can only be a number&quot;
+</code></pre><h2 id="外观模式"><a href="#外观模式" class="headerlink" title="外观模式"></a>外观模式</h2><pre><code>说明
+    通过把常用方法包装到一个新的方法中，从而提供一个更为便利的API。
+
+范例
+    var event = {
+        // ...
+        stop: function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        // ...
+    };
+</code></pre><h2 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h2><pre><code>说明
+    在代理模式中，一个对象充当另外一个对象的接口。
+    代理介于对象的客户端和对象本身之间，并且对该对象的访问提供保护。
+    代理模式可用于服务器请求的合并，降低服务器压力。
+    下面的例子中taskProxy用来作为doTask的代理，积累1S内的任务统一执行。
+
+范例
+    // 执行任务的方法
+    var doTask = function(msg){
+        console.log(&quot;doTask: &quot; + msg);
+    }
+    // 中间代理
+    var taskProxy = (function(){
+        // 代发送的消息列表
+        var msgList = [];
+        // 任务队列是否已经开始积累任务
+        var taskQueueStart = false;
+        var task = function(msg){
+            msgList.push(msg);
+            if(!taskQueueStart){
+                setTimeout(function(){
+                    doTask(msgList.join(&quot;, &quot;));
+                    msgList = [];
+                    taskQueueStart = false;
+                }, 1000);
+            }
+            taskQueueStart = true;
+        }
+        return task
+    }());
+    // 同时执行三个任务
+    taskProxy(&quot;msg-1&quot;);
+    taskProxy(&quot;msg-2&quot;);
+    taskProxy(&quot;msg-3&quot;);
+    // doTask: msg-1, msg-2, msg-3
+</code></pre><h2 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a>中介者模式</h2><pre><code>说明
+    多个对象间相互并不直接通信，而是仅通过中介者对象进行通信，从而促进形成松散耦合。
+
+范例
+    // 创建数据模型
+    function Model(){
+        this.data = [];
+    }
+    Model.prototype.getNumber = function(){
+        console.log(this.data.join(&quot;,&quot;));
+    }
+    // 构造两个实例，分别用来收集单数和偶数
+    var oddModel = new Model(),
+        evenModel = new Model();
+    // 中介者
+    var mediator = function(){
+        arr = [].slice.call(arguments);
+        for (var i = 0; i &lt; arr.length; i++) {
+            if(arr[i] % 2 === 1){
+                oddModel.data.push(arr[i])
+            }else{
+                evenModel.data.push(arr[i])
+            }
+        }
+    }
+    mediator(1,2,3,4,5,6,7,8,9,0)
+    oddModel.getNumber();   // 1,3,5,7,9
+    evenModel.getNumber();  // 2,4,6,8,0
+</code></pre><h2 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h2><pre><code>说明
+    观察者模式广泛应用于客户端JavaScript编程中，所有的浏览器事件都是该模式的例子。
+    它的另外一个名字称为自定义事件，也可称为订阅/发布模式。
+    该模式的实现是通过创建可观察的对象，发生事件时将事件通知给所有观察者，从而形成松耦合。
+
+范例
+    // 通用的发布者对象
+    var publisher = {
+        // 存放不同事件类型订阅者数组的对象
+        subscribers: {
+            any: []  //any事件类型
+        },
+        // 订阅
+        subscribe: function(fn, type) {
+            // 默认为any事件
+            type = type || &quot;any&quot;;
+            // 当事件不存在时在subscribers里面添加
+            if(typeof this.subscribers[type] === &quot;undefined&quot;){
+                this.subscribers[type] = [];
+            }
+            this.subscribers[type].push(fn)
+        },
+        // 取消订阅
+        unsubscribe: function(fn, type){
+            this.visitSubscribers(&quot;unsubscribe&quot;,fn,type);
+        },
+        // 发布事件
+        publish: function(publication, type){
+            this.visitSubscribers(&quot;publish&quot;,publication,type);
+        },
+        // 这个方法的内部用来发布或取消订阅
+        visitSubscribers: function(action, arg, type){
+            var pubtype = type || &quot;any&quot;,
+                subscribers = this.subscribers[pubtype];
+            for (var i = 0; i &lt; subscribers.length; i++) {
+                if(action === &quot;publish&quot;){
+                    subscribers[i](arg);
+                }else{
+                    if(subscribers[i] === arg){
+                        subscribers.splice(i,1);
+                    }
+                }
+            }
+
+        }
+    }
+    // 可将通用发布者对象的方法拷贝到指定对象中
+    function makePublisher(o){
+        var i;
+        for (i in publisher) {
+            if(publisher.hasOwnProperty(i) &amp;&amp; typeof publisher[i] === &quot;function&quot;){
+                o[i] = publisher[i];
+            }
+        }
+        o.subscribers = {any:[]};
+    }
+    // 实现paper对象，它可以发布日报和月刊
+    var paper = {
+        daily: function(){
+            this.publish(&quot;big news today&quot;);
+        },
+        monthly: function(){
+            this.publish(&quot;interesting analysis&quot;,&quot;monthly&quot;);
+        }
+    }
+    makePublisher(paper);
+    // 实现订阅者
+    var joe = {
+        drinkCoffee: function(paper){
+            console.log(&quot;Just read &quot; + paper);
+        },
+        sundayPreNap: function(monthly){
+            console.log(&quot;About to fall asleep reading this &quot; + monthly);
+        }
+    }
+    // paper注册joe
+    paper.subscribe(joe.drinkCoffee);
+    paper.subscribe(joe.sundayPreNap,&quot;monthly&quot;);
+    // 发布
+    paper.daily();    // Just read big news today
+    paper.daily();    // Just read big news today
+    paper.monthly();  // About to fall asleep reading this interesting analysis
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/12/ES2015-笔记/" rel="prev" title="ES2015-笔记.md">
+                ES2015-笔记.md <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Cao Zheng" />
+          <p class="site-author-name" itemprop="name">Cao Zheng</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#单体模式"><span class="nav-number">1.</span> <span class="nav-text">单体模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工厂模式"><span class="nav-number">2.</span> <span class="nav-text">工厂模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迭代器模式"><span class="nav-number">3.</span> <span class="nav-text">迭代器模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#装饰者模式"><span class="nav-number">4.</span> <span class="nav-text">装饰者模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#策略模式"><span class="nav-number">5.</span> <span class="nav-text">策略模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#外观模式"><span class="nav-number">6.</span> <span class="nav-text">外观模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代理模式"><span class="nav-number">7.</span> <span class="nav-text">代理模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中介者模式"><span class="nav-number">8.</span> <span class="nav-text">中介者模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#观察者模式"><span class="nav-number">9.</span> <span class="nav-text">观察者模式</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cao Zheng</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

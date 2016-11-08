@@ -1,0 +1,3448 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="声明本文为学习Linux的笔记，主要内容来自鸟哥的Linux私房菜，也有一些视频和各处零零碎碎的文章，随着学习和使用内容也会慢慢的更新，笔记里面的内容主要是对学到知识点的梳理和备忘，建议大家查看原版，这样会对Linux有个更清晰完整的认识。
+文件操作命令touch    修改文件的访问时间和修改时间  也可用来创建文件
+chown    改变文件拥有者和所在用户组
+chgrp    改变文件所属群">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux-笔记">
+<meta property="og:url" content="http://blog.uiideas.com/2016/05/14/Linux-笔记/index.html">
+<meta property="og:site_name" content="Uiideas Blog">
+<meta property="og:description" content="声明本文为学习Linux的笔记，主要内容来自鸟哥的Linux私房菜，也有一些视频和各处零零碎碎的文章，随着学习和使用内容也会慢慢的更新，笔记里面的内容主要是对学到知识点的梳理和备忘，建议大家查看原版，这样会对Linux有个更清晰完整的认识。
+文件操作命令touch    修改文件的访问时间和修改时间  也可用来创建文件
+chown    改变文件拥有者和所在用户组
+chgrp    改变文件所属群">
+<meta property="og:updated_time" content="2016-11-08T08:28:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux-笔记">
+<meta name="twitter:description" content="声明本文为学习Linux的笔记，主要内容来自鸟哥的Linux私房菜，也有一些视频和各处零零碎碎的文章，随着学习和使用内容也会慢慢的更新，笔记里面的内容主要是对学到知识点的梳理和备忘，建议大家查看原版，这样会对Linux有个更清晰完整的认识。
+文件操作命令touch    修改文件的访问时间和修改时间  也可用来创建文件
+chown    改变文件拥有者和所在用户组
+chgrp    改变文件所属群">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Linux-笔记 | Uiideas Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?559798d21c881907a6a2339e025bbc03";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Uiideas Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章列表
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Linux-笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-14T15:47:52+08:00" content="2016-05-14">
+              2016-05-14
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><p>本文为学习Linux的笔记，主要内容来自<a href="http://cn.linux.vbird.org/" target="_blank" rel="external">鸟哥的Linux私房菜</a>，也有一些视频和各处零零碎碎的文章，随着学习和使用内容也会慢慢的更新，笔记里面的内容主要是对学到知识点的梳理和备忘，建议大家查看原版，这样会对Linux有个更清晰完整的认识。</p>
+<h2 id="文件操作命令"><a href="#文件操作命令" class="headerlink" title="文件操作命令"></a>文件操作命令</h2><pre><code>touch    修改文件的访问时间和修改时间  也可用来创建文件
+chown    改变文件拥有者和所在用户组
+chgrp    改变文件所属群组
+chmod    改变文件的权限, SUID, SGID, SBIT等等的特性
+chattr   配置文件隐藏属性
+lsattr   显示文件隐藏属性
+
+dd       转换和复制文件命令  可用来复制iso到U盘
+    if     input file  也可以是装置喔！
+    of     output file 也可以是装置；
+    bs     规划的一个 block 的大小，若未指定则默认是 512 bytes(一个 sector 的大小)
+    count  多少个 bs 的意思
+    dd if=input_file of=output_file bs=block_size count=number
+    time dd if=/dev/zero of=test.dbf bs=1M count=100 oflag=direct  测试IO写入速度
+</code></pre><h2 id="文件查看命令"><a href="#文件查看命令" class="headerlink" title="文件查看命令"></a>文件查看命令</h2><pre><code>file      查看文件类型
+cat       由第一行开始显示文件内容
+tac       从最后一行开始显示，可以看出 tac 是 cat 的倒著写！
+nl        显示的时候，顺道输出行号！
+
+more  一页一页的显示文件内容
+    space            代表向下翻一页；
+    Enter            代表向下翻『一行』；
+    /str             代表在这个显示的内容当中，向下搜寻str这个关键字；
+    :f               立刻显示出档名以及目前显示的行数；
+    q                代表立刻离开 more ，不再显示该文件内容。
+    b or [ctrl]-b    代表往回翻页，不过这动作只对文件有用，对管线无用。
+
+less  与more类似，但是比more更好的是，他可以往前翻页！
+    space            向下翻动一页
+    [pagedown]       向下翻动一页
+    [pageup]         向上翻动一页
+    /str             向下搜寻str的功能
+    ?str             向上搜寻str的功能
+    n                重复前一个搜寻 (与 / 或 ? 有关！)
+    N                反向的重复前一个搜寻 (与 / 或 ? 有关！)
+    q                离开 less 这个程序
+
+printf  格式化输出内容
+    \a    警告声音输出
+    \b    倒退键(backspace)
+    \f    清除萤幕 (form feed)
+    \n    输出新的一行
+    \r    亦即 Enter 按键
+    \t    水平的 [tab] 按键
+    \v    垂直的 [tab] 按键
+    \xNN  NN 为两位数的数字，可以转换数字成为字节。关於 C 程序语言内，常见的变量格式
+    %ns   那个 n 是数字， s 代表 string ，亦即多少个字节；
+    %ni   那个 n 是数字， i 代表 integer ，亦即多少整数码数；
+    %N.nf 那个 n 与 N 都是数字， f 代表 floating (浮点)，如果有小数码数，
+          假设我共要十个位数，但小数点有两位，即为 %10.2f ！
+
+    printf &apos;%s\t %s\t %s\t %s\t %s\t \n&apos; $(cat printf.txt)
+
+awk      逻辑运算字节
+
+head     只看头几行
+tail     只看尾巴几行
+od       以二进位的方式读取文件内容！
+
+diff  文件比较工具  以行来比对
+    -b   忽略一行当中，仅有多个空白的差异(例如 &quot;about me&quot; 与 &quot;about     me&quot; 视为相同
+    -B   忽略空白行的差异。
+    -i   忽略大小写的不同。
+
+patch    命令可以将旧版数据升级到新版 (主要亦由 diff 创建 patch 的补丁来源文件)
+
+cmp   以位组来比对文件  通常比对二进制文件
+
+通配符
+    *       代表 0 个到无穷多个任意字符
+    ?       代表一定有一个任意字符
+    [ ]     例如 [abcd] 代表a, b, c, d 这四个任何一个
+    [-]     [0-9] 代表 0 到 9 之间的所有数字，因为数字的语系编码是连续的！
+    [^ ]    反向选择，例如 [^abc] 代表非 a, b, c 的其他字符就接受的意思。
+    ll -d /etc/cron*    /etc/底下以 cron 为开头的档名
+    ll -d /etc/?????    /etc/底下文件名『刚好是五个字母』的文件名
+    ll -d /etc/*[0-9]*  /etc/底下文件名含有数字的文件名
+    ll -d /etc/[^a-z]*  /etc/底下，档名开头非为小写字母的文件名：
+
+echo [选项] [输出内容]  把指定内容输出到屏幕上
+    -e  支持控制字符
+        \a     警告音
+        \b     退格键
+        \n     换行键
+        \r     回车键
+        \t     制表键
+        \v     垂直制表键
+        \0nnn     按照8进制ASCII码输出字符    nnn是三位8进制数字
+        \xhh       按照16进制ASCII码输出字符          hh是两位16进制数
+    echo -e &quot;\e[1;34m 天上掉下个林妹妹！\e[0m&quot;   通过颜色输出字符
+</code></pre><h2 id="目录处理命令"><a href="#目录处理命令" class="headerlink" title="目录处理命令"></a>目录处理命令</h2><pre><code>mkdir     创建目录      -p   可创建子目录
+
+ls        查看目录
+    -l    详细内容
+    －h   人性化文件大小
+    /etc/DIR_COLORS or ~/.dir_colors 颜色配置文件
+    其中第一个字符的含义
+        d   目录
+        -   文件
+        l   示为连结档(link file)；
+        b   示为装置文件里面的可供储存的接口设备(可随机存取装置)；
+        c   示为装置文件里面的串行端口设备，例如键盘、鼠标(一次性读取装置)
+        s   数据接口文件(sockets)：
+        p   数据输送文件(FIFO, pipe) first-in-first-out  主要的目的在解决多个程序同时存取一个文件所造成的错误问题
+
+tree      以树形借口显示文件
+rm        删除目录      -rf  强制删除子目录和文件
+mv        移动目录,可以重命名目录或文件
+ln        创建链接文件, -s创建软链接, 硬链接指向同一i节点盒block数据块, 软链接和windows的快捷方式类似
+</code></pre><h2 id="文件搜索命令"><a href="#文件搜索命令" class="headerlink" title="文件搜索命令"></a>文件搜索命令</h2><pre><code>locate    搜索后台数据库中的文件  数据库每天一更新 /var/lib/mlocate
+updatedb  更新locate命令的数据库
+
+whereis   搜索命令的命令所在位置和帮助文件   可搜索命令的文字
+which     搜索命令所在位置 和 别名
+find      搜索文件，可按 时间 所有者 大小 i节点等
+    find /var/log -size -1k -exec ls -lh {} \;   对搜索结果使用第二条命令来处理   -exec {} \;  为固定组合
+</code></pre><h2 id="帮助命令"><a href="#帮助命令" class="headerlink" title="帮助命令"></a>帮助命令</h2><pre><code>man      查看命令的帮助文档  manual的缩写
+    /-d              搜索帮助文档中包含-d的行  n下一个  N 上一个
+    man man          可查看帮助级别的意义
+    man -f passwd    查看passwd命令的帮助级别   相当于 whatis passwd
+    man 1 passwd     获取命令级别为1的帮助
+    man -k passwd    查看所有帮助文档中包含passwd关键字的命令的帮助   相当于 apropos  passwd
+
+--help   获取选项帮助
+help     获取内部命令的帮助，可通过whereis来判断命令是否内部命令，无执行文件则内部命令
+info     在系统帮助文档内检索命令的帮助信息
+</code></pre><h2 id="压缩和解压缩命令"><a href="#压缩和解压缩命令" class="headerlink" title="压缩和解压缩命令"></a>压缩和解压缩命令</h2><pre><code>zip  压缩后的文件名 源文件
+    zip example.zip example
+    -r 压缩目录
+
+unzip  解压目录
+
+gzip  压缩文件为gz格式  压缩完文件会消失
+    gzip example
+    gzip -c example &gt; example.gz  压缩文件不让原文件消失
+    gzip -r example               压缩目录内的全部子文件
+    gzip -d example.gz            解压缩文件
+    gunzip example.gz             解压缩文件
+
+bzip2  压缩文件为bz2文件格式 不能压缩目录
+    bzip2 example          压缩example文件不保留原文件
+    bzip2 -k example       压缩example文件,保留原文件
+    bzip2 -d example.bz2   解压缩文件
+    bunzip2 example.bz2    解压缩文件
+    bunzip2 -k example.bz2 解压缩文件 保留原文件
+
+tar  打包命令
+    -c   打包
+    -v   显示过程
+    -f   指定打包后的文件名
+    -x   解打包
+    -z   压缩为 .tar,gz 格式
+    -j   压缩或者解压为.tar.bz2格式
+    -t   测试压缩包  只查看 不解压
+    -C   指定解压目录
+    tar -cvf example.tar example  打包文件或目录为一个文件包
+    tar -xvf example.tar  解打包一个包文件
+    tar -zcvf example.tar.gz example  打包并压缩文件为.tar.gz格式的压缩文件包
+    tar -zcvf /tmp/example.tar.gz example  example2 打包并压缩example example1两个文件到/tmp/目录
+    tar -zxvf example.tar.gz  解压缩一个.tar.gz的文件压缩包
+    tar -jcvf example.tar.bz2 example  打包并压缩文件为.tar.gz格式的压缩文件包
+    tar -jxvf example.tar.bz2  解压缩一个.tar.bz2的文件压缩包
+    tar -jxvf example.tar.bz2  -C /tmp/ 解压缩一个.tar.bz2的文件压缩包到/tmp/目录下
+</code></pre><h2 id="关机和重启命令"><a href="#关机和重启命令" class="headerlink" title="关机和重启命令"></a>关机和重启命令</h2><pre><code>shutdown [选项] 时间    关机或者重启命令
+    -h  关机
+    -r  重启
+    -c  取消前一个关机命令
+    shutdown -r 05:30  凌晨05:30重启
+    shutdown -r 05:30  &amp;  在后台执行重启命令
+
+其他关机命令   不如shutdown安全   shutdown可在关机重启前保存服务
+    halt
+    poweroff
+    init 0
+
+其他重启命令
+    reboot
+    init 6  调用系统运行级别
+        0 关机
+        1 单用户  启动最小程序  类似安全模式
+        2 不完全多用户  不含NFS服务  NFS为文件共享服务
+        3 完全多用户  正常字符界面
+        4 未分配
+        5 图形界面
+        6 重启
+    runlevel 查看当前系统级别  N 3   N是当前级别之前的级别为null  3为当前级别
+        /etc/inittab 可定义系统默认启动级别
+
+    logout 退出登入
+</code></pre><h2 id="挂载命令"><a href="#挂载命令" class="headerlink" title="挂载命令"></a>挂载命令</h2><pre><code>mount 挂载命令  查看挂载设备
+    -a  依据配置文件 /etc/fstab 的内容，自动挂载
+    mount [-t 文件系统] [-o 特殊选项] 设备文件名 挂载名
+
+umount ［设备文件名 或 挂载点］  卸载设备
+
+挂载光盘
+    mkdir /mnt/cdrom 建立挂载点
+    mount -t iso9660 /dev/sr0 /mnt/cdrom  挂载命令
+
+挂载ISO镜像文件
+    mount -o loop /root/centos5.2_x86_64.iso /mnt/centos_dvd
+
+卸载光盘
+    umount /mnt/cdrom
+
+挂载U盘
+    fdisk -l 查看系统中已经存在的硬盘
+    mount -t vfat /dev/sda1 /mnt/usb/   vaft:fat32系统   sda1:通过fdisk查出来的
+    ntfs-3g 安装后支持ntfs  只读不可写入数据
+
+系统启动自动挂载
+    vi /etc/fstab
+        # Device  Mount point  filesystem  parameters  dump  fsck
+        Device           磁盘装置文件名或该装置的Label
+        Mount point      挂载点 为目录
+        filesystem       磁盘分区槽的文件系统
+        parameters       文件系统参数
+            async/sync     异步/同步
+            auto/noauto    自动/非自动
+            rw/ro          可擦写/只读
+            exec/noexec    可运行/不可运行
+            user/nouser    允许/不允许使用者挂载
+            suid/nosuid    具有/不具有 suid 权限
+            usrquota       启动 filesystem 支持磁盘配额模式
+            grpquota       启动 filesystem 对群组磁盘配额模式的支持。
+            defaults       同时具有 rw, suid, dev, exec, auto, nouser, async 等参数。
+        dump            0代表不做dump备份， 1代表要每天进行dump备份。 2代表其他不定日期的 dump 备份动作。
+        fsck            是否要以fsck检验该filesystem喔。 0是不检验， 1 表示最早检验， 2也是要检验，
+</code></pre><h2 id="用户登入查看命令"><a href="#用户登入查看命令" class="headerlink" title="用户登入查看命令"></a>用户登入查看命令</h2><pre><code>w 查看用户登入信息
+    USER   :  登入的用户名
+    TTY    :  登入终端
+    FROM   :  从哪个IP地址登入
+    LOGIN@ :  登入时间
+    IDLE   :  用户闲置时间
+    JCPU   :  和该终端连接的所有进程占用的时间，不包括过去后台作业时间，但包括当前正在运行的后台作业所占用时间
+    PCPU   :  当前进程所占用的时间
+    WHAT   :  当前正在运行的命令
+
+who 查看当前登入用户 无法查看系统占用
+last 查看当前登入和过去登入的用户信息 (实际是查看 /var/log/wtmp 文件  二进制文件 不可直接操作)
+    命令输出 用户名，登入终端，登入IP，登入时间，退出时间
+
+lastlo 查看系统所有用户的登入时间  读取/var/log/lastlog 文件
+    命令输出 用户名，登入终端，登入IP，最后一次登入时间
+</code></pre><h2 id="SHELL-基础"><a href="#SHELL-基础" class="headerlink" title="SHELL 基础"></a>SHELL 基础</h2><pre><code>echo $SHELL       打印出来当前使用的shell版本
+vi /ect/shells    查看当前系统支持的shell
+sh                切换成sh shell，通过exit 退出
+
+执行脚本
+    bash xxx.sh   未设置权限时候可通过bash命令执行脚本
+    chmod 755 xxx.sh   设置脚本的权限为可执行
+    ./xxx.sh  或  /xxx/xxx.sh   绝对路径或相对路径来执行脚本
+
+bash基本功能
+    alias     查看系统中默认已经生效的别名
+    alias ls=“ls -color=never”  设置命令的别名  临时生效
+    unalias   删除别名  临时删除
+
+历史命令
+    history   查看历史命令
+    history -w   保存历史命令到历史命令保存文件中
+    history -c   清空历史命令
+    vi ~/.bash_history     查看历史纪录命令的保存文件  保存有上次正确注销前的历史命令
+    历史命令默认保存1000条  可在环境变量配置文件/etc/profile中修改
+    !n    执行第n条历史命令
+    !!    重复执行上一条命令
+    !xx   重复执行最后一次以xx开头的命令
+
+输出重定向
+    &gt;      以覆盖的方法将 正确的数据 输出到指定的文件或装置上
+    &gt;&gt;     以追加的方法将 正确的数据 输出到指定的文件或装置上
+    2&gt;     以覆盖的方法将 错误的数据 输出到指定的文件或装置上
+    2&gt;&gt;    以追加的方法将 错误的数据 输出到指定的文件或装置上
+    命令 &gt;&gt; 文件 2&gt;&amp;1         正确和错误输出都追加写入到文件中
+    命令 &amp;&gt;&gt; 文件             正确和错误输出都追加写入到文件中
+    命令 &gt;&gt; 文件1 2&gt;&gt;文件2     正确命令保存到文件1   错误输出保存到文件2
+    ls &gt; example.log         ls输出的内容写到example文件中
+    ls &gt;&gt; example.log 2&gt;&amp;1   正确和错误日志都追加写入到文件中
+
+输入重定向
+    wc     统计输入字符   ctrl+d 结束统计
+    wc &lt; example.log     统计文件内容
+    wc &lt;&lt; mark  当再次输入mark标记时  统计输入的内容
+
+多命令顺序执行
+    ;   命令1 ; 命令2   多个命令顺序执行
+    &amp;&amp;  命令1 &amp;&amp; 命令2  逻辑与 命令1正确执行 命令2才执行
+    ||  命令1 || 命令2  逻辑或 命令1正确执行 命令2不执行
+    命令 &amp;&amp; echo yes || echo no 如果命令正确执行 输出yes 否则输出no
+
+管道符
+    |   命令1 | 命令2   命令1正确执行的结果作为命令2的操作对象
+    netstat -an | grep ESTABLISHED | wc -l  统计当前链接计算机的用户数
+
+通配符
+    ?   匹配任意一个字符
+    *   匹配0个或多个字符
+    []  匹配中括号内的字符
+
+其他特殊符号
+    &apos;&apos;         单引号内的的所有特殊符号 如$ `，都没有特殊含义
+    &quot;&quot;         双引号中特殊符号没有特殊含义，但是 $ ` \ 是例外
+    $name      调用或得到变量的值
+    var=`ls`   先执行命令，再把命令结果赋值给变量
+    var=$(ls)  先执行命令，再把命令结果赋值给变量
+    #          #开头的行代表注释
+    \          转义符  让特殊符号失去作用
+
+管线命令(pipe)
+    cut     将一段信息中每行 切出来符合规则的副本
+        -d    后面接分隔字符。与 -f 一起使用；
+        -f    依据 -d 的分隔字符将一段信息分割成为数段，用 -f 取出第几段的意思；
+        -c    以字符 (characters) 的单位取出固定字符区间；
+
+    grep    匹配获取文件或信息中的包含特定字符串的行
+        grep &quot;display&quot; README.md   搜索README.md中&quot;display”字符串
+        -a            将 binary 文件以 text 文件的方式搜寻数据
+        -c            计算找到 &apos;搜寻字符串&apos; 的次数
+        -i            忽略大小写的不同，所以大小写视为相同
+        -n            顺便输出行号
+        -v            反向选择，亦即显示出没有 &apos;搜寻字符串&apos; 内容的那一行！
+        -An           后面可加数字，为after的意思，除了列出该行外，后续的 n 行也列出来；
+        -Bn           后面可加数字，为befer的意思，除了列出该行外，前面的 n 行也列出来；
+        --color=auto  可以将找到的关键词部分加上颜色的显示喔！
+
+    sort    对一段数据进行排序
+        -f    忽略大小写的差异，例如 A 与 a 视为编码相同；
+        -b    忽略最前面的空格符部分；
+        -M    以月份的名字来排序，例如 JAN, DEC 等等的排序方法；
+        -n    使用『纯数字』进行排序(默认是以文字型态来排序的)；
+        -r    反向排序；
+        -u    就是 uniq ，相同的数据中，仅出现一行代表；
+        -t    分隔符，默认是用 [tab] 键来分隔；
+        -k    以那个区间 (field) 来进行排序的意思
+
+    uniq    将重复的数据去重
+        -i    忽略大小写字符的不同；
+        -c    进行计数
+
+    wc      统计数据中的行数和字符数
+        -l    仅列出行；
+        -w    仅列出多少字(英文单字)；
+        -m    多少字符；
+
+    tee     把数据同时输出的标准输出和文件
+
+    tr      删除或替换一段信息当中的文字
+        -d    删除信息当中的 SET1 这个字符串；
+        -s    取代掉重复的字符！
+
+    col     可将tab转换为空格键
+        -x    将 tab 键转换成对等的空格键
+        -b    在文字内有反斜杠 (/) 时，仅保留反斜杠最后接的那个字符
+
+    join    将两个文件当中，有&quot;相同数据&quot;的那一行加在一起
+
+    paste   将两行贴在一起，且中间以tab键隔开
+
+    expand  将tab转换为空格键
+        -t    一个 tab 按键可以用多少个空格替代。默认为8
+
+    split   切割文件  将一个大文件切割为多个小文件
+        -b    后面可接欲分割成的文件大小，可加单位，例如 b, k, m 等；
+        -l    以行数来进行分割。
+
+    xargs   处理参数
+
+    sed     可分析standard input！ 还可以将数据进行取代、删除、新增、撷取特定行等等的功能呢
+        -n    使用安静(silent)模式。在一般 sed 的用法中，所有来自 STDIN
+              的数据一般都会被列出到萤幕上。但如果加上 -n 参数后，则只有经过
+              sed 特殊处理的那一行(或者动作)才会被列出来。
+        -e    直接在命令列模式上进行 sed 的动作编辑；
+        -f    直接将 sed 的动作写在一个文件内， -f filename 则可以运行 filename 内的
+              sed 动作；
+        -r    sed 的动作支持的是延伸型正规表示法的语法。(默认是基础正规表示法语法)
+        -i    直接修改读取的文件内容，而不是由萤幕输出。
+
+        动作说明：  [n1[,n2]]function
+        n1, n2 ：不见得会存在，一般代表『选择进行动作的行数』，举例来说，如果我的动作
+                 是需要在 10 到 20 行之间进行的，则『 10,20[动作行为] 』
+        function：
+        a     新增， a 的后面可以接字串，而这些字串会在新的一行出现(目前的下一行)～
+        c     取代， c 的后面可以接字串，这些字串可以取代 n1,n2 之间的行！
+        d     删除，因为是删除啊，所以 d 后面通常不接任何咚咚；
+        i     插入， i 的后面可以接字串，而这些字串会在新的一行出现(目前的上一行)；
+        p     列印，亦即将某个选择的数据印出。通常 p 会与参数 sed -n 一起运行～
+        s     取代，可以直接进行取代的工作哩！通常这个 s 的动作可以搭配
+              正规表示法！例如 1,20s/old/new/g 就是啦！
+
+正则表达式
+    特殊符号（可避免编码对匹配的影响）
+        [:alnum:]    代表英文大小写字节及数字，亦即 0-9, A-Z, a-z
+        [:alpha:]    代表任何英文大小写字节，亦即 A-Z, a-z
+        [:blank:]    代表空白键与 [Tab] 按键两者
+        [:cntrl:]    代表键盘上面的控制按键，亦即包括 CR, LF, Tab, Del.. 等等
+        [:digit:]    代表数字而已，亦即 0-9
+        [:graph:]    除了空白字节 (空白键与 [Tab] 按键) 外的其他所有按键
+        [:lower:]    代表小写字节，亦即 a-z
+        [:print:]    代表任何可以被列印出来的字节
+        [:punct:]    代表标点符号 (punctuation symbol)，亦即：&quot; &apos; ? ! ; : # $...
+        [:upper:]    代表大写字节，亦即 A-Z
+        [:space:]    任何会产生空白的字节，包括空白键, [Tab], CR 等等
+        [:xdigit:]   代表 16 进位的数字类型，因此包括： 0-9, A-F, a-f 的数字与字节
+
+变量
+    a=123                   echo $a  输出一个变量的值
+    a=$(ls)                 先执行ls命令，再把命令结果赋值给变量
+    var=&quot;$LANG&quot;             echo $var 得到 en_US  双引号内的保留原有特性
+    var=&apos;$LANG&apos;             echo $var 得到 $LANG  单引号内的特殊字符则仅为一般字符
+    \                       将特殊符号(如 [Enter], $, \, 空格符, &apos;等)变成一般字符；
+    export PATH             若该变量需要在其他子程序运行，则需要以 export 来使变量变成环境变量：
+    unset myname            取消 myname 的配置：
+    var[index]=content      定义数组
+    ${var#pattern}          删除var变量左边开始匹配pattern最短的字符
+    ${var##pattern}         删除var变量左边开始匹配pattern最长的字符
+    ${var%pattern}          删除var变量后面开始匹配pattern最短的字符
+    ${var%%pattern}         删除var变量后面开始匹配pattern最长的字符
+    ${var/oldStr/newStr}    替换变量内第一个oldStr为newStr
+    ${var//oldStr/newStr}   替换变量内所有的oldStr为newStr
+    var=${oldVar-content}   当oldVar不存在时  var为content的值
+    var=${oldVar:-content}  当oldVar不存在或oldVar=&quot;&quot;时 var为content的值
+
+环境变量
+    env      列出目前的 shell 环境下的所有环境变量与其内容。
+        HOME       代表用户的家目录。
+        SHELL      目前这个环境使用的 SHELL，默认使用 /bin/bash
+        HISTSIZE   历史记录的数量
+        MAIL       当我们使用 mail 这个命令在收信时，系统会去读取的邮件信箱文件 (mailbox)。
+        PATH       就是运行文件搜寻的路径啦～目录与目录中间以冒号(:)分隔。
+        LANG       语系数据  通常为 zh_CN.UTF-8 或 en_GB.UTF-8
+        RANDOM     随机数 介于 0~32767 之间
+
+    set      配置配置整个命令输出/输入的环境
+        -u      默认不激活。若激活后，当使用未配置变量时，会显示错误信息；
+        -v      默认不激活。若激活后，在信息被输出前，会先显示信息的原始内容；
+        -x      默认不激活。若激活后，在命令被运行前，会显示命令内容(前面有 ++ 符号)
+        -h      默认激活。与历史命令有关；
+        -H      默认激活。与历史命令有关；
+        -m      默认激活。与工作管理有关；
+        -B      默认激活。与刮号 [] 的作用有关；
+        -C      默认不激活。若使用 &gt; 等，则若文件存在时，该文件不会被覆盖。
+        set      显示所有变量 (含环境变量与自定义变量)
+            PS1        提示字符的配置
+            $          本 shell 的 PID echo $$
+            ?          上个运行命令的返回值  成功运行命令为返回0  错误返回错误代码
+            HOSTNAME   记录了主机名
+            HOSTTYPE   记录系统的硬件架构
+            MACHTYPE   也是记录系统的硬件架构
+            OSTYPE     记录的是操作系统的类型
+        echo $-   所有的 set 配置值  $- 变量内容就是 set 的所有配置！ bash 默认 himBH
+
+    locale   获取语言环境信息
+        LANG=en_US              主语言的环境
+        LC_CTYPE=&quot;en_US&quot;        字符(文字)辨识的编码
+        LC_NUMERIC=&quot;en_US&quot;      数字系统的显示信息
+        LC_TIME=&quot;en_US&quot;         时间系统的显示数据
+        LC_COLLATE=&quot;en_US&quot;      字符串的比较与排序等
+        LC_MONETARY=&quot;en_US&quot;     币值格式的显示等
+        LC_MESSAGES=&quot;en_US&quot;     信息显示的内容，如菜单、错误信息等
+        LC_ALL=                 整体语系的环境
+        locale -a  列出支持的语言环境
+
+    read     获取键盘输入的值 赋值给变量
+        -p      后面可以接提示字符
+        -t      后面可以接等待的秒数
+
+    declare  定义变量类型
+    typeset  定义变量类型
+        -a      将后面名为 variable 的变量定义成为数组 (array) 类型
+        -i      将后面名为 variable 的变量定义成为整数数字 (integer) 类型
+        -x      用法与 export 一样，就是将后面的 variable 变成环境变量；
+        -r      将变量配置成为 readonly 类型，该变量不可被更改内容，也不能 unset
+
+    ulimit   与文件系统及程序的限制关系
+        -H      hard limit ，严格的配置，必定不能超过这个配置的数值；
+        -S      soft limit ，警告的配置，可以超过这个配置值，但是若超过则有警告信息。
+                在配置上，通常 soft 会比 hard 小，举例来说，soft 可配置为 80 而 hard
+                配置为 100，那么你可以使用到 90 (因为没有超过 100)，但介于 80~100 之间时，
+                系统会有警告信息通知你！
+        -a      后面不接任何选项与参数，可列出所有的限制额度；
+        -c      当某些程序发生错误时，系统可能会将该程序在内存中的信息写成文件(除错用)，
+                这种文件就被称为核心文件(core file)。此为限制每个核心文件的最大容量。
+        -f      此 shell 可以创建的最大文件容量(一般可能配置为 2GB)单位为 Kbytes
+        -d      程序可使用的最大断裂内存(segment)容量；
+        -l      可用于锁定 (lock) 的内存量
+        -t      可使用的最大 CPU 时间 (单位为秒)
+        -u      单一用户可以使用的最大程序(process)数量。
+        ulimit -a         列出你目前身份(假设为root)的所有限制数据数值
+        ulimit -f 10240   限制用户仅能创建 10MBytes 以下的容量的文件
+</code></pre><h2 id="bash-配置文件"><a href="#bash-配置文件" class="headerlink" title="bash  配置文件"></a>bash  配置文件</h2><pre><code>source ~/.bashrc  调用文件内容   不须重启使起生效
+. ~/.bashrc       调用文件内容   不须重启使起生效
+
+/etc/issue  登入时显示的信息(无论登录成功与否都会显示)
+    \d    本地端时间的日期；
+    \l    显示第几个终端机接口；
+    \m    显示硬件的等级 (i386/i486/i586/i686...)；
+    \n    显示主机的网络名称；
+    \o    显示 domain name；
+    \r    操作系统的版本 (相当于 uname -r)
+    \t    显示本地端时间的时间；
+    \s    操作系统的名称；
+    \v    操作系统的版本。
+/etc/motd  登入时显示的信息(只有登录成功了才能显示)
+
+/etc/profile   整体环境配备文件(login shell)读取,一般会设置如下变量：
+    PATH       会依据 UID 决定 PATH 变量要不要含有 sbin 的系统命令目录
+    MAIL       依据账号配置好使用者的 mailbox 到 /var/spool/mail/账号名
+    USER       根据用户的账号配置此一变量内容
+    HOSTNAME   依据主机的 hostname 命令决定此一变量内容
+    HISTSIZE   历史命令记录笔数。CentOS 5.x 配置为 1000；
+
+    此文件中一般会呼叫如下配置文件
+    /etc/sysconfig/i18n  这个文件用来设置终端的语言信息
+    /etc/inputrc         这个文件主要设置终端的输入方式，比如Ctrl+C之类的情况
+    /etc/profile.d/      全局的bash环境p配置文件目录，包括颜色、语系、别名等。
+
+~/.bash_profile 个人配置文件(login shell) 按照顺序第一个读取
+~/.bash_login   个人配置文件(login shell) 如果.bash_profile不存在读取此文件
+~/.profile      个人配置文件(login shell) 如果.bash_login不存在读取此文件
+    可针对用户配置环境变量 export PATH=$PATH:/root/bin
+
+~/.bashrc (non-login shell) 配置用户的命令别名
+
+/etc/bashrc(CentOS独有)
+    依据不同的 UID 规范出 umask 的值；
+    依据不同的 UID 规范出提示字符 (就是 PS1 变量)；
+    呼叫 /etc/profile.d/*.sh 的配置
+
+/etc/manpath.config   (CentOS) 使用man命令时，帮助文档的路径
+/etc/man.config       (Debian) 使用man命令时，帮助文档的路径
+
+~/.bash_history       命令的历史纪录  数量取决于HISTFILESIZE变量
+
+~/.bash_logout        配置系统关机前执行的动作
+
+stty (setting tty 终端机的意思)
+    -a     列出当前系统中所有按键列表
+        eof      End of file 的意思，代表『结束输入』。
+        erase    向后删除字符，
+        intr     送出一个 interrupt (中断) 的讯号给目前正在 run 的程序；
+        kill     删除在目前命令列上的所有文字；
+        quit     送出一个 quit 的讯号给目前正在 run 的程序；
+        start    在某个程序停止后，重新启动他的 output
+        stop     停止目前屏幕的输出；
+        susp     送出一个 terminal stop 的讯号给正在 run 的程序。
+    stty erase ^h   设置[ctrl]+h 来进行字符的删除
+</code></pre><h2 id="shell-script"><a href="#shell-script" class="headerlink" title="shell script"></a>shell script</h2><pre><code>注意事项
+    1，命令的运行是从上而下、从左而右的分析与运行；
+    2，命令、选项与参数间的多个空白都会被忽略掉；
+    3，空白行也将被忽略掉，并且 [tab] 按键所推开的空白同样视为空白键；
+    4，如果读取到一个 Enter 符号 (CR) ，就尝试开始运行该行 (或该串) 命令；
+    5，至於如果一行的内容太多，则可以使用『 \[Enter] 』来延伸至下一行；
+    6，『 # 』可做为注解！任何加在 # 后面的数据将全部被视为注解文字而被忽略！
+
+运行脚本方式
+    直接命令下达： shell.sh 文件必须要具备可读与可运行 (rx) 的权限，然后：
+        绝对路径：使用 /home/dmtsai/shell.sh 来下达命令；
+        相对路径：假设工作目录在 /home/dmtsai/ ，则使用 ./shell.sh 来运行
+        变量『PATH』功能：将 shell.sh 放在 PATH 指定的目录内，例如： ~/bin/
+    以 bash 程序来运行：透过『 bash shell.sh 』或『 sh shell.sh 』来运行
+
+基本语法
+    第一行 #!/bin/bash 在宣告这个 script 使用的 shell 名称
+    exit 0  这代表离开 script 并且回传一个 0 给系统
+
+判断
+    test   可检测文件和相关属性
+        例: test -e /etc &amp;&amp; echo &quot;exist&quot; || echo &quot;Not exist&quot;  检测/etc是否存在
+        1. 关於某个档名的&quot;文件类型&quot;判断，如 test -e filename 表示存在否
+            -e  该&quot;档名&quot;是否存在？(常用)
+            -f  该&quot;档名&quot;是否存在且为文件(file)？(常用)
+            -d  该&quot;档名&quot;是否存在且为目录(directory)？(常用)
+            -b  该&quot;档名&quot;是否存在且为一个 block device 装置？
+            -c  该&quot;档名&quot;是否存在且为一个 character device 装置？
+            -S  该&quot;档名&quot;是否存在且为一个 Socket 文件？
+            -p  该&quot;档名&quot;是否存在且为一个 FIFO (pipe) 文件？
+            -L  该&quot;档名&quot;是否存在且为一个连结档？
+        2. 关於文件的权限侦测，如 test -r filename 表示可读否 (但 root 权限常有例外)
+            -r  侦测该档名是否存在且具有&quot;可读&quot;的权限？
+            -w  侦测该档名是否存在且具有&quot;可写&quot;的权限？
+            -x  侦测该档名是否存在且具有&quot;可运行&quot;的权限？
+            -u  侦测该档名是否存在且具有&quot;SUID&quot;的属性？
+            -g  侦测该档名是否存在且具有&quot;SGID&quot;的属性？
+            -k  侦测该档名是否存在且具有&quot;Sticky bit&quot;的属性？
+            -s  侦测该档名是否存在且为&quot;非空白文件&quot;？
+        3. 两个文件之间的比较，如： test file1 -nt file2
+            -nt (newer than)判断 file1 是否比 file2 新
+            -ot (older than)判断 file1 是否比 file2 旧
+            -ef 判断 file1 与 file2 是否为同一文件，可用在判断 hard link 的判定上。 主要意义在判定，两个文件是否均指向同一个 inode 哩！
+        4. 关於两个整数之间的判定，例如 test n1 -eq n2
+            -eq 两数值相等 (equal)
+            -ne 两数值不等 (not equal)
+            -gt n1 大於 n2 (greater than)
+            -lt n1 小於 n2 (less than)
+            -ge n1 大於等於 n2 (greater than or equal)
+            -le n1 小於等於 n2 (less than or equal)
+        5. 判定字串的数据
+            test -z string  判定字串是否为 0 ？若 string 为空字串，则为 true
+            test -n string  判定字串是否非为 0 ？若 string 为空字串，则为 false。
+            注： -n 亦可省略
+            test str1 = str2    判定 str1 是否等於 str2 ，若相等，则回传 true
+            test str1 != str2   判定 str1 是否不等於 str2 ，若相等，则回传 false
+        6. 多重条件判定，例如： test -r filename -a -x filename
+            -a  (and)两状况同时成立！例如 test -r file -a -x file，则 file 同时具有 r 与 x 权限时，才回传 true。
+            -o  (or)两状况任何一个成立！例如 test -r file -o -x file，则 file 具有 r 或 x 权限时，就可回传 true。
+            !   反相状态，如 test ! -x file ，当 file 不具有 x 时，回传 true
+
+    [ == ]  判断符号
+        例: [ &quot;$HOME&quot; == &quot;$MAIL&quot; ]  是test $HOME = $MAIL的意思  注意[]里面需要有空格
+
+命令行参数
+    $0 : 代表当前执行脚本的文件名
+    $1 : 第一个命令行参数 $2为第二个 等
+    $# : 代表命令后接的参数的个数；
+    $@ ：代表『 &quot;$1&quot; &quot;$2&quot; &quot;$3&quot; &quot;$4&quot; 』之意，每个变量是独立的(用双引号括起来)；
+    $* ：代表『 &quot;$1c$2c$3c$4&quot; 』，其中 c 为分隔字节，默认为空白键， 所以本例中代表『 &quot;$1 $2 $3 $4&quot; 』之意。
+    shift  从前面开始删除参数
+
+条件判断语句
+    单个条件判断式
+        if [ 条件判断式 ]; then
+            当条件判断式成立时，可以进行的命令工作内容；
+        fi   &lt;==将 if 反过来写，就成为 fi 啦！结束 if 之意！
+
+    多个条件判断 (if ... elif ... elif ... else) 分多种不同情况运行
+        if [ 条件判断式一 ]; then
+            当条件判断式一成立时，可以进行的命令工作内容；
+        elif [ 条件判断式二 ]; then
+            当条件判断式二成立时，可以进行的命令工作内容；
+        else
+            当条件判断式一与二均不成立时，可以进行的命令工作内容；
+        fi
+
+    &amp;&amp; 代表 AND ；
+    || 代表 or ；
+    [ &quot;$yn&quot; == &quot;Y&quot; ] || [ &quot;$yn&quot; == &quot;y&quot; ]  代表$yn为Y或y
+
+    case ..... esac 判断
+        case $var in
+            &quot;value1&quot;)
+                progrom1
+                ;;
+            &quot;value2&quot;)
+                progrom2
+                ;;
+            *)
+                default progrom
+                exit 1
+                ;;
+        esac
+
+    function 函数功能
+        定义函数
+       function fname() {
+           program...
+       }
+        执行函数
+            fname pram1 pram2 ...
+        参数
+            函数名称代表示 $0 ，而后续接的变量也是以 $1, $2...
+
+循环 loop
+    当 condition 成立时，就进行循环
+        while [ condition ]
+        do
+            program...
+        done
+
+    当 condition 成立时，终止循环
+        until [ condition ]
+        do
+            program...
+        done
+
+    for...in...do...done 遍历循环  每次循环var的值分别为con1,con2,con3...
+        for var in con1 con2 con3 ...
+        do
+            program...
+        done
+
+    for...do...done  按次数循环
+        for (( i=0; i&lt;$num; i=i+1 ))
+        do
+            program...
+        done
+
+debug 调试
+    sh [-nvx] scripts.sh
+        -n    不要运行 script，仅查询语法的问题；
+        -v    再运行 sccript 前，先将 scripts 的内容输出到萤幕上；
+        -x    将使用到的 script 内容显示到萤幕上，这是很有用的参数！
+</code></pre><h2 id="Linux-的账号与群组"><a href="#Linux-的账号与群组" class="headerlink" title="Linux 的账号与群组"></a>Linux 的账号与群组</h2><pre><code>/etc/passwd 文件结构
+    账号名称：如root
+    密码：早期 Unix 系统的密码！现将密码数据改放到/etc/shadow，用x占位。
+    UID：用户的User ID，通常 Linux 对于 UID 的几个限制：
+        0         系统管理员，需其他的账号有 root 的权限，可将该账号的 UID 改为 0，不建这样做。
+        1~499     系统账号，保留给系统使用的 ID，除了 0 之外，其他的 UID 权限与特性并没有不一样。
+                  由于系统上面启动的服务希望使用较小的权限去运行，因此不希望使用 root 的身份去运行这些服务，
+                  所以我们就得要提供这些运行中程序的拥有者账号才行。这些系统账号通常是不可登陆的，
+                  所以才会有我们在第十一章提到的 /sbin/nologin 这个特殊的 shell 存在。
+        1~99      由 distributions 自行创建的系统账号；
+        100~499   若用户有系统账号需求时，可以使用的账号 UID。
+        500~65535 可登陆账号，给一般使用者用的。linux核心2.6.x以上已可以支持到 4294967295 (2^32-1)。
+    GID： 用户组ID，与 /etc/group 有关
+    用户信息说明栏：用来解释这个账号的意义！提供使用 finger 的功能时，可以提供很多的信息呢！
+    家目录：这是用户的家目录，移动用户家目录可修改此字段，默认/home/yourIDname
+    Shell：用户默认shell，/sbin/nologin 可让用户无法用shell 环境的登陆
+
+/etc/shadow 文件结构
+    账号名称：如root
+    密码：经过加密后的密码，避免密码被泄露破解，勿修改此文件权限！
+         因编码方式不同，这个字段的长度不相同。
+    最近修改密码的日期：修改密码的日期。1970年1月1日作为1
+    密码不可被修改的天数：密码在最近一次修改后需要经过几天才可以再被修改！0表示随时可以更动的意思。
+    密码需要重新变更的天数：99999表示无需变动密码。
+    密码需要变更期限前的警告天数：7表示密码到期7天内系统会警告该用户修改密码。
+    密码过期后的账号宽限时间：是在口令过期几天后，可用旧密码登入，系统会强制修改密码。
+    账号失效日期：账号在此字段规定的日期之后，将无法再使用。
+    保留：最后一个字段是保留的，看以后有没有新功能加入。
+
+/etc/group 文件结构
+    组名：
+    群组密码：通常不需要配置，是给『群组管理员』使用的，很少用到！密码已经移动到/etc/gshadow，x占位；
+    GID：群组的ID。我们 /etc/passwd 第四个字段使用的 GID 对应的群组名，就是由这里对应出来的！
+    此群组支持的账号名称：那某个账号想要加入此群组时，将该账号加入这个字段。如root:x:0:root,caozheng
+
+/etc/gshadow 文件结构
+    组名
+    密码：同样的，开头为 ! 表示无合法密码，所以无群组管理员
+    群组管理员的账号 (相关信息在 gpasswd 中介绍)
+    该群组的所属账号 (与 /etc/group 内容相同！)
+
+有效群组(effective group)与初始群组(initial group)
+    初始群组：当用户一登陆系统，立刻就拥有这个群组的相关权限的意思
+    有效群组：创建新文件时的群组
+    groups  查看支持的群组
+        groups user  查看其它用户支持的群组  其中第一个为有效群组
+    newgrp  切换有效群组
+        newgrp groupname 切换当前用户的有效群组，群组必须是该用户支持的
+
+/etc/default/useradd 文件结构
+    GROUP=100              新建账号的GID为100，RHEL,Fedora,CentOS等为私有群组机制，默认创建同名群组，不参考此值。
+    HOME=/home             用户家目录的基准目录(basedir)
+    INACTIVE=-1            密码过期后是否会失效，0立刻失效，-1永不失效，如果是数字，30 天后才失效。
+    EXPIRE=                账号失效的日期
+    SHELL=/bin/bash        默认使用的 shell 程序文件名
+    SKEL=/etc/skel         用户家目录参考基准目录，新创见用户的家目录会复制此目录
+    CREATE_MAIL_SPOOL=yes  创建使用者的 mailbox
+
+ /etc/login.defs 文件结构 用来配置创建用户时的UID/GID 还有口令参数等
+    MAIL_DIR /var/spool/mail  用户默认邮件信箱放置目录
+    PASS_MAX_DAYS   99999     /etc/shadow 内的第 5 栏，多久需变更口令日数
+    PASS_MIN_DAYS   0         /etc/shadow 内的第 4 栏，多久不可重新配置口令日数
+    PASS_MIN_LEN    5         口令最短的字符长度，已被 pam 模块取代，失去效用！
+    PASS_WARN_AGE   7         /etc/shadow 内的第 6 栏，过期前会警告的日数
+    UID_MIN         500       使用者最小的 UID，意即小于 500 的 UID 为系统保留
+    UID_MAX       60000       使用者能够用的最大 UID
+    GID_MIN         500       使用者自定义组的最小 GID，小于 500 为系统保留
+    GID_MAX       60000       使用者自定义组的最大 GID
+    CREATE_HOME     yes       在不加 -M 及 -m 时，是否主动创建用户家目录？
+    UMASK           077       用户家目录创建的 umask ，因此权限会是 700
+    USERGROUPS_ENAB yes       使用 userdel 删除时，是否会删除初始群组
+    MD5_CRYPT_ENAB yes        口令是否经过 MD5 的加密机制处理
+
+/etc/sudoers 与 visudo  配置哪些用户可以使用sudo和权限
+    root  ALL=(ALL)  ALL
+        1，系统的哪个账号可以使用 sudo 这个命令的意思，默认为 root 这个账号；
+        2，当这个账号由哪部主机联机到本，可以指定客户端计算机。默认值 root 可来自任何一部网络主机
+        3，这个账号可以切换成什么身份来下达后续的命令，默认 root 可以切换成任何人；
+        4，可用该身份下达什么命令？这个命令请务必使用绝对路径撰写。
+    %admin  ALL=(ALL)  ALL
+        %groupname 为群组的意思
+    %admin  ALL=(ALL)  NOPASSWD: ALL
+        NOPASSWD 表示免除口令输入的意思喔！
+    user  ALL=(root) /usr/bin/passwd
+        user用户仅能以root身份运行passwd命令
+    user  ALL=(root)  !/usr/bin/passwd, /usr/bin/passwd [A-Za-z]*, !/usr/bin/passwd root
+        限制user用户不能使用passwd密令修改root用户的密码
+    user  ALL=(root)  /bin/su -
+        只执行一次sudo 后面皆可通过root身份执行命令
+    User_Alias ADMPW = pro1, pro2, pro3, myuser1, myuser2
+    Cmnd_Alias ADMPWCOM = !/usr/bin/passwd, /usr/bin/passwd [A-Za-z]*
+    ADMPW  ALL=(root)  ADMPWCOM
+        通过用户别名和命令别名来配置
+
+ACL Access Control List 的缩写,针对特定用户特定群组来配置权限
+    查看是否启动ACL
+        dumpe2fs -h /dev/sda2 中的 Default mount options 字段是否包含acl
+    启动ACL
+        vi /etc/fstab
+        LABEL=/1   /   ext3    defaults,acl    1 1
+
+    setfacl  配置某个目录/文件的 ACL 规范
+        -m   配置后续的 acl 参数给文件使用，不可与 -x 合用；
+        -x   删除后续的 acl 参数，不可与 -m 合用；
+        -b   移除所有的 ACL 配置参数；
+        -k   移除默认的 ACL 参数，关于所谓的『默认』参数于后续范例中介绍；
+        -R   递归配置 acl ，亦即包括次目录都会被配置起来；
+        -d   配置『默认 acl 参数』的意思！只对目录有效，在该目录新建的数据会引用此默认值
+        setfacl -m u:user:rx file  对file文件user用户设置acl属性
+        setfacl -m g:groupname:rx file  对file文件groupname用户组设置acl属性
+        setfacl -m m:r file 设置mask(最大允许的权限)的acl属性
+
+    getfacl 取得某个文件/目录的 ACL 配置项目
+</code></pre><h2 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h2><pre><code>配置文件
+    /etc/group   存储当前系统中所有用户组信息
+        Group: x:0:user1,user2,user3  分别为  组名:组密码占位符:组编号:组中用户名列表
+        组编号: 0固定为root  1~499为系统预留  500开始为用户手动创建的用户组
+    /etc/gshadow 存储当前系统中用户组密码的信息
+        Group: *::user1,user2,user3  分别代表  组名:组密码:组管理者:组中用户名列表
+        组密码: * ! 或者 空 为没有密码
+        组管理者：一般情况下为空  表示组内所有用户都可以管理用户组
+    /etc/passwd  存储当前系统中用户的信息
+        root:x:0:0:xxx:/root:/bin/bash
+        用户名:密码占位符:用户编号:用户组编号:用户注释信息:用户目录:shell类型
+        用户注释信息：添加用户信息时 可添加用户备注信息
+    /etc/shadow  存储用户密码的配置文件
+
+用户组管理
+    groupadd groupname  创建用户组
+        -g   后面接某个特定的 GID ，用来直接给予某个 GID
+        -r   创建系统群组啦！与 /etc/login.defs 内的 GID_MIN 有关。
+
+    groupmod -n oldname modifyname 修改用户组名为modifyname
+    groupmod -g 888 groupname      修改name用户组的编号为666
+    groupdel groupname             删除名字为name的用户组（必须先删除组内用户）
+
+    gpasswd  群组管理员功能  可以管理哪些账号可以加入/移出该群组
+        -A   (root)将 groupname 的主控权交由后面的使用者管理(该群组的管理员)
+        -M   (root)将某些账号加入这个群组当中！
+        -r   (root)将 groupname 的口令移除
+        -R   (root)让 groupname 的口令栏失效
+        -a   将某位使用者加入到 groupname 这个群组当中！
+        -d   将某位使用者移除出 groupname 这个群组当中。
+
+用户管理
+    useradd  创建新的用户
+        -u   后面接的是 UID ，是一组数字。直接指定一个特定的 UID 给这个账号；
+        -g   后面接groupname，该群组的GID会被放置到 /etc/passwd 的第四个字段内。
+        -G   后面接的组名则是这个账号还可以加入的群组。此参数会修改 /etc/group 内的相关数据！
+        -M   强制！不要创建用户家目录！(系统账号默认值)
+        -m   强制！要创建用户家目录！(一般账号默认值)
+        -c   账户说明信息，/etc/passwd 的第五字段
+        -d   指定某个目录成为家目录，而不要使用默认值。务必使用绝对路径！
+        -r   创建一个系统的账号，这个账号的 UID 会有限制 (参考 /etc/login.defs)
+        -s   后面接一个 shell ，若没有指定则默认是 /bin/bash
+        -e   账号失效日期，格式YYYY-MM-DD，此项目可写入 shadow 第八字段，
+        -f   后面接 shadow 的第七字段，指定口令是否会失效。0为立刻失效，-1 为永远不失效
+        -D   查看useradd的参数默认值，读取自/etc/default/useradd
+
+    passwd        修改用户密码
+        --stdin   可以透过来自前一个管线的数据，作为口令输入，对 shell script 有帮助！
+        -l        是 Lock 的意思，会将 /etc/shadow 第二栏最前面加上 ! 使口令失效；
+        -u        与 -l 相对，是 Unlock 的意思！
+        -S        列出口令相关参数，亦即 shadow 文件内的大部分信息。
+        -n        后面接天数，shadow 的第 4 字段，多久不可修改口令天数
+        -x        后面接天数，shadow 的第 5 字段，多久内必须要更动口令
+        -w        后面接天数，shadow 的第 6 字段，口令过期前的警告天数
+        -i        后面接『日期』，shadow 的第 7 字段，口令失效日期
+
+    chage [-ldEImMW] username   更详细的口令参数显示功能
+        -l   列出该账号的详细口令参数；
+        -d   后面接日期，修改 shadow 第三字段(最近一次更改口令的日期)，格式 YYYY-MM-DD
+        -E   后面接日期，修改 shadow 第八字段(账号失效日)，格式 YYYY-MM-DD
+        -I   后面接天数，修改 shadow 第七字段(口令失效日期)
+        -m   后面接天数，修改 shadow 第四字段(口令最短保留天数)
+        -M   后面接天数，修改 shadow 第五字段(口令多久需要进行变更)
+        -W   后面接天数，修改 shadow 第六字段(口令过期前警告日期)
+
+    usermod  修改用户信息
+        -c   后面接账号的说明，即 /etc/passwd 第五栏的说明栏，可以加入一些账号的说明。
+        -d   后面接账号的家目录，即修改 /etc/passwd 的第六栏；
+        -e   后面接日期，格式是 YYYY-MM-DD 也就是在 /etc/shadow 内的第八个字段数据啦！
+        -f   后面接天数，为 shadow 的第七字段。
+        -g   后面接初始群组，修改 /etc/passwd 的第四个字段，亦即是 GID 的字段！
+        -G   后面接次要群组，修改这个使用者能够支持的群组，修改的是 /etc/group 啰～
+        -a   与 -G 合用，可『添加次要群组的支持』而非『配置』喔！
+        -l   后面接账号名称。亦即是修改账号名称， /etc/passwd 的第一栏！
+        -s   后面接 Shell 的实际文件，例如 /bin/bash 或 /bin/csh 等等。
+        -u   后面接 UID 数字啦！即 /etc/passwd 第三栏的数据；
+        -L   暂时将用户的口令冻结，让他无法登陆。其实仅改 /etc/shadow 的口令栏。
+        -U   将 /etc/shadow 口令栏的 ! 拿掉，解冻啦！
+
+    userdel username   删除用户
+        -r   删除用户的同时删除用户文件
+
+    touch /etc/nologin             禁止除了root之外的用户登入服务器
+
+用户相关其他命令
+    passwd -l username             锁定用户 禁止用户使用
+    passwd -u username             解锁用户
+    passwd -d username             取消用户密码
+    gpasswd -a username groupname  修改用户的附属用户组 可用,链接多个附属组
+    gpasswd -d username groupname  移除用户附属组
+    newgrp groupname               临时切换用户组为groupname
+
+其他用户命令
+    su                             切换到root用户
+        -     使用 su - 代表login-shell的变量文件读取方式登陆系统；否则为non-login shell。
+        -l    与 - 类似，但后面需要加欲切换的使用者账号！也是 login-shell 的方式。
+        -m    -m 与 -p 是一样的，表示『使用目前的环境配置，而不读取新使用者的配置文件』
+        -c    仅进行一次命令，所以 -c 后面可以加上命令喔！
+
+    whoami                         显示当前登入的用户名
+    id username                    显示指定用户信息 包括用户编号主要组编号附属组列表
+    groups username                显示用户所在的组 包括附属组
+    chfn username                  设置用户详细资料 包括性别生日等 实际为修改etc/passwd第5字段
+        -f   后面接完整的大名；
+        -o   您办公室的房间号码；
+        -p   办公室的电话号码；
+        -h   家里的电话号码！
+
+    chsh 修改用户的shell
+        -l   列出目前系统上面可用的 shell ，其实就是 /etc/shells 的内容！
+        -s   配置修改自己的 Shell
+
+    finger username                显示用户的详细资料
+        -s   仅列出用户的账号、全名、终端机代号与登陆时间等等；
+        -m   列出与后面接的账号相同者，而不是利用部分比对 (包括全名部分)
+        Login：为使用者账号，亦即 /etc/passwd 内的第一字段；
+        Name：为全名，亦即 /etc/passwd 内的第五字段(或称为批注)；
+        Directory：就是家目录了；
+        Shell：就是使用的 Shell 文件所在；
+        Never logged in.：figner 还会调查用户登陆主机的情况喔！
+        No mail.：调查 /var/spool/mail 当中的信箱数据；
+        No Plan.：调查 ~vbird1/.plan 文件，并将该文件取出来说明！
+
+    w 或 who    查看目前已登陆在系统上面的用户呢
+    lastlog     读取 /var/log/lastlog  查看每个账户最后登入时间
+
+    write 给其他用户发送信息
+        write username port  port可用who命令查看
+
+    mesg [y|n]  是否接受其他人发送的信息
+
+    wall  对系统中所有用户发送信息
+        wall &quot;message&quot;
+
+    pwck  检查 /etc/passwd，与对应的家目录是否存在，/etc/passwd /etc/shadow 的信息是否一致等。
+    pwconv  将 /etc/passwd 内的账号与口令，移动到 /etc/shadow 当中
+    pwunconv  将 /etc/shadow 内的口令栏数据写回 /etc/passwd 当中， 并且删除 /etc/shadow 文件
+    chpasswd  读入未加密前的口令，并且经过加密后， 将加密后的口令写入 /etc/shadow 中
+</code></pre><h2 id="文件系统管理"><a href="#文件系统管理" class="headerlink" title="文件系统管理"></a>文件系统管理</h2><pre><code>df  查看磁盘分区的使用情况
+    -l  仅显示本地磁盘(默认)
+    -a  显示所有文件系统的磁盘使用情况，包含/proc/
+    -h  以1024进制用最合适的单位显示磁盘容量
+    -H  以1000进制用最合适的单位显示磁盘容量
+    -T  显示磁盘分区类型
+    -t  显示指定类型文件系统的磁盘分区
+    -x  不显示指定类型文件系统的磁盘分区
+
+du  统计磁盘上的文件大小
+    -b  以byte为单位统计文件
+    -k  以KB为单位统计文件
+    -m  以MB为单位统计文件
+    -h  以1024进制用最合适的单位统计文件
+    -H  以1000进制用最合适的单位统计文件
+    -s  指定统计目标(可以指定统计某个文件夹的大小)
+
+fdisk   磁盘分区工具  分区最大容量2TB
+    -l  列出所有磁盘分区表
+    fdisk /dev/sda  进入sda硬盘的分区模式（只能MBR分区）
+        设置扇区大小时，可输入 +2000M 来设置分区大小
+
+parted  MBR和GPT分区工具
+    注：Using /dev/sda 默认分区磁盘为系统第一块硬盘
+    select /dev/sdb   切换目标磁盘为sdb
+    mklabel msdos     指定分区表类型为MBR
+    mklabel gpt       指定分区表类型为gpt
+    print             查看当前硬盘分区详情
+    print all         查看所有硬盘分区详情
+    mkpart            创建分区
+        start         从第几MB开始分区，可输入1，如输入0会有分区对齐的警告，对磁盘性能有影响
+        end           可输入2000MB
+    mkpart NAME 20 30 命令模式创建分区
+    rm NUMBER         删除分区
+    unit              修改分区单位
+    quit              退出分区工具
+
+分区模式区别
+    MBR
+        主分区数量最大4个
+        单个分区容量最大2TB
+    GPT
+        主分区数量最大128个
+        单个分区容量最大18EB   1EP=1024PB=1024TB=1024GB
+        不适合安装X86架构 32位操作系统
+
+硬盘格式化工具
+    mkfs   格式化分区
+    mkfs.ext3 /dev/sda1     格式化sda1分区
+    mkfs -t ext4 /dev/sda1  格式化sda1分区
+
+添加SWAP交换分区
+    建立一个普通的linux分区  修改分区类型的16位编码
+        fdisk /dev/sda  进入fdisk工具
+        t  修改编码 Hex Code 为82  L可查看编码列表
+    mkswap /dev/sda1  格式化sda1为交换分区
+    swapon /dev/sda1   启用sda1为交换分区
+    swapoff /dev/sda1  关闭sda1交换分区
+    free可查看swap分区
+
+文件系统备份 dump [-Suvj] [-level] [-f 备份档] 待备份数据
+    -S     仅列出后面的待备份数据需要多少磁碟空间才能够备份完毕；
+    -u     将这次 dump 的时间记录到 /etc/dumpdates 文件中；
+    -v     将 dump 的文件过程显示出来；
+    -j     加入 bzip2 的支持！将数据进行压缩，默认 bzip2 压缩等级为 2
+    -level 就是我们谈到的等级，从 -0 ~ -9 共十个等级；
+    -f     有点类似 tar 啦！后面接产生的文件，亦可接例如 /dev/st0 装置档名等
+    -W     列出在 /etc/fstab 里面的具有 dump 配置的 partition 是否有备份过？
+
+文件系统还原 restore
+    restore -t [-f dumpfile] [-h]         用来察看 dump 档
+    restore -C [-f dumpfile] [-D 挂载点]   比较dump与实际文件
+    restore -i [-f dumpfile]              进入互动模式
+    restore -r [-f dumpfile]              还原整个文件系统
+
+    -t  ：此模式用在察看 dump 起来的备份档中含有什么重要数据！类似 tar -t 功能；
+    -C  ：此模式可以将 dump 内的数据拿出来跟实际的文件系统做比较，
+          最终会列出『在 dump 文件内有记录的，且目前文件系统不一样』的文件；
+    -i  ：进入互动模式，可以仅还原部分文件，用在 dump 目录时的还原！
+    -r  ：将整个 filesystem 还原的一种模式，用在还原针对文件系统的 dump 备份；
+    其他较常用到的选项功能：
+    -h  ：察看完整备份数据中的 inode 与文件系统 label 等资讯
+    -f  ：后面就接你要处理的那个 dump 文件罗！
+    -D  ：与 -C 进行搭配，可以查出后面接的挂载点与 dump 内有不同的文件！
+</code></pre><p>##进程管理</p>
+<pre><code>任务管理
+    ctrl + z  将一个正在前台执行的命令放到后台，并且暂停
+    jobs  查看后台任务状态
+        -l  除了列出 job number 与命令串之外，同时列出 PID 的号码；
+        -r  仅列出正在背景 run 的工作；
+        -s  仅列出正在背景当中暂停 (stop) 的工作
+    fg  将放置到后台的任务拿到前台处理
+        %number ：number 为后台任务数字。% 是选！默认打开油 + 的任务
+    bg  让后台暂停的任务在后台运行
+    nohup  让命令在终端离线后不会中断，继续运行。
+
+ps      查看当前时间进程快照
+    -A  所有的 process 均显示出来，与 -e 具有同样的效用；
+    -a  不与 terminal 有关的所有 process ；
+    -u  有效使用者 (effective user) 相关的 process ；
+    x   通常与 a 这个参数一起使用，可列出较完整资讯。
+    l   较长、较详细的将该 PID 的的资讯列出；
+    j   工作的格式 (jobs format)
+    -f  做一个更为完整的输出。
+    -l  仅观察自己的 bash 相关程序
+        F  代表这个程序旗标 (process flags)，说明这个程序的总结权限，常见号码有：
+            若为 4 表示此程序的权限为 root ；
+            若为 1 则表示此子程序仅进行复制(fork)而没有实际运行(exec)。
+        S  代表这个程序的状态 (STAT)，主要的状态有：
+            R  (Running)该程序正在运行中；
+            S  (Sleep)该程序目前正在睡眠状态(idle)，但可以被唤醒(signal)。
+            D  不可被唤醒的睡眠状态，通常这支程序可能在等待 I/O 的情况(ex&gt;列印)
+            T  停止状态(stop)，可能是在工作控制(背景暂停)或除错 (traced) 状态；
+            Z  (Zombie)僵尸状态，程序已经终止但却无法被移除至内存外。
+        UID    此程序被该 UID 所拥有
+        PID    程序的 PID 号码
+        PPID   程序的父程序 PID 号码
+        C      代表 CPU 使用率，单位为百分比；
+        PRI/NI Priority/Nice 的缩写，代表此程序被 CPU 所运行的优先顺序，数值越小该程序越快被 CPU 运行。
+        ADDR   是 kernel function，指出该程序在内存的哪个部分，如果是个 running 的程序，一般就会显示 -
+        SZ     代表此程序用掉多少内存
+        WCHAN  表示目前程序是否运行中，同样的， 若为 - 表示正在运行中。
+        TTY    登陆者的终端机位置，若为远程登陆则使用动态终端介面 (pts/n)；
+        TIME   使用掉的 CPU 时间，注意，是此程序实际花费 CPU 运行的时间，而不是系统时间；
+        CMD    就是 command 的缩写，造成此程序的触发程序之命令为何。
+    aux  观察系统所有程序
+        USER    属於哪个使用者帐号的
+        PID     的程序识别码
+        %CPU    使用掉的 CPU 资源百分比
+        %MEM    所占用的实体内存百分比
+        VSZ     使用掉的虚拟内存量 (Kbytes)
+        RSS     占用的固定的内存量 (Kbytes)
+        TTY     是在那个终端机上面运行，若与终端机无关则显示 ?
+                tty1-tty6 是本机上面的登陆者程序，pts/0 等则表示为由网络连接进主机的程序。
+        STAT    该程序目前的状态，状态显示与 ps -l 的 S 旗标相同 (R/S/T/Z)
+        START   被触发启动的时间；
+        TIME    实际使用 CPU 运行的时间。
+        COMMAND 该程序的实际命令
+
+prtree  显示进程树
+    -p  并同时列出每个 process 的 PID；
+    -u  并同时列出每个 process 的所属帐号名称。
+    -A  各程序树之间的连接以 ASCII 字节来连接；
+    -U  各程序树之间的连接以万国码的字节来连接。在某些终端介面下可能会有错误；
+
+top  动态观察进程的变化
+    -d  后面可以接秒数，就是整个程序画面升级的秒数。默认是 5 秒；
+    -b  以批量的方式运行 top ，还有更多的参数可以使用喔！
+        通常会搭配数据流重导向来将批量的结果输出成为文件。
+    -n  与 -b 搭配，意义是，需要进行几次 top 的输出结果。
+    -p  指定某些个 PID 来进行观察监测而已。
+    在 top 运行过程当中可以使用的按键命令
+        ?  显示在 top 当中可以输入的按键命令；
+        P  以 CPU 的使用资源排序显示；
+        M  以 Memory 的使用资源排序显示；
+        N  以 PID 来排序喔！
+        T  由该 Process 使用的 CPU 时间累积 (TIME+) 排序。
+        k  给予某个 PID 一个讯号  (signal)
+        r  给予某个 PID 重新制订一个 nice 值。
+        q  离开 top 软件的按键。
+    头部6行状态栏意义
+        top    目前时间，系统启动时间，已登入系统用户数，系统在 1, 5, 15 分钟的平均工作负载。
+        Tasks  显示的是目前程序的总量与个别程序在什么状态(running, sleeping, stopped, zombie)
+        Cpus   显示的是 CPU 的整体负载，可按数字1，来显示多核心CPU负载
+            us: (user CPU time) 用户态使用的cpu时间比
+            sy: (system CPU time) 系统态使用的cpu时间比
+            ni: (nice CPU time) 用做nice加权的进程分配的用户态cpu时间比
+            id: (idle) 空闲的cpu时间比
+            wa: (iowait)  cpu等待磁盘写入完成时间
+            hi: (hardware irq) 硬中断消耗时间
+            si: (software irq) 软中断消耗时间
+            st: (steal time) 虚拟机偷取时间
+        Mem    物理内存的使用情况
+        Swap   虚拟内存的使用情况，需注意如果 swap 被用的很多，表示系统的物理内存不足
+        other  这个是当在 top 程序当中输入命令时，显示状态的地方。
+    进程状态的意义
+        PID       进程的ID
+        USER      进程所有者
+        PR        进程的优先级别，越小越优先被执行
+        NI        nice值
+        VIRT      进程占用的虚拟内存
+        RES       进程占用的物理内存
+        SHR       进程使用的共享内存
+        S         进程的状态。S表示休眠，R表示正在运行，Z表示僵死状态，N表示该进程优先值为负数
+        %CPU      进程占用CPU的使用率
+        %MEM      进程使用的物理内存和总内存的百分比
+        TIME+     该进程启动后占用的总的CPU时间，即占用CPU使用时间的累加值。
+        COMMAND   进程启动命令名称
+
+进程的优先级
+    名词概念
+        PRI  (Priority)优先运行序,PRI值越低代表越优先的意思。PRI值由核心动态调整，使用者无法直接调整PRI
+        NI   (Nice)使用者可修改NI值来影响PRI，范围-20~19，非root用户只能调整自己进程的NI值，且只能调高
+    nice    以所设置的nice值运行新的命令
+        -n number command   以所设置的nice值运行新的命令
+    renice  调整已经运行的程序的nice值
+        [number] PID  把该PID的process的nice值调整为number
+
+kill
+    PID  杀掉指定PID的进程
+    -l   这个是 L 的小写，列出目前 kill 能够使用的讯号 (signal) 有哪些？
+    signal   代表给予后面接的那个工作什么样的指示罗！用 man 7 signal 可知：
+        -1   重新读取一次参数的配置档 (类似 reload)；
+        -2   代表与由键盘输入 [ctrl]-c 同样的动作；
+        -9   立刻强制删除一个工作；
+        -15  以正常的程序方式终止一项工作。与 -9 是不一样的。
+
+screen  终端模拟器
+    screen -S name    新建一个会画
+    screen -dmS name  建立一个处于断开模式下的会话（并指定其会话名）。
+    screen -list      列出所有会话。
+    screen -r name    重新连接指定会话。
+    CTRL + a d        暂时断开当前会话。
+    exit              终止当前会画
+    CTRL + d          终止当前会画
+
+fuser  找出正在使用指定文件或文件夹的程序
+    -u       除了程序的 PID 之外，同时列出该程序的拥有者；
+    -m       后面接的那个文件会主动的上提到该文件系统的最顶层，对 umount 不成功很有效！
+    -v       可以列出每个文件与程序还有命令的完整相关性！
+    -k       找出使用该文件/目录的 PID ，并试图以 SIGKILL 这个讯号给予该 PID；
+    -i       必须与 -k 配合，在删除 PID 之前会先询问使用者意愿！
+    -signal  例如 -1 -15 等等，若不加的话，默认是 SIGKILL (-9) 罗！
+    -uv .    找出目前所在目录的使用 PID/所属帐号/权限 是什么
+    fuser -mvu /proc  找到所有使用到 /proc 这个文件系统的程序
+    ACCESS 的意义：
+        c  此程序在当前的目录下(非次目录)；
+        e  可被触发为运行状态；
+        f  是一个被开启的文件；
+        r  代表顶层目录 (root directory)；
+        F  该文件被开启了，不过在等待回应中；
+        m  可能为分享的动态函式库；
+
+lsof   查看正在被进程所开启的文件
+    -a  多项数据需要『同时成立』才显示出结果时！
+    -U  仅列出 Unix like 系统的 socket 文件类型；
+    -u  后面接 username，列出该使用者相关程序所开启的文件；
+    +d  后面接目录，亦即找出某个目录底下已经被开启的文件！
+
+pidof  找出某个正在运营程序的PID
+    -s  仅列出一个 PID 而不列出所有的 PID
+    -x  同时列出该 program name 可能的 PPID 那个程序的 PID
+</code></pre><h2 id="定时任务"><a href="#定时任务" class="headerlink" title="定时任务"></a>定时任务</h2><pre><code>at [-mldv] TIME   新增，查看，修改定时任务
+    -m   当 at 的工作完成后，即使没有输出信息，亦以 email 通知使用者该工作已完成。
+    -l   at -l 相当於 atq，列出目前系统上面的所有该使用者的 at 排程；
+    -d   at -d 相当於 atrm ，可以取消一个在 at 排程中的工作；
+    -v   可以使用较明显的时间格式列出 at 排程中的工作列表；
+    -c   可以列出后面接的该项工作的实际命令内容。
+
+    TIME：时间格式，这里可以定义出『什么时候要进行 at 这项工作』的时间，格式有：
+        HH:MM  在今日的 HH:MM 时刻进行，若该时刻已超过，则明天的 HH:MM 进行此工作。
+        HH:MM YYYY-MM-DD  强制规定在某年某月的某一天的特殊时刻进行该工作！
+        HH:MM[am|pm] + number [minutes|hours|days|weeks]  在某个时间点『再加几个时间后』才进行。
+
+    相关文件
+        /var/spool/at/ 被安排在队列中的任务
+        /etc/at.allow  允许使用at的用户，如果at.allow不存在，则取at.deny配置。
+        /etc/at.deny   不允许使用at的用户，如果两个都不存在，则只有root可以运行at。
+
+atq  查询目前主机上面有多少的 at 工作计划
+atrm num  移除当前主机第num号 at 任务计划
+batch  在CPU工作负载小于0.8时，执行所下达的工作计划
+
+crontab [-u username] [-l|-e|-r]  定时计划任务
+    -u   只有 root 才能进行这个任务，亦即帮其他使用者创建/移除 crontab 工作排程；
+    -e   编辑 crontab 的工作内容
+    -l   查阅 crontab 的工作内容
+    -r   移除所有的 crontab 的工作内容，若仅要移除一项，请用 -e 去编辑。
+    相关文件
+        /var/spool/cron/ 已经被crontab安排的工作记录
+        /var/log/cron    crontab的工作日志
+        /etc/cron.allow  允许使用crontab的用户，如果cron.allow不存在，则取cron.deny配置。
+        /etc/cron.deny   允许使用crontab的用户，如果两个都不存在，则只有root可以运行crontab。
+        /etc/crontab     系统的定时任务设置
+
+anacron  检测关机期间没有运行的定时任务并运行
+    -s    开始一连续的运行各项工作 (job)，会依据时间记录档的数据判断是否进行；
+    -f    强制进行，而不去判断时间记录档的时间戳记；
+    -n    立刻进行未进行的任务，而不延迟 (delay) 等待时间；
+    -u    仅升级时间记录档的时间戳记，不进行任何工作。
+    job   由 /etc/anacrontab 定义的各项工作名称。
+</code></pre><h2 id="查看系统信息"><a href="#查看系统信息" class="headerlink" title="查看系统信息"></a>查看系统信息</h2><pre><code>uptime               查看系统启动时间与工作负载
+cal                  显示日历 也可显示其他月份
+date                 显示或者设置系统时间
+dumpe2fs partition   查看分区的文件系统信息
+/proc/cpuinfo        cpu信息
+
+lsblk   列出块设备  以树状格式输出
+    -a  以列表模式输出
+
+free    显示内存占用信息
+    属性意义
+        Mem     那一行显示的是实体内存的量
+        Swap    则是虚拟内存的量
+        total   是总量
+        used    是已被使用的量
+        free    则是剩余可用的量
+        shared/buffers/cached 则是在已被使用的量当中，用来作为缓冲及缓存的量
+
+uname    显示机器名 操作系统 及内核详细信息
+    -a   所有系统相关的资讯，包括底下的数据都会被列出来；
+    -s   系统核心名称
+    -r   核心的版本
+    -m   本系统的硬件名称，例如 i686 或 x86_64 等；
+    -p   CPU 的类型，与 -m 类似，只是显示的是 CPU 的类型！
+    -i   硬件的平台 (ix86)
+
+netstat  查看网络信息
+    -r   列出路由表(route table)，功能如同 route 这个指令；
+    -a   将目前系统上所有的连线、监听、Socket 数据都列出来
+    -t   列出 tcp 网络封包的数据
+    -u   列出 udp 网络封包的数据
+    -n   不以程序的服务名称，以端口 (port number) 来显示；
+    -l   列出目前正在网络监听 (listen) 的服务；
+    -p   列出该网络服务的程序 PID
+    -c   可以设定几秒钟后自动更新一次，例如 -c 5 每五秒更新一次网络状态的显示；
+    netstat -tlnp  列出目前系统中已开启的网络服务及PID
+    网络连接相关状态：
+        Proto           网络的封包协议，主要分为 TCP 与 UDP 封包，相关数据请参考服务器篇；
+        Recv-Q          非由使用者程序连结到此 socket 的复制的总 bytes 数；
+        Send-Q          非由远程主机传送过来的 acknowledged 总 bytes 数；
+        Local Address   本地端的 IP:port 情况
+        Foreign Address 远程主机的 IP:port 情况
+        State           连线状态；
+            ESTABLISED  已建立联机的状态；
+            SYN_SENT    发出主动联机 (SYN 标志) 的联机封包；
+            SYN_RECV    接收到一个要求联机的主动联机封包；
+            FIN_WAIT1   该插槽服务(socket)已中断，该联机正在断线当中；
+            FIN_WAIT2   该联机已挂断，但正在等待对方主机响应断线确认的封包；
+            TIME_WAIT   该联机已挂断，但 socket 还在网络上等待结束；
+            LISTEN      通常用在服务的监听 port ！可使用『 -l 』参数查阅。
+    本机进程相关状态：
+        Proto   一般就是 unix 啦；
+        RefCnt  连接到此 socket 的程序数量；
+        Flags   连线的旗标；
+        Type    socket 存取的类型。主要有确认连线的 STREAM 与不需确认的 DGRAM 两种；
+        State   若为 CONNECTED 表示多个程序之间已经连线创建。
+        Path    连接到此 socket 的相关程序的路径！或者是相关数据输出的路径。
+
+hdparm   查看硬盘的相关信息或对硬盘进行测速、优化、修改硬盘相关参数设定。
+    -a    表示是否关闭磁盘预读取功能。对于大文件读取，这个显然能提高性能。
+    -A    设置硬盘驱动器缓存读取特性。可能就是硬盘缓存开关
+    -g    显示硬盘的磁轨，磁头，磁区等参数。
+    -i    显示硬盘的硬件规格信息，这些信息是在开机时由硬盘本身所提供。
+    -I    直接读取硬盘所提供的硬件规格信息。
+    -p    设定硬盘的PIO模式。
+    -t    测试硬盘的读取效率。
+    -T    测试硬盘缓存读取效率。
+    -u    在硬盘存取时，允许其他中断要求同时执行。
+    -v    显示硬盘的相关设定。
+    hdparm /dev/sda     显示硬盘相关设置
+    hdparm -g /dev/sda  显示硬盘的柱面、磁头、扇区数
+    hdparm -t /dev/xvda 测试硬盘的读取速度
+    hdparm -C /dev/sda  检测硬盘的电源管理模式
+
+/proc/*
+    process 已 /porc/PID 目录的形式保存在/porc中
+        cmdline  这个程序被启动的命令串；
+        environ  这个程序的环境变量内容。
+    /proc/cmdline     加载 kernel 时所下达的相关参数！查阅此文件，可了解系统是如何启动的！
+    /proc/cpuinfo     本机的 CPU 的相关资讯，包含时脉、类型与运算功能等
+    /proc/devices     这个文件记录了系统各个主要装置的主要装置代号，与mknod有关！
+    /proc/filesystems 目前系统已经加载的文件系统罗！
+    /proc/interrupts  目前系统上面的 IRQ 分配状态。
+    /proc/ioports     目前系统上面各个装置所配置的 I/O 位址。
+    /proc/kcore       这个就是内存的大小啦！好大对吧！但是不要读他啦！
+    /proc/loadavg     还记得 top 以及 uptime 吧？没错！上头的三个平均数值就是记录在此！
+    /proc/meminfo     使用 free 列出的内存资讯，嘿嘿！在这里也能够查阅到！
+    /proc/modules     目前我们的 Linux 已经加载的模块列表，也可以想成是驱动程序啦！
+    /proc/mounts      系统已经挂载的数据，就是用 mount 这个命令呼叫出来的数据啦！
+    /proc/swaps       到底系统挂加载的内存在哪里？呵呵！使用掉的 partition 就记录在此啦！
+    /proc/partitions  使用 fdisk -l 会出现目前所有的 partition 吧？在这个文件当中也有纪录喔！
+    /proc/pci         在 PCI 汇流排上面，每个装置的详细情况！可用 lspci 来查阅！
+    /proc/uptime      就是用 uptime 的时候，会出现的资讯啦！
+    /proc/version     核心的版本，就是用 uname -a 显示的内容啦！
+    /proc/bus/*       一些汇流排的装置，还有 U盘 的装置也记录在此喔！
+</code></pre><h2 id="硬件信息"><a href="#硬件信息" class="headerlink" title="硬件信息"></a>硬件信息</h2><pre><code>dmidecode  查询硬件信息
+    -t type  查询指定类型信息，常用type如下:
+        1    详细系统信息，主板型号及硬件基础信息
+        4    CPU相关信息，包括倍频，外频，核心数量，核心数据等
+        9    系统相关插槽格式，包括PCI,PCI-E等接口规格说明
+        17   内存插槽规格，若已经插上内存，则显示该内存的容量及型号
+
+dmesg    查看开机和系统运行过程中，核心产生的信息
+
+lspci    列出系统中的PCI设备
+    -v   显示更多的 PCI 设备的详细信息
+    -vv  比 -v 相信的内部信息；
+    -n   直接查看 PCI 的 ID 而不是厂商名称
+
+update-pciids  更新PCI设备ID厂商对应表
+
+lsusb    列出系统中各USB接口的状态
+    -t   适用树状解构显示各USB设备的相关性
+
+iostat   与vmstat类似，即时查看整个CPU与周边设备的Input/Output状态
+    -c   仅显示 CPU 状态
+    -d   仅显示存储设备状态
+    -k   默认显示的是 block ，可改成 K bytes 的大小显示
+    -m   与 -k 类似，以 MB 的单位显示结果
+    -t   显示日期日
+    状态值意义:
+        tps        平均每秒传送次数，只与次数相关，非容量
+        kB_read/s  开机到现在平均每秒读取单位
+        kB_wrtn/s  开机到现在平均每秒写入单位
+        kB_read    开机到现在，移动读取的数据大小
+        kB_wrtn    开机到现在，移动写入的数据大小
+
+smartctl  查询设备的SMART信息
+    -a /dev/sda        查看/dev/sda设备的SMART信息
+    -t short /dev/sda  硬盘检查
+</code></pre><h2 id="系统备份"><a href="#系统备份" class="headerlink" title="系统备份"></a>系统备份</h2><pre><code>需要备份的文件目录
+    /etc/              配置文件目录，可整个目录备份
+    /root/             root家目录，可整个目录备份
+    /home/             用户家目录，可整个目录备份
+    /var/spool/mail/   用户邮件，可整个目录备份
+    /var/spool/at/     定时任务文件夹
+    /var/spool/cron/   定时任务文件夹
+    /boot/             如果修改过核心或启动文件，可整个目录备份
+    /usr/local/        自己安装过软件，可整个目录备份
+    /opt               自行安装过软件，可整个目录备份
+
+备份相关命令
+    dd
+        if=/dev/sda of=/dev/sdb   将/dev/sda到完全备份至/dev/sdb，速度较慢
+    cpio
+        find / -print | cpio -covB &gt; /dev/st0  备份根目录下所有文件至设备st0
+        cpio -iduv &lt; /dev/st0  从备份中还原
+    xfsdump
+        xfsdump -l 0 -L &apos;full&apos; -M &apos;full&apos; -f /backu/home.dump /home  第一次完整备份
+        xfsdump -l 1 -L &apos;full-1&apos; -M &apos;full-1&apos; -f /backup/home.dump1 /home  第一次增量备份
+    tar
+        tar --exclude /proc --exclude /backup -jcvp -f /backup/system.tar.bz2 /  除proc外完整备份
+        tar -jpcvf mysql.`date +%Y-%m-%d`.tar.bz2 /var/lib/mysql  备份mysql，并以时间命名
+    rsync
+        rsync -av /home /backupdata/  保持两个目录文件一致，第一次为完全备份，第二次增量备份
+</code></pre><h2 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h2><pre><code>Tarball源码方式
+    安装步骤
+        1，获取原始文件，将 tarball 文件在 /usr/local/src 目录下解压缩。
+        2，查看源码提供的说明文件，如 INSTALL 与 README 等文件内容。
+        3，依照 INSTALL/README 的内容安装依赖软件
+        4，建立makefile，通过自动检测程序configure或config检测环境，并建立Makefile 文件。
+        5，编译，通过make程序并以Makefile文件为参数设定文件进行编译。
+        6，安装，通过make程序并以Makefile文件为参数设定，依据install这个target 的指定路径安装。
+    安装相关命令
+        ./configure   检测环境建立 Makefile 文件。
+        make clean    读取 Makefile 中关于 clean 的内容，删除上一次编译的残留文件。
+        make          依据 Makefile 编译。
+        make install  依据 Makefile 中关于 install 的内容，将编译好的文件安装到指定目录。
+    安装路径
+        系统预装软件
+            /etc/httpd
+            /usr/lib
+            /usr/bin
+            /usr/share/man
+        源码编译安装通常默认安装位置
+            /usr/local/etc
+            /usr/local/bin
+            /usr/local/lib
+            /usr/local/man
+        建议安装位置（利于删除程序，需指定path）
+            /usr/local/software/etc
+            /usr/local/software/bin
+            /usr/local/software/lib
+            /usr/local/software/man
+    md5sum/sha1sum/sha256sum  校验文件是否正确
+        -b   使用 binary 的读取方式，默认为 Windows/DOS 文件类型的读取方式
+        -c   检查文件指纹
+        -t   以文字形态读取文件指纹
+    函数库
+        静态
+            扩展名：.a
+            编译行为：函数库在编译时整合进可执行文件中，相对动态函数库编译后文件较大。
+            独立执行：不依赖外部函数库内容，可独立执行
+            升级难度：函数库升级，程序须重新编译。
+        动态
+            扩展名：.so
+            编译行为：程序编译时(Pointer)指向动态函数库目标，相对静态函数库编译后文件较小。
+            独立执行：不可独立执行，依赖外部函数库，函数库文件位置不可改变
+            升级难度：函数库升级，程序不须重新编译。
+        在内存中载入函数库
+            1，在 /etc/ld.so.conf 中写入希望在内存中载入的函数库目录
+            2，通过 ldconfig 程序将 /etc/ld.so.conf 中的资料载入到内存中
+            3，同时将内容复制一份至 /etc/ld.so.cache 文件中
+        ldd  查看函数所使用的函数库
+            -v   列出所有内容信息
+            -d   重新将信息遗失的 link 显示出来
+            -r   将 ELF 相关的错误显示出来
+
+dpkg
+    目录说明
+        /var/lib/dpkg/  通过dpkg安装的软件的相关信息库
+
+RPM - RedHat Package Manager 本地包升级
+    目录说明
+        /var/lib/rpm/     通过RPM安装的软件的相关信息库
+        /etc              软件相关设置文件
+        /usr/bin          一些可执行文件
+        /usr/lib          一些程序所使用的动态函数库
+        /usr/share/doc    一些基本软件使用手册及说明书
+        /usr/share/man    一些 man page 文件
+    安装升级相关命令选项
+        -i               install 的意思
+        -v               查看更详细的安装信息
+        -h               以安装信息列显示安装进度
+        -U               安装过则升级，否则安装
+        -F               只是升级，没有安装过不安装
+        -e               删除软件
+        --nodeps         当放生两个软件相互依赖时可使用
+        --replacefiles   当出现文件已存在或confilcting files时
+        --replacepkgs    当软件已经安装过，需要重新安装时
+        --force          强制安装，是 --replacefiles 与 --replacepkgs 的综合体！
+        --test           测试软件是否能被安装到使用者的linux中
+        --justdb         由于RPM的资料库破损或某些原因产生错误，可用来个更新软件在资料库中的信息
+        --nosignature    略过软件的数字签名检查
+        --prefix         指定软件安装路径
+        --noscripts      不想软件在安装过程中执行某些系统指令
+    查询相关命令选项
+        -q               查询指定软件是否安装
+        -qa              列出系统已安装的所有软件
+        -qi              列出指定软件详细资讯
+        -ql              列出指定软件所有的文件和目录名
+        -qc              列出指定软件的所有设置文件
+        -qd              列出指定软件的所有man相关说明文件
+        -qR              列出與指定软件依赖软件
+        -qf              由文件名找出属于哪个软件的文件
+        -q --scripts     列出是否有安装好需要执行的脚本
+        -qp[icdlR]       找出某个软件信息，非已经按照的
+    验证相关命令选项
+        -V               验证指定软件是否被修改过
+            修改状态
+                S        (file Size differs)                   文件大小是否有变化
+                M        (Mode differs)                        文件属性（rwx）是否有改变
+                5        (MD5 sum differs)                     MD5 指纹是否有变化
+                D        (Device major/minor number mis-match) 设备代码是否变化
+                L        (readLink(2) path mis-match)          Link 路径是否变化
+                U        (User ownership differs)              文件拥有者是否变化
+                G        (Group ownership differs)             文件所属群组是否变化
+                T        (mTime differs)                       文件建立时间是否被改变
+                P        (caPabilities differ)                 功能是否被修改
+            修改的文件类型
+                c        (config file)    配置文件
+                d        (documentation)  文档文件
+                g        (ghost file)     不属于该软件的档案
+                l        (license file)   授权信息档案
+                r        (read me)        说明档案
+        -Va              列出目前系统商所被可能被改动过的文件
+        -Vp              列出该软件内的可能被修改过的文件
+        -Vf              查看某个文件是否被修改过
+
+SRPM - 包含源的RPM
+    rpmbuild
+        -ba              编译并同时生成RPM和SRPM文件
+        -ba              仅编译成RPM文件
+        --rebuild        进行编译打包操作，最终生成.rpm文件
+        --recompile      进行编译打包的操作，完成后安装到系统中
+    相关目录
+        /root/rpmbuild/SPECS      软件设置文件
+        /root/rpmbuild/SOURCES    软件原始文件 (*.tar.gz) 以及 config 设置文件
+        /root/rpmbuild/BUILD      编译过程中的临时文件
+        /root/rpmbuild/RPMS       编译成功后，打包完成的文件，包含x86_64,noarch等子目录
+        /root/rpmbuild/SRPMS      编译成功后，打包完成的文件，以SRPM封装的文件
+    配置文件内容 *.spec
+        Summary          软件的主要说明
+        Name             软件的名称，最终生成的RPM的文件名
+        Version          软件版本，RPM文件名组成部分
+        Release          软件打包次数，RPM文件名组成部分
+        License          软件授权方式
+        Group            软件所属的软件组
+        URL              源码的主要官网
+        SourceN          软件来源网站
+        PatchN           作为补丁的patch file
+        BuildRoot        临时文件的保存目录
+        Requires         所依赖的软件
+        BuildRequires    编译过程中需要的软件
+        %description     软件相关的描述说明
+        %prep            编译之前需要做的事情
+        %build           编译相关指令
+        %install         编译完成后的安装指令
+        %files           软件包括的文件和目录
+        %changelog       软件的变更记录
+
+YUM - 线上升级
+    相关选项和命令
+        -y               当yum 需要输入时，自动选 Yes
+        --installroot=   指定软件安装的目录
+        install          安装软件
+        update           升级软件
+        remove           删除软件
+        search           搜索某个软件名或描述中的关键字
+        list             列出目前 yum 所管理的所有的软件名称和版本
+        info             列出目前 yum 所管理的所有的软件，并显示更详细信息
+        provides         由文件名找出属于哪个软件的文件
+        repolist all     列出目前所有使用的软件仓库
+        clean all        删除所有本机缓存的软件仓库相关文件
+        grouplist        查询目前已经安装的和软件仓库中的软件组
+        groupinstall     安装软件组
+    修改相关设置
+        设置文件地址
+            /etc/yum.repos.d/*
+        相关字段
+            [base]          软件库名字，中括号必须存在，名字可自定义，不可重复
+            name            软件库的说明，非必须
+            mirrorlist=     软件仓库的更新列表网址，非必须
+            baseurl=        软件库地址
+            enable=         此软件库状态，1为启动，0为关闭
+            gpgcheck=       是否检查数字签名
+            gpgkey=         数字签名文件位置
+</code></pre><h2 id="系统服务"><a href="#系统服务" class="headerlink" title="系统服务"></a>系统服务</h2><pre><code>System V (init)启动服务
+    相关文件
+        /etc/services     服务和端口对应的配置文件(不建议修改)
+        /etc/init.d/*     启动脚本放置的地方
+        /etc/sysconfig/*  各服务的初始化环境配置文件
+        /etc/xinetd.conf  super daemon 配置文件
+        /etc/*            各服务各自的配置文件
+        /var/lib/*        各服务产生的数据库
+        /var/run/*        各服务的程序之 PID 记录处
+
+    service
+        service_name [ command | --full-restart ]  管理某个服务，如start|stop|restart|...
+        --status-all   将系统所有的 stand alone 的服务状态通通列出来
+
+    /etc/init.d/service_name  查看service_name服务所能执行的命令
+
+    /etc/init.d/service_name [start|stop|restart|status...] 开启停止重启服务等
+
+systemd 启动服务
+    相关文件和目录
+        /usr/lib/systemd/system/  系统内置的服务启动脚本设置，类似以前的 /etc/init.d
+        /run/systemd/system/      系統执行过程中所产生的服务脚本，优先级比/usr/lib/systemd/system/高
+        /etc/systemd/system/      管理员自己编写的服务启动腳本， 优先级比/run/systemd/system/高
+        /etc/sysconfig/*          大部分服务的初始化设置
+        /var/lib/                 各服务产生的数据库
+        /run/*                    各服务的暂存文件，包括 lock file 及 PID file 等等
+        /usr/lib/systemd/system/vsftpd.service            服务官方默认配置文件
+        /etc/systemd/system/vsftpd.service.d/custom.conf  个人定制配置文件
+        /etc/systemd/system/vsftpd.service.wants/*        启动后建起启动此目录下的服务
+        /etc/systemd/system/vsftpd.service.requires/*     启动前需要启动此目录下的服务
+
+    配置文件字段说明
+        [Unit]  unit 本身说明及依赖设置
+            Description    服务说明
+            Documentation  相关说明文档
+            After          此服务在哪个服务之后启动，不强制
+            Before         与After相反，在哪个服务启动前最好启动此服务，不强制
+            Requires       依赖某个服务启动后才能启动
+            Wants          与Requires相反，此服务启动后还需启动哪些服务
+            Conflicts      互相冲突的服务，不能同时启动
+        [Service],[Socket],[Timer],[Mount],[Path].. 启动脚本，环境变量，重启方式等设置
+            Type              此服务的启动方式，会影响到ExecStart，通常有如下类型
+                simple        默认值，这个服务主要由 ExecStart 指定的指令启动，启动后常驻内存。
+                forking       由ExecStart启动的程序通过spawns延伸出其他子程序作为服务，子程序启动后终止父程序
+                oneshot       与simple类似，但工作完成后结束，不常驻内存
+                dbus          与simple类似，但必须获取一个D-Bus后才继续运行，设置此值通常须设定BusName=
+                idle          与simple类似，此服务须其他所有程序都顺利执行后才会执行，通常是开机到最后才执行
+            EnvironmentFile   环境设置文件
+            ExecStart         执行服务的指令，除Type=oneshot不支持 &lt;, &gt;, &gt;&gt;, |, &amp; 等特殊字符
+            ExecStartPre      开启服务前执行的指令
+            ExecStartPost     开启服务后执行的指令
+            ExecStop          与systemctl stop有关，关闭此服务执行的指令。
+            ExecReload        与systemctl reload有关的指令
+            Restart           当此值为1时，服务终止后会自动重启服务，只能用systemctl关闭
+            RemainAfterExit   当此值为1时，服务所属程序全部终止后，此服务重启。
+            TimeoutSec        当此服务无法正常启动或关闭时，多久进入强制结束的状态
+            KillMode          关闭模式
+                process       服务终止后，只终止主要程序（ExecStart后面的指令）
+                control-group 由此服务所产生的其他程序也会关闭
+                none          不关闭程序
+            RestartSec        当服务因Restart重启，需要sleep多少时间再重启，默认100ms
+        [Install]  将此unit安装到哪个target里面
+            WantedBy   此服务属于哪个target unit，通常为multi-user.target
+            Also       服务设置enable时，指定的unit也需设置enable
+            Alias      别名
+
+    systemd 常见服务类型（根据文件名可大概判断）
+        .service    一般服务类型 (service unit)：主要是系統服務，经常使用，最常见！
+        .socket     内部程序资料交换的通信服务 (socket unit)：较少用到
+        .target     执行环境类型 (target unit)：通常为一堆服务unit的集合
+        .mount      文件系统挂载服务(mount unit)
+        .automount  文件系统自动挂载服务 (automount unit)：例如来自网络的自动挂载、NFS等
+        .path       检测特定文件类型 (path unit)：某些服务需要侦测特定目录来提供服务，需.path服务支持
+        .timer      循环执行的服务 (timer unit)：类似anacrontab，由systemd提供的，更有弹性！
+
+    常见target unit说明
+        graphical.target  文字+图形界面 已包含multi-user.target 項目
+        multi-user.target 純文字模式
+        rescue.target     无法使用root登入系统的情况时，systemd开机时的格外系统
+        emergency.target  需要root登入的紧急处理错误，无法使用rescue.target时可尝试
+        shutdown.target   开机流程
+        getty.target      可设定需要几个tty等，如需要降低tty的項目，可以修改此设定
+
+    systemctl  管理服务
+        start unit_name      立即启动所指定的服务
+        stop unit_name       立即停止所指定的服务
+        restart unit_name    立即重启所指定的服务
+        reload unit_name     不关闭服务的情况下，重新加载配置，让配置生效
+        enable unit_name     开机时，服务自动启动
+        disable unit_name    开机时，服务不自动启动
+        is-active unit_name  目前是否在运行
+        is-enable unit_name  是否已设置开机启动
+        list-sockets         查看本机所用到的socket file
+
+        status unit_name     显示服务的状态，如是否正在执行、是否开机启动等！
+            Loaded    开机时是否启动
+                enabled  为启动
+                disabled 为不启动
+                static   不可设置为开机启动，但可被其他开机启动的服务唤醒
+                mask     已被禁止开机启动，可通过systemctl unmask 方式修改
+            Active    当前服务是否已经启动
+                active (running)  服务已启动，有一个或多个程序在运行
+                active (exited)   服务已启动，仅运行一次就正常结束的服务，目前没有在系统中运行
+                active (waiting)  服务已启动，但需登台其他事件才能继续运行
+                inactive (dead)   这个服务目前没有启动
+            Docs      服务的文档文件
+            Main PID  服务对应的PID
+
+        systemctl   查看当前系统中所有启动的服务，不加参数等同与 list-units
+            UNIT    服务的名称
+            LOAD    是否开机启动，默认显示的是启动的
+            ACTIVE  目前的状态
+            DESCRIPTION 详细描述
+        list-units      查看当前系统中所有开机启动的服务
+            --type=TYPE -all  列出类型为TYPE的服务，TYPE包括 service, socket, target等
+        list-unit-files       显示当前系统中所有服务
+        list-dependencies     显示系统间各服务的依赖
+
+        get-default                 获取当前目前的 target
+        set-default target_name     设定 target 为默认的操作模式
+        isolate target_name         切换到指定 target
+        list-dependencies [target]  查看指定的target的依赖关系，默认default.target
+            -reverse                查看谁用到了指定的target，默认default.target
+
+        poweroff  系统关机
+        reboot    系统重启
+        suspend   进入睡眠模式，所有资料保存在内存中，关闭其他大部分硬件
+        hibernate 进入休眠模式，资料保存在硬盘中并关机，开机后从硬盘恢复
+        rescue    强制进入救援模式
+        emergency 强制进入紧急救援模式
+
+    systemd.timer 定时任务设置
+        系统需求
+            timer.target 需要启动
+            name.service 需自定义名字的服务
+            name.timer   需要自定义名字的时间启动服务存在，可放在/etc/systemd/system中
+        name.timer 设置
+            OnActiveSec        当timers.target启动多久后执行此unit
+            OnBootSec          当开机后多久执行
+            OnStartupSec       当systemd第一次启动后多久执行
+            OnUnitActiveSec    此timer配置所管理的unit服务在最后一次启动后隔多久再执行一次
+            OnUnitInactiveSec  此timer配置所管理的unit服务在最后一次停止后隔多久再执行一次
+            OnCalendar         使用绝对时间来启动服务
+            Unit               一般不需要設定，会自动找同名对应服务，不存在可指定
+            Persistent         当使用OnCalendar时，该功能是否继续执行，通常为yes
+        OnCalendar时间设置
+            绝对时间
+                格式  英文周名 YYYY-MM-DD HH:MM:SS
+                例    Thu 2015-08-13 13:40:00
+            时间间隔
+                单位
+                    us 或 usec：微秒 (10-6 秒)
+                    ms 或 msec：毫秒 (10-3 秒)
+                    s, sec, second, seconds
+                    m, min, minute, minutes
+                    h, hr, hour, hours
+                    d, day, days
+                    w, week, weeks
+                    month, months
+                    y, year, years
+                简称对应时间
+                    now         Thu 2015-08-13 13:50:00
+                    today       Thu 2015-08-13 00:00:00
+                    tomorrow    Thu 2015-08-14 00:00:00
+                    hourly      *-*-* *:00:00
+                    daily       *-*-* 00:00:00
+                    weekly      Mon *-*-* 00:00:00
+                    monthly     *-*-01 00:00:00
+                    +3h10m      Thu 2015-08-13 17:00:00
+                    2015-08-16  Sun 2015-08-16 00:00:00
+
+    相关资源
+        http://www.jinbuguo.com/systemd/systemd.service.html
+        http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html
+</code></pre><h2 id="系统日志"><a href="#系统日志" class="headerlink" title="系统日志"></a>系统日志</h2><pre><code>常见日志文件
+    /var/log/boot.log  开机时的启动日志，只保存最近一次记录
+    /var/log/cron      crontab定时任务执行日志
+    /var/log/dmesg     开机核心检测过程日志
+    /var/log/lastlog   记录系统中所有帐号最近一次登入系统的相关信息
+    /var/log/maillog   记录SMTP 和 POP3 产生的信息
+    /var/log/messages  记录各类系统错误或重要信息
+    /var/log/secure    记录系统中的登入操作，包括su,sudo,ssh,telnet等
+    /var/log/wtmp      记录正确登入系统的帐号信息
+    /var/log/faillog   记录错误登入系统时使用的帐号信息
+    /var/log/httpd/*   记录http服务产生的日志
+    /var/log/samba/*   记录samba服务产生的日志
+
+日志相关服务
+    systemd-journald.service  由systemd提供的日志接收者，信息保存在内存中，可通过/run/log/查看
+    rsyslog.service           统一管理日志文件的服务，主要记录系统与网络服务等信息
+    logrotate                 日志文件备份保存工具，备份重命名旧文件，生成新文件
+
+rsyslog.service
+    配置文件 /etc/rsyslog.conf
+        服务分类
+            0     kern(kernel)  kernel所产生的信息，多为硬件检测和核心功能启用
+            1     user          用户产生的日志，如 logger 的使用
+            2     mail          邮件收发相关日志；
+            3     daemon        系统服务产生的日志
+            4     auth          认证授权相关信息，如login, ssh, su 等
+            5     syslog        rsyslogd 程序所产生的信息
+            6     lpr           打印相关的日志
+            7     news          新闻服务器相关的信息
+            8     uucp          Unix to Unix Copy Protocol，早期用于 unix 系统间的信息通信
+            9     cron          定时任务 cron/at 等产生的日志
+            10    authpriv      与 auth 相似，多记录帐号私有信息，如 pam 模块的运行等！
+            11    ftp,FTP       FTP通信协议有关的日志
+            16~23 local0 ~ 7    保留给用户使用的信息，通常和终端互动。
+        日志级别
+            7   debug   debug信息
+            6   info    信息说明
+            5   notice  比info更需要引起注意的信息
+            4   warning 警告信息，可能存在问题，但不至于影响服务正常运行
+            3   err     错误信息，如服务无法启动等
+            2   crit    严重错误信息，比error更加严重，critical 的缩写
+            1   alert   警告信息，比crit更加严重
+            0   emerg   最严重的级别，如硬件出现问题，核心无法正常工作
+        连接符
+            .      代表小于等于该级别，更加严重的都记录下来
+            .=     代表只记录.=后面的级别
+            .!     除.!后面的级别都记录
+            .none  不记录
+        日志保存位置
+            本机绝对路径 如/var/log
+            打印机等设备 如/dev/lp0
+            用户名称，显示给指定用户
+            远程主机，如 @study.vbird.tsai，需远程主机支持
+            * 代表目前线上所有人
+        服务名称
+            syslog           Linux核心提供的日志函数
+            rsyslogd         具有日志分类等功能的程序， 是最基本的daemon
+            rsyslog.service  加入 systemd 的控制，由rsyslogd开发的启动服务脚本设置！
+
+logrotate
+    配置文件
+        /etc/logrotate.conf
+        /etc/logrotate.d/
+    logrotate
+        -v   在logrotate运行时显示过程信息
+        -f   无论是否符合设定，强制执行 rotate
+
+journalctl
+    配置文件
+        /etc/systemd/journald.conf
+    命令及选项
+        -n           展示最近的几行信息
+        -r           反向输出
+        -p           按照重要性排序展示信息
+        -f           类似 tail -f 的功能，持续展示 journal 日志内容
+        -u           输入指定的unit的日志
+        --since      设定开始时间
+        --until      设定结束时间
+        _COMM=bash   只输出 bash 相关的日志
+        _PID=pid     只输出指定 PID 进程的日志
+        _UID=uid     只输出指定 UID 用户的日志
+        _SYSTEMD_UNIT=unit.service   输出 unit.service 的日志
+        SYSLOG_FACILITY=[0-23]       使用 syslog.h 规范服务序号显示日志
+
+logger  保存信息至日志文件
+dmesg   打印开机过程保存的日志
+logwatch  日志分析工具
+</code></pre><h2 id="启动流程模块管理-Loader"><a href="#启动流程模块管理-Loader" class="headerlink" title="启动流程模块管理 Loader"></a>启动流程模块管理 Loader</h2><pre><code>开机过程
+    1，读取Bios进行硬件自检，并根据Bios设置获取第一个启动设备
+    2，读取并执行设备MBR(Master boot record,主引导记录)的boot loader(grub2,spfdisk等)
+    3，根据boot loader设定载入Kernel ，Kernel 开始检测硬件并加载驱动
+    4，硬件驱动成功后，Kernel 主动启动 systemd 程序，并以 default.target 流程开机；
+        systemd 执行 sysinit.target 初始化系统及 basic.target 准备操作系统
+        systemd 启动 multi-user.target 下的本机与服务器服务
+        systemd 执行 multi-user.target 下的 /etc/rc.d/rc.local 文件
+        systemd 执行 multi-user.target 下的 getty.target 及登入服务
+        systemd 执行 graphical 需要的服务
+
+boot loader功能
+    提供选择不同loader的选项
+    加载操作系统核心
+    将开机管理功能交给其他loader负责
+
+/boot/相关文件
+    config                  内核编译时的功能和模块设置文件
+    grub/                   旧版 grub1 相关文件
+    grub2/                  启动管理程序 grub2 相关文件
+    initrd.gz               内存虚拟磁盘映像
+    initramfs-0-rescue.img  救援模式用到的系像文件
+    initramfs.img           正常开机用到的系统文件
+    initramfskdump.img      内核题时用到的系统文件
+    System.map              内核功能放置到内存的地址对应表
+    vmlinuz-0-rescue*       救援模式用到的内核文件
+    vmlinuz*                内核二进制文件
+
+开机过程中的配置文件
+    /etc/modules-load.d/*.conf       核心模块加载配置
+    /etc/modprobe.d/*.conf           可附加参数的模块配置
+    /etc/sysconfig/authconfig        规范用户身份认证机制，如是否可用/etc/passwd, /etc/shadow等
+    /etc/sysconfig/cpupower          cpupower.service服务的配置，规定系统如何高效利用CPU
+    /etc/sysconfig/firewalld         firewalld系统防火墙配置
+    /etc/sysconfig/iptables-config   iptables系统防火墙配置
+    /etc/sysconfig/network-scripts/  网卡设定
+
+核心 &amp; 核心模块
+    文件位置
+        /boot/vmlinuz[-version]           核心文件
+        /boot/initramfs[-version]         核心解压缩RAM Disk
+        /lib/modules/version/kernel       核心模块
+        /lib/modules/$(uname -r)/kernel   核心模块
+        /usr/src/linux                    核心源码
+        /usr/src/kernels/                 核心源码
+        /proc/version                     核心版本
+        /proc/sys/kernel/                 系统核心功能
+    新硬件安装驱动
+        重新编译内核，并加入最新的硬件驱动
+        将该硬件驱动编译为模块，开机载入该模块
+    核心模块
+        模块目录
+            arch     硬件平台相关模块，如CPU等级等
+            crypto   内核支持的加密基数，如 md5  des 等
+            drivers  硬件驱动，如显卡，网卡，PCI 等
+            fs       内核所支持的 filesystems ，如 vfat, reiserfs, nfs 等
+            lib      一些函数库；
+            net      网络相关协议资料，防火墙模块 (net/ipv4/netfilter/*) 等
+            sound    音效相关模块
+        模块依赖文件
+            /lib/modules/$(uname -r)/modules.dep
+        depmod  生成模块依赖文件
+            -n  ：不写入 modules.dep ，而是将结果输出到屏幕上(standard out)；
+            -e  ：显示出目前已加载的不可执行的模块名
+        lsmod  查看已加载的模块
+            字段意义
+                Module    模块名称
+                size      模块大小
+                Used by   被哪些模块使用
+        modinfo  看看模块信息
+            -a [module_name]  仅列出作者名称
+            -d [module_name]  仅列出该 modules 的说明 (description)；
+            -l [module_name]  仅列出授权 (license)；
+            -n [module_name]  仅列出该模块的的詳細路径。
+        modprobe 依据modules.dep依赖关系加载模块
+            -c             列出目前系统中所有模块
+            -f module_name 强制加载模块
+            -r module_name 删除模块 类似 rmmod
+        insmod   根据文件名加载模块，不依据modules.dep
+        rmmod    删除模块
+        核心模块额外参数设置  /etc/modprobe.d/*conf
+
+Boot Loader: Grub2
+    Grub2文件
+        /grub2/device.map                    grub2 的设备对应文件
+        /grub2/fonts                         开机画面的字体
+        /grub2/grub.cfg                      grub2 主设置文件，重要，不建议修改
+        /grub2/grubenv                       环境区块文件
+        /grub2/i386-pc                       针对x86PC所需要的grub2的相关模块
+        /grub2/locale                        语系相关文件
+        /grub2/themes                        开机主题画面相关文件
+        /grub2/i386-pc/acpi.mod              電源管理相关模块
+        /grub2/i386-pc/ata.mod               磁盘相关模块
+        /grub2/i386-pc/chain.mod             进行 loader 控制权限移交相关模块
+        /grub2/i386-pc/command.lst           指令相关性列表
+        /grub2/i386-pc/efiemu32.o            uefi BIOS 32位相关模块
+        /grub2/i386-pc/efiemu64.o            uefi BIOS 64位相关模块
+        /grub2/i386-pc/efiemu.mod            uefi BIOS 64位相关模块
+        /grub2/i386-pc/ext2.mod              EXT 文件系统家族模块
+        /grub2/i386-pc/fat.mod               FAT 文件系统模块
+        /grub2/i386-pc/gcry_sha256.mod       sha256加密模块
+        /grub2/i386-pc/gcry_sha512.mod       sha512加密模块
+        /grub2/i386-pc/iso9660.mod           光盘文件系统模块
+        /grub2/i386-pc/lvm.mod               LVM文件系统模块
+        /grub2/i386-pc/mdraid09.mod          软磁盘阵列模块
+        /grub2/i386-pc/minix.mod             MINIX相关文件系统模块
+        /grub2/i386-pc/msdospart.mod         一般 MBR 分区表
+        /grub2/i386-pc/part_gpt.mod          GPT 分区表
+        /grub2/i386-pc/part_msdos.mod        MBR 分区表
+        /grub2/i386-pc/scsi.mod              SCSI 相关模块
+        /grub2/i386-pc/usb_keyboard.mod      USB键盘相关模块
+        /grub2/i386-pc/usb.mod               USB相关模块
+        /grub2/i386-pc/vga.mod               VGA 显卡相关模块
+        /grub2/i386-pc/xfs.mod               XFS 文件系统模块
+    Grub2优点
+        支持较多文件系统，可由Grub2程序直接在文件系统中搜索系统内核文件
+        可自定义开机选项
+        动态载入设置文件，修改设置文件后不需要重新安装Grub2，重启后生效
+    /etc/default/grub 主要环境配置文件
+        GRUB_TIMEOUT             默认倒数描述
+        GRUB_DEFAULT             默认开机选项菜单
+        GRUB_TIMEOUT_STYLE       是否隐藏选单
+        GRUB_DISABLE_SUBMENU     是否隐藏子菜单
+        GRUB_TERMINAL_OUTPUT     指定信息输出终端格式，默认是文字终端机
+        GRUB_CMDLINE_LINUX       核心启动时的格外参数
+        GRUB_DISABLE_RECOVERY    关闭救援模式菜单
+    grub2-mkconfig  依据/etc/default/grub重建grub.cfg
+    grub2 菜单生产脚本 /etc/grub.d/*
+        00_header      主要建立初始显示信息，包括终端机格式显示秒数等
+        10_linux       分析/boot下文件，尝试找到正确的linux核心读取核心文件和模块
+        30_os-prober   默认到其他partition里面的操作系统并添加到菜单中
+        40_custom      可在这里手动添加其他的启动项目
+    dracut  生成新的initramfs文件
+        -f             强制编译initramfs，如果initramfs文件已经存在则覆盖
+        -v             显示dracut运营过程
+        --add-drivers  在文件中增加驱动核心模块
+        --modules      将dracut所提供的模块载入，usr/lib/dracut/modules.d/
+        --gzip|--bzip2 选择压缩方式对initramfs压缩。默认gzip
+        --filesystems  加入格外的文件系统资支持
+</code></pre><h2 id="系统设置"><a href="#系统设置" class="headerlink" title="系统设置"></a>系统设置</h2><pre><code>网络设置
+    网卡名称
+        eno1     主板内置网卡
+        ens1     主板内置的PCI-E网卡
+        enp2s0   PCI-E独立网卡，多个插槽会有s0, s1... 等编号
+        eth0     (Ethernet) 上述名称都不适用时，恢复默认网卡编号
+    hostnamectl  查看或修改主机名称
+        set-hostname [host-name] 修改主机名称
+
+日期时间设置
+    timedatectl  查看或设置系统日期时区
+        list-timezones   列出系統上所有支持时区
+        set-timezone     设置时区
+        set-time         设置时间
+        set-ntp          设置网络校时
+    ntpdate 设定网络校时服务器
+    hwclock 手动依据网络校时服务器更新时间
+
+语言设置
+    locale  当前环境语系
+    localectl  查询设置系统语言
+        set-locale  设置系统语言
+</code></pre><h2 id="核心编译"><a href="#核心编译" class="headerlink" title="核心编译"></a>核心编译</h2><pre><code>核心目录
+    arch            与硬件平台相关内容，通常为是 CPU 的类别，如 x86, x86_64, Xen 虚拟支持等等；
+    block           与存储设备和文件系统相关的内容，文件系统是否允许等
+    crypto          核心支持的加密技术，如 md5，des 等
+    Documentation   与核心相关的文档说明
+    drivers         硬件相关的驱动程序，如网卡，显卡，PCI设备等
+    firmware        旧式硬件的微指令码 (固件) 资料
+    fs              核心支持的文件系统 filesystems ，如 vfat, reiserfs, nfs 等
+    include         一些可让其他程序呼叫的头(header)定义资料
+    init            核心初始化的内容，包括挂载与 init 程序的呼叫等
+    ipc             定义 Linux 系统各程序的通信
+    kernel          定义核心的程序、核心状态、执行序、程序的排程(schedule)、程序的信号(signle)等
+    lib             一些函数库；
+    mm              与内存单元有关的各项资料，包括 swap 与虚拟内存等；
+    net             与网络有关的各项设定资料，还有防火墙模块 (net/ipv4/netfilter/*) 等
+    security        包括 selinux 等在内的安全性设定；
+    sound           与音效有关的各项模块；
+    virt            与虚拟机有关的信息，目前核心支持的是 KVM (Kernel base Virtual Machine)
+
+生成config编译配置文件
+    make menuconfig    最常用，终端图形界面核心功能设置界面
+    make oldconfig     以已经存在的./.config文件内容作为默认值，提供新功能的选项
+    make xconfig       Qt图形设置界面，需 X window 支持，如 KDE
+    make gconfig       Gtk图形设置界面，需 X window 支持，如 GNOME
+    make config        旧版命令行设置方式，每个设置独立选择
+
+编译
+    make vmlinux          编译未经过压缩的核心
+    make modules          仅编译核心模块
+    make bzImage          编译经过压缩的核心（默认）
+    make all              进行如上三种动作
+    make -j 4 clean       先清楚临时文件
+    make -j 4 bzImage     编译核心
+    make -j 4 modules     编译核心模块
+
+安装
+    make modules_install  安装模块
+</code></pre><h2 id="硬件设备名"><a href="#硬件设备名" class="headerlink" title="硬件设备名"></a>硬件设备名</h2><pre><code>IDE硬盘机              /dev/hd[a-d]
+SCSI/SATA/U盘硬盘机    /dev/sd[a-p]
+U盘                    /dev/sd[a-p](与SATA相同)
+软盘机                 /dev/fd[0-1]
+打印机 25针:           /dev/lp[0-2]
+打印机 USB:            /dev/usb/lp[0-15]
+鼠标  USB:             /dev/usb/mouse[0-15]
+鼠标  PS2:             /dev/psaux
+当前CDROM/DVDROM       /dev/cdrom
+当前的鼠标             /dev/mouse
+磁带机 IDE:            /dev/ht0
+磁带机 SCSI:           /dev/st0
+</code></pre><h2 id="apt-get包管理工具"><a href="#apt-get包管理工具" class="headerlink" title="apt-get包管理工具"></a>apt-get包管理工具</h2><pre><code>apt-cache search package 搜索包
+apt-cache show package 获取包的相关信息，如说明、大小、版本等
+apt-cache depends package 了解使用依赖
+apt-cache rdepends package 查看该包被哪些包依赖
+sudo apt-get install package 安装包
+sudo apt-get install package --reinstall 重新安装包
+sudo apt-get -f install package 修复安装包
+sudo apt-get remove package 删除包
+sudo apt-get remove package --purge 删除包，包括删除配置文件等
+sudo apt-get update 更新源
+sudo apt-get upgrade 更新已安装的包
+sudo apt-get dist-upgrade 升级系统
+sudo apt-get dselect-upgrade 使用 dselect 升级
+sudo apt-get build-dep package 安装相关的编译环境
+apt-get source package 下载该包的源代码
+sudo apt-get clean &amp;&amp; sudo apt-get autoclean 清理无用的包
+sudo apt-get check 检查是否有损坏的依赖
+</code></pre><h2 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h2><pre><code>ctrl + c    强行终止
+ctrl + l    清屏   相当于clear命令
+ctrl + a    光标移动到命令行首
+ctrl + e    光标移动到命令行尾
+ctrl + u    从光标所在位置删除到行首
+ctrl + z    把命令放入后台
+ctrl + r    在历史命令中搜索
+ctrl + d    输入结束 (eof)，例如邮件结束的时候；
+ctrl + m    就是 enter 啦！
+ctrl + s    暂停屏幕的输出
+ctrl + q    恢复屏幕的输出
+</code></pre><h2 id="目录作用"><a href="#目录作用" class="headerlink" title="目录作用"></a>目录作用</h2><pre><code>/bin/                  系统所需要的任意用户可执行的命令
+/sbin/                 系统所需要的超级用户才可以执行的命令
+/usr/                  系统软件资源目录 unix software resources
+    /usr/              存放Unix系统商（比如IBM和HP）开发的程序
+    /usr/bin/          任意用户可执行的命令
+    /usr/sbin/         超级用户才可以执行的命令
+    /usr/include       linux下开发和编译应用程序所需要的头文件
+    /usr/lib           常用的动态链接库和软件包的配置文件
+    /usr/local/        存放用户自己安装的程序
+    /usr/local/bin     本地增加的命令
+    /usr/local/lib     本地增加的库
+    /usr/doc           linux文档，实际是 /usr/share/doc 的软链接
+    /usr/etc           一个极少用到的配置文件存放地
+    /usr/games         曾经包含游戏等文件，现在很少用到
+    /usr/info          系统相关信息，是 /usr/share/info 的软链接
+    /usr/man           man 手册，已经移至 /usr/share/man
+    /usr/share         它包含了各种程序间的共享文件，如字体，图标，文档等
+    /usr/share/doc     类似应用程序的 man 手册。它包含程序的说明文件，默认配置文件等
+    /usr/share/info    不常用，已经被 man 代替
+    /usr/share/man     app 的 manual
+    /usr/share/icons   应用程序的图标等文件，分为 png，svg 等多种格式
+    /usr/share/fonts   字体文件，系统范围内可使用，~/.fonts 仅当前用户可用
+    /usr/src           linux 内核的源码和说明文档等
+    /usr/tmp           已经被众多发行版抛弃的临时文件夹
+    /usr/X11R6         存放X window的目录
+/boot/                 启动目录，保存启动数据
+/dev/                  设备特殊文件，保存硬件文件
+/ect/                  系统管理和配置文件
+/home/                 普通用户主目录
+/root/                 系统管理员的主目录
+/lib/                  函数库文件保存目录
+/misc/                 挂载磁带机目录(不常用 因老版linux不存在此目录)
+/media/                挂载光盘目录(不常用 因老版linux不存在此目录)
+/mnt/                  让用户临时挂载其他的文件系统，如移动硬盘和U盘
+/proc/                 虚拟的目录，是系统内存的映射。可直接访问这个目录来获取系统信息
+/sys/                  内存挂载点目录，不可直接操作，数据直接写在目录中
+/tmp/                  公用的临时文件存储点
+/var/                  某些大文件的溢出区，比方说各种服务的日志文件
+/opt/                  option-选装,存放第三方厂商开发的程序，软件所有的数据在同一文件夹
+/lost+found            这个目录平时是空的，系统非正常关机而留下“无家可归”的文件
+</code></pre><h2 id="网络基础"><a href="#网络基础" class="headerlink" title="网络基础"></a>网络基础</h2><pre><code>OSI七层网络协议
+    1.物理层  Physical Layer
+        一个（不一定可靠的）点对点数据直链。定义机械特性；电气特性；功能特性；规程特性
+        例如:线路、无线电、光纤
+    2.数据链路层  Data-Link Layer
+        一个可靠的点对点数据直链。检错与纠错（CRC码）；多路访问；寻址
+        例如:以太网、令牌环、HDLC、帧中继、ISDN、ATM、IEEE 802.11、FDDI、PPP
+    3.网络层  Network Layer
+        在网络的各个节点之间进行地址分配、路由和（不一定可靠的）分发报文。路由（ IP寻址）；拥塞控制。
+        例如:IP、ICMP、IGMP、IPX、BGP、OSPF、RIP、IGRP、EIGRP、ARP、RARP、X.25
+    4.传输层  Transport Layer
+        在网络的各个节点之间可靠地分发数据包。所有传输遗留问题；复用；流量；可靠
+        例如:TCP、UDP、TLS、RTP、SCTP、SPX、ATP、IL
+    5.会话层  Session Layer
+        主机间通讯，管理应用程序之间的会话。规定通信时序 ；数据交换的定界、同步，创建检查点等
+        例如:ASAP、SSH、ISO 8327 / CCITT X.225、RPC、NetBIOS、ASP、Winsock、BSD sockets
+    6.表示层  Presentation Layer
+        数据表示形式，加密和解密，把机器相关的数据转换成独立于机器的数据。规定数据的格式化表示 ，数据格式的转换等
+        例如:XDR、ASN.1、SMB、AFP、NCP
+    7.应用层  Application Layer
+        网络进程到应用程序。针对特定应用规定各层协议、时序、表示等，进行封装 。在端系统中用软件来实现，如HTTP等
+        例如:HTTP、SMTP、SNMP、FTP、Telnet、SIP、SSH、NFS、RTSP、XMPP、Whois、ENRP
+
+TCP/IP参考模型
+    1 网络接口层 link layer
+        例如:以太网、Wi-Fi、MPLS等。
+    2 网络互连层 internet layer
+        对于TCP/IP来说这是因特网协议（IP）
+    3 传输层 transport layer
+        例如:TCP、UDP、RTP、SCTP
+    4 应用层 application layer
+        例如:HTTP、FTP、DNS
+</code></pre><h2 id="网络配置"><a href="#网络配置" class="headerlink" title="网络配置"></a>网络配置</h2><pre><code>配置文件
+    /etc/sysconfig/network-scripts/ifcfg-eth0  IP相关参数配置
+        DEVICE=&quot;eth0&quot;                网络卡代号，必须要 ifcfg-eth0 相对应
+        HWADDR=&quot;08:00:27:71:85:BD&quot;   就是网络卡地址，若只有一张网卡，可省略此项目
+        NM_CONTROLLED=&quot;no&quot;           不要受到其他软件的网络管理！
+        ONBOOT=&quot;yes&quot;                 是否默认启动此接口的意思
+        BOOTPROTO=none               取得IP的方式，其实关键词只有dhcp，手动可输入none
+        IPADDR=192.168.1.100         IP地址
+        NETMASK=255.255.255.0        子网掩码
+        GATEWAY=192.168.1.254        预设路由
+        NETWORK=192.168.1.0          该网段的第一个 IP，可省略
+        BROADCAST=192.168.1.255      广播地址啰，可省略
+        MTU=1500                     最大传输单元的设定值，若不更改则 可省略
+    /etc/resolv.conf  DNS配置文件
+    /etc/sysconfig/network  主机名相关配置
+    /etc/hosts  hosts配置
+
+网络配置和查询命令
+    dig        检查DNS设置
+    host       查看某个域名对应的IP
+    nslookup   互相查询域名和IP的对应
+    hostname   查看主机名
+    ifup       开启网络接口
+    ifdown     关闭网络接口
+    iwconfig   查看设置无线网卡
+    iwlist     利用无线网卡进行无线 AP 的侦测与取得相关的数据
+    dhclient   手动使用 DHCP 取得IP
+
+    ping
+        -c        后面接的是执行 ping 的次数，例如 -c 5 ；
+        -n        在输出数据时不进行 IP 与主机名的反查，直接使用 IP 输出(速度较快)；
+        -s        发送出去的 ICMP 封包大小，预设为 56bytes，不过你可以放大此一数值；
+        -t        TTL 的数值，预设是 255，每经过一个节点就会少一；
+        -W        等待响应对方主机的秒数。
+        -M        主要在侦测网络的 MTU 数值大小，两个常见的项目是：
+            do    代表传送一个 DF (Don&apos;t Fragment) 旗标，让封包不能重新拆包与打包；
+            dont  代表不要传送 DF 旗标，表示封包可以在其他主机上拆包与打包
+        状态意义
+           64 bytes   ICMP的封包大小为64 bytes，这是默认值。可修改此值测试网络内最大的MTU
+           icmp_seq   ICMP 所侦测进行的次数，第一次编号为 1 ；
+           ttl=       默认255或64，每经过一个带MAC的节点时，TTL减1
+           time=      响应时间，越小的响应时间，表示两部主机之间的网络联机越良好！
+
+    traceroute     分析两个主机之间的节点
+        -n         可以不必进行主机的名称解析，单纯用 IP ，速度较快！
+        -U         使用 UDP 的 port 33434 来进行侦测，这是默认的侦测协议；
+        -I         使用 ICMP 的方式来进行侦测；
+        -T         使用 TCP 来进行侦测，一般使用 port 80 测试
+        -w         若对方主机在几秒钟内没有回声就宣告不治...预设是 5 秒
+        -p port    若不想使用 UDP 与 TCP 的默认端口来侦测，可在此改变端口。
+        -i device  当前有多台设备，可指定其中一个
+        -g gate    与 -i 的参数相仿，只是 -g 后面接的是 gateway 的 IP 就是了。
+
+    netstat  查看网络信息
+        -r   列出路由表(route table)，功能如同 route 这个指令；
+        -a   将目前系统上所有的连线、监听、Socket 数据都列出来
+        -t   列出 tcp 网络封包的数据
+        -u   列出 udp 网络封包的数据
+        -n   不以程序的服务名称，以端口 (port number) 来显示；
+        -l   列出目前正在网络监听 (listen) 的服务；
+        -p   列出该网络服务的程序 PID
+        -c   可以设定几秒钟后自动更新一次，例如 -c 5 每五秒更新一次网络状态的显示；
+        netstat -tlnp  列出目前系统中已开启的网络服务及PID
+        网络连接相关状态：
+            Proto           网络的封包协议，主要分为 TCP 与 UDP 封包，相关数据请参考服务器篇；
+            Recv-Q          非由使用者程序连结到此 socket 的复制的总 bytes 数；
+            Send-Q          非由远程主机传送过来的 acknowledged 总 bytes 数；
+            Local Address   本地端的 IP:port 情况
+            Foreign Address 远程主机的 IP:port 情况
+            State           连线状态；
+                ESTABLISED  已建立联机的状态；
+                SYN_SENT    发出主动联机 (SYN 标志) 的联机封包；
+                SYN_RECV    接收到一个要求联机的主动联机封包；
+                FIN_WAIT1   该插槽服务(socket)已中断，该联机正在断线当中；
+                FIN_WAIT2   该联机已挂断，但正在等待对方主机响应断线确认的封包；
+                TIME_WAIT   该联机已挂断，但 socket 还在网络上等待结束；
+                LISTEN      通常用在服务的监听 port ！可使用『 -l 』参数查阅。
+        本机进程相关状态：
+            Proto   一般就是 unix 啦；
+            RefCnt  连接到此 socket 的程序数量；
+            Flags   连线的旗标；
+            Type    socket 存取的类型。主要有确认连线的 STREAM 与不需确认的 DGRAM 两种；
+            State   若为 CONNECTED 表示多个程序之间已经连线创建。
+            Path    连接到此 socket 的相关程序的路径！或者是相关数据输出的路径。
+
+    nmap  扫描主机和开启的服务和端口
+        -sT    扫瞄 TCP 封包已建立的联机 connect() ！
+        -sS    扫瞄 TCP 封包带有 SYN 卷标的数据
+        -sP    以 ping 的方式进行扫瞄
+        -sU    以 UDP 的封包格式进行扫瞄
+        -sO    以 IP 的协议 (protocol) 进行主机的扫瞄
+        -PT    使用 TCP 里头的 ping 的方式来进行扫瞄，可以获知目前有几部计算机存活(较常用)
+        -PI    使用实际的 ping (带有 ICMP 封包的) 来进行扫瞄
+        -p     这个是 port range ，例如 1024-, 80-1023, 30000-60000 等等的使用方式
+        [Hosts 地址与范围]：这个有趣多了，有几种类似的类型
+            192.168.1.100  ：直接写入 HOST IP 而已，仅检查一部；
+            192.168.1.0/24 ：为 C Class 的型态，
+            192.168.*.*　　：嘿嘿！则变为 B Class 的型态了！扫瞄的范围变广了
+            192.168.1.0-50,60-100,103,200 ：这种是变形的主机范围
+
+    ifconfig   查询、设定网卡与 IP 网域等相关参数
+        up, down    启动 (up) 或关闭 (down) 该网络接口(不涉及任何参数)
+        mtu         可以设定不同的 MTU 数值，例如 mtu 1500 (单位为 byte)
+        netmask     就是子屏蔽网络
+        broadcast   就是广播地址啊
+        查询状态意义
+            eth0          网络卡的代号，也有 lo 这个 loopback ；
+            HWaddr        网络卡的硬件地址，俗称的 MAC 地址；
+            inet addr     IPv4 的 IP 地址，后续的 Bcast, Mask 分别代表的是 Broadcast 与 netmask
+            inet6 addr    是 IPv6 的版本的 IP
+            MTU           每次MAC封包数据的最大字节数
+            RX            网络由启动到目前为止的封包接收量，packets封包数、errors错误量、dropped丢弃封包量
+            TX            与 RX 相反，为网络由启动到目前为止的传送情况；
+            collisions    代表封包碰撞的情况，如果发生太多次， 表示你的网络状况不太好；
+            txqueuelen    代表用来传输数据的缓冲区的储存长度；
+            RX bytes      总接收节总量
+            TX bytes      总发送字节总量
+
+    route  查看路由表
+        -n           不要使用通讯协议或主机名，直接使用 IP 或 port number；
+        -ee          使用更详细的信息来显示
+        add          新增路由
+        del          删除路由
+            -net     表示后面接的路由为一个网域；
+            -host    表示后面接的为连接到单部主机的路由；
+            netmask  与网域有关，可以设定 netmask 决定网域的大小；
+            gw       gateway 的简写，后续接的是 IP 的数值喔，与 dev 不同；
+            dev      如果只是要指定由那一块网络卡联机出去，则使用这个设定，后面接 eth0 等
+        状态意义
+            Destination  其实就是 Network 的意思；
+            Gateway      该接口的 Gateway 那个 IP 啦！若为 0.0.0.0 表示不需要额外的 IP；
+            Genmask      Netmask！与 Destination 组合成为一部主机或网域；
+            Flags        共有多个旗标可以来表示该网域或主机代表的意义：
+                U        该路由是启动的；
+                H        目标是一部主机 (IP) 而非网域；
+                G        需要透过外部的主机 (gateway) 来转递封包；
+                R        使用动态路由时，恢复路由信息的旗标；
+                D        已经由服务或转 port 功能设定为动态路由
+                M        路由已经被修改了；
+                !        这个路由将不会被接受(用来抵挡不安全的网域！)
+            Iface        Interface (接口) 的意思。
+
+    ip   查询修改网络设置,比ifconfig route 更加全面
+        link          关于装置 (device) 的相关设定，包括 MTU, MAC 地址等等
+        addr/address  关于额外的 IP 协议，例如多 IP 的达成等等；
+        route         与路由有关的相关设定
+
+    arp  查看本机 MAC/IP 对应表
+        -n   将主机名以 IP 的型态显示
+        -d   将 hostname 的 hardware_address 由 ARP table 当中删除掉
+        -s   设定某个 IP 或 hostname 的 MAC 到 ARP table 当中
+
+远程联机相关命令
+    telnet  通过telnet连接远程主机
+    lftp    自动化脚本FTP
+
+    ftp     从FTP服务器下载文件
+        连接主机后可执行的命令
+            help            提供需要的指令说明，可以常参考！
+            dir             显示远程服务器的目录内容 (文件名列表)
+            cd /pub         变换目录到 /pub 当中
+            get filename    下载单一档案，档名为 filename
+            mget filename*  下载多个档案，可使用通配符 *
+            put filename    上传 filename 这个档案到服务器上
+            delete file     删除主机上的 file 这个档案
+            mkdir dir       建立 dir 这个目录
+            lcd /home       切换『本地端主机』的工作目录
+            passive         启动或关闭 passive 模式
+            binary          数据传输模式设定为 binary 格式
+            bye             结束 ftp 软件的使用
+
+    links  文本网页浏览
+        进入程序后的快捷键
+            h    history ，曾经浏览过的 URL 就显示到画面中
+            g    Goto URL，按 g 后输入网页地址(URL) 如 :http://www.abc.edu/等
+            d    download，将该链接数据下载到本机成为档案；
+            q    Quit，离开 links 这个软件；
+            o    Option，进入功能参数的设定值修改中，最终可写入 ~/.elinks/elinks.conf 中
+
+    wget   文本接口下载工具
+        --http-user        设置用户名
+        --http-password    设置密码
+        --quiet            不要显示 wget 在抓取数据时候的显示讯息
+        /etc/wgetrc        配置文件
+
+    tcpdump  抓包工具
+        -A   封包的内容以 ASCII 显示，通常用来捉取 WWW 的网页封包资料。
+        -e   使用资料连接层 (OSI 第二层) 的 MAC 封包数据来显示；
+        -n   直接以 IP 及 port number 显示，而非主机名与服务名称
+        -q   仅列出较为简短的封包信息，每一行的内容比较精简
+        -X   可以列出十六进制 (hex) 以及 ASCII 的封包内容，对于监听封包内容很有用
+        -i   后面接要『监听』的网络接口，例如 eth0, lo, ppp0 等等的界面；
+        -w   如果你要将监听所得的封包数据储存下来，用这个参数就对了！后面接文件名
+        -r   从后面接的文件将封包数据读出来。这个文件是由 -w 所制作出来的。
+        -c   监听的封包数，如果没有这个参数， tcpdump 会持续不断的监听。
+
+    nc  启动 TCP/UDP 封包的端口联机
+        -l   作为监听之用，亦即开启一个 port 来监听用户的联机；
+        -u   不使用 TCP 而是使用 UDP 作为联机的封包状态
+</code></pre><h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><pre><code>相关概念
+    静态路由：类似route指令来直接设定路由表到核心功能当中，网域有变化时需重新设定；
+    动态路由：透过类似Quagga或zebra软件的功能，动态的侦测网域的变化修改路由表信息。
+    NAT：(Network Address Translation)除了路由，多出Public IP与Private IP转换功能。
+
+相关文件
+    /proc/sys/net/ipv4/ip_forward  查看是否启用数据包传递，1开启，0未开启
+    /etc/sysctl.conf   系统变量设置，可启动数据包传递功能
+
+quagga  动态路由功能，相当于zebra + ripd
+    相关服务
+        zebra   这个 daemon 的功能在更新核心的路由规则；
+        RIP     这个 daemon 则是在向附近的其他 Router 沟通协调路由规则的传送与否。
+    配置文件
+        /etc/quagga/*.conf
+</code></pre><h2 id="防火墙设置"><a href="#防火墙设置" class="headerlink" title="防火墙设置"></a>防火墙设置</h2><pre><code>TCP wrappers
+    配置文件
+        /etc/hosts.allow
+        /etc/hosts.deny
+    语法
+        &lt;service(program_name)&gt; : &lt;IP, domain, hostname&gt;
+        &lt;服务(亦即程序名称)&gt; : &lt;IP 或 域名 或 主机名&gt;
+    例
+        ALL: 127.0.0.1     这就是本机全部的服务都接受
+        rsync: 192.168.1.0/255.255.255.0 10.0.0.100  多个IP可用空格相加
+
+iptables
+    Linux核心默认包含的表格
+        raw              用于配置数据包，raw 中的数据包不会被系统跟踪。
+        filter           过滤器，主要跟进入 Linux 本机的封包有关，这个是默认的 table
+            INPUT        主要与想要进入我们 Linux 本机的封包有关
+            OUTPUT       与我们 Linux 本机所要送出的封包有关
+            FORWARD      可以转递数据包到后端的计算机中，与下列 nat table 相关性较高。
+        nat              是用于存放所有与防火墙相关操作的默认表。
+            PREROUTING   在进行路由判断之前所要进行的规则(DNAT/REDIRECT)
+            POSTROUTING  在进行路由判断之后所要进行的规则(SNAT/MASQUERADE)
+            OUTPUT       与发送出去的封包有关
+        mangle           破坏者，这个表格主要是与特殊的封包的路由旗标有关
+        security         用于 强制访问控制 网络规则。
+
+    选项与参数
+        -t   后面接 table ，例如 nat 或 filter ，若省略此项目，则使用默认的 filter
+        -L   列出目前的 table 的规则
+        -n   不进行 IP 与 HOSTNAME 的反查，显示讯息的速度会快很多！
+        -v   列出更多的信息，包括通过该规则的封包总位数、相关的网络接口等
+        -F   清除所有的已订定的规则；
+        -X   杀掉所有使用者 &quot;自定义&quot; 的 chain (应该说的是 tables ）啰；
+        -Z   将所有的 chain 的计数与流量统计都归零
+        -P   定义政策( Policy )
+
+    修改相关的选项与参数
+        -A       新增一条规则至最后
+        -I       插入一条规则至最前
+        -i       封包所进入的那个网络接口，例如 eth0, lo 等接口。需INPUT链配合；
+        -o       封包所传出的那个网络接口，需与 OUTPUT 链配合；
+        -p       协议：设定此规则适用于哪种封包格式，有tcp, udp, icmp 及 all 。
+        -s       来源 IP/网域：设定此规则之封包的来源项目，可指定单纯的 IP 或包括网域，例如：
+                 IP    192.168.0.100
+                 网域   192.168.0.0/24, 192.168.0.0/255.255.255.0 均可。
+                 若规范为 不允许 时，则加上 ! 即可，例如：
+                 -s ! 192.168.100.0/24 表示不许 192.168.100.0/24 之封包来源；
+        -d       目标 IP/网域：同 -s ，只不过这里指的是目标的 IP 或网域。
+        --syn    SYN标识
+        --sport  端口范围：限制来源的端口号码，端口号码可以是连续的，例如 1024:65535
+        --dport  端口范围：限制目标的端口号码。
+        -m       一些外挂模块，主要常见的有：state状态模块，mac网卡物理地址
+        --state  一些封包的状态，主要有：
+            INVALID     无效的封包，例如数据破损的封包状态
+            ESTABLISHED 已经联机成功的联机状态；
+            NEW         想要新建立联机的封包状态；
+            RELATED     这个最常用！表示这个封包是与我们主机发送出去的封包有关
+        -j       后面接动作，主要的动作有接受(ACCEPT)、丢弃(DROP)、拒绝(REJECT)及记录(LOG)
+
+    状态与意义
+        target       代表进行的动作， ACCEPT放行，REJECT拒绝，DROP丢弃
+        prot         代表使用的封包协议，主要有 tcp, udp 及 icmp 三种封包格式
+        opt          额外的选项说明
+        source       代表此规则是针对哪个 来源 IP 进行限制？
+        destination  代表此规则是针对哪个 目标 IP 进行限制？
+
+    IPv4 的核心管理功能
+        防止利用TCP SYN Flooding 的 DoS 攻击
+            相关文件
+                /proc/sys/net/ipv4/tcp_syncookies
+            原理
+                当启动 SYN Cookie 时，主机在发送 SYN/ACK 确认封包前，
+                会要求 Client 端在短时间内回复一个序号，
+                这个序号包含许多原本 SYN 封包内的信息，
+                包括 IP、port 等。若 Client 端可以回复正确的序号，
+                那么主机就确定该封包为可信的，因此会发送 SYN/ACK 封包，否则就不理会此一封包。
+
+    防止数据包很大的Ping攻击 ping flooding DoS 攻击
+        相关文件
+            /proc/sys/net/ipv4/icmp_echo_ignore_broadcasts
+        原理
+            可利用防火墙取消 ICMP 类型 8 的 ICMP 封包回应就是了
+            也可通过核心功能禁止ping
+            icmp_echo_ignore_broadcasts (仅有 ping broadcast 地址时才取消 ping 的回应)
+            icmp_echo_ignore_all (全部的 ping 都不回应)
+
+    针对不通的网络接口实现不通的参数设置
+        相关文件
+            /proc/sys/net/ipv4/conf/网络接口/*
+</code></pre><p>##远程联机与服务器</p>
+<pre><code>SSH联机过程
+    1.服务器建立公钥档，文件保存在/etc/ssh/ssh_host*
+    2.客户端主动联机要求
+    3.服务器传送公钥档给客户端，保存在客户端~/.ssh/known_hosts
+    4.客户端保存/对比服务器的公钥数据及随机计算自己的公私钥：
+    5.回传客户端的公钥数据到服务器端：
+    6.开始双向加解密
+
+ssh 命令联机选项与参数
+    -f  需要配合后面的 [指令] ，不登入远程主机直接发送一个指令过去而已；
+    -o  参数项目：主要的参数项目有：
+            ConnectTimeout=秒数 ：联机等待的秒数，减少等待的时间
+            StrictHostKeyChecking=[yes|no|ask]：默认 ask，若要让 public key
+            主动加入 known_hosts ，则可以设定为 no 即可。
+    -p  指定端口，非默认22端口时使用
+
+文件位置
+    /etc/ssh/sshd_config   sshd服务配置文件
+    ~/.ssh/known_hosts     服务器的公钥记录文件
+
+sftp  通过SSH上传下载文件
+    针对Server的行为
+        cd PATH                 变换目录
+        ls                      列出目前下文件名
+        mkdir directory         建立目录
+        rmdir directory         删除目录
+        pwd                     显示目前所在的目录
+        chgrp groupname PATH    更改档案或目录群组
+        chown username PATH     更改档案或目录拥有者
+        chmod 644 PATH          更改档案或目录的权限
+        ln oldname newname      建立连结档
+        rm PATH                 删除档案或目录
+        rename oldname newname  更改档案或目录名称
+        exit                    离开远程主机
+    针对本机的命令前需加l(L的小写)
+        lcd PATH                变换目录到本机的PATH 当中
+        lls                     列出目前本机所在目录下的文件名
+        lmkdir                  在本机建立目录
+        lpwd                    显示目前所在的本机目录
+    文件上传下载相关行为
+        put [LocalDir] [ServerDir]   发送文件至远程服务器
+        put [LocalDir]               发送文件至远程服务器
+        get [ServerDir] [LocalDir]   从服务器下载文件
+        get [ServerDir]              从服务器下载文件
+
+scp  档案的直接复制
+    -p   保留原本档案的权限数据；
+    -r   复制来源为目录时，可以复制整个目录 (含子目录)
+    -l   可以限制传输的速度，单位为 Kbits/s
+
+sshd  服务配置
+    关于 SSH Server 的整体设定
+        Port 22                    SSH服务的的端口，多行此字段用来开放多个端口
+        Protocol 2                 选择的 SSH 协议版本，2,1可支持旧版
+        ListenAddress 0.0.0.0:22   监听地址和端口，可通过多行监听多个地址
+        PidFile /var/run/sshd.pid  放置 SSHD 这个 PID 的文件
+        LoginGraceTime 2m          在输入密码过程中，超时自动断线时间
+        Compression delayed        使用压缩传输，有yes,no与登入后压缩delayed
+    主机的 Private Key 放置的文件
+        HostKey /etc/ssh/ssh_host_key      SSH version 1 使用的私钥
+        HostKey /etc/ssh/ssh_host_rsa_key  SSH version 2 使用的 RSA 私钥
+        HostKey /etc/ssh/ssh_host_dsa_key  SSH version 2 使用的 DSA 私钥
+    关于日志文件的信息数据放置与 daemon 的名称！
+        SyslogFacility AUTHPRIV     可用[DAEMON|USER|AUTH|LOCAL0~5]
+        LogLevel INFO               日志级别
+    登入设定部分
+        PermitRootLogin yes         是否允许 root 登入！默认yes，建议设定成 no！
+        StrictModes yes             是否让 sshd 去检查用户家目录或相关档案的权限数据，
+        PubkeyAuthentication yes    是否允许自行使用成对的密钥登入。仅version 2
+        AuthorizedKeysFile .ssh/authorized_keys  公钥文件位置
+        PasswordAuthentication yes  密码验证当然是需要的
+        PermitEmptyPasswords no     是否允许以空的密码登入
+    认证部分
+        RhostsAuthentication no     是否使用.rhosts（使用不安全）
+        IgnoreRhosts yes            是否取消使用 ~/.ssh/.rhosts 来做为认证
+        RhostsRSAAuthentication no  使用rhosts配合RSA进行认证，用于version 1
+        HostbasedAuthentication no  与上类似，用于version 2
+        IgnoreUserKnownHosts no     是否忽略家目录内的 ~/.ssh/known_hosts
+        ChallengeResponseAuthentication no  允许任何的密码认证
+        UsePAM yes                  利用 PAM 管理使用者认证
+    与Kerberos有关的参数设定！
+        KerberosAuthentication no
+        KerberosOrLocalPasswd yes
+        KerberosTicketCleanup yes
+        KerberosTgtPassing no
+    在 X-Window 底下使用的相关设定
+        X11Forwarding yes           是否允许窗口的数据透过 ssh 信道来传送
+        X11DisplayOffset 10
+        X11UseLocalhost yes
+    登入后的项目：
+        PrintMotd yes               登入后是否显示出一些信息呢？例如上次登入的时间、地点等等
+        PrintLastLog yes            显示上次登入的信息
+        TCPKeepAlive yes            保持TCP连接，连接过程中通过TCP包检测是否掉线。
+        UsePrivilegeSeparation yes  是否权限较低的程序来提供用户操作
+        MaxStartups 10              同时允许几个尚未登入的联机画面，密码界面
+    关于用户限制的设定项目：
+        DenyUsers *                 设定受限制的使用者名称
+        DenyGroups test             设置受限制的使用组名称
+    关于 SFTP 服务与其他的设定项目！
+        Subsystem  sftp             /usr/lib/ssh/sftp-server
+        UseDNS yes                  通过DNS反查用户主机是否合法
+</code></pre><h2 id="DHCP服务"><a href="#DHCP服务" class="headerlink" title="DHCP服务"></a>DHCP服务</h2><pre><code>工作方式
+    1.客户端：播UDP数据包发送搜索 DHCP 服务器，包的目标IP为255.255.255.255
+    2.服务器端：提供客户端网络相关的租约以供选择，IP根据MAC是否存在和是否静态来判断
+    3.客户端：决定选择的 DHCP 服务器提供的网络参数租约并回报服务器
+    4.服务器端：记录该次租约行为并回报客户端已确认的响应封包信息
+
+相关文件
+    /etc/dhcp/dhcpd.conf         配置文件
+    /usr/sbin/dhcpd              二进制执行文件
+    /var/lib/dhcp/dhcpd.leases   客户端租约到期日文件
+    /var/lib/dhcp/dhclient*      客户端租约所记载的信息
+    /var/lib/dhcpd/dhcpd.leases  服务器记录客户端租约的文件
+</code></pre><h2 id="NFS文件服务器"><a href="#NFS文件服务器" class="headerlink" title="NFS文件服务器"></a>NFS文件服务器</h2><pre><code>RPC (Remote Procedure Call)
+    1.客户端会向服务器端的 RPC (port 111) 发出 NFS 档案存取功能的询问要求
+    2.服务器端找到对应的已注册的 NFS daemon 端口后，会回报给客户端
+    3.客户端了解正确的端口后，就可以直接与 NFS daemon 来联机
+
+相关服务
+    rpc.nfsd   主要NFS服务，管理客户端是否能够使用服务器文件系统挂载信息等
+    rpc.mountd 管理 NFS 的文件系统，包括用户文件权限等
+    rpc.lockd  非必要，这个玩意儿可以用在管理档案的锁定 (lock) 用途
+    rpc.statd  非必要，可以用来检查档案的一致性，与 rpc.lockd 有关
+
+所需软件
+    rpcbind    RPC 主程序
+    nfs-utils  NFS 主程序，提供rpc.nfsd 及 rpc.mountd
+
+相关文件
+    /etc/exports         主要配置文件
+    /usr/sbin/exportfs   NFS文件系统维护指令
+    /var/lib/nfs/*tab    分享资源的日志，etab记录权限设置，xtab记录客户端数据
+    /usr/sbin/showmount  客户端查询服务器分享资源的指令
+
+配置说明
+    格式
+        [分享目录] [第一部主机(权限)] [可用主机名] [可用通配符]
+    例子
+        /tmp  192.168.100.0/24(ro)  localhost(rw)  *.ncku.edu.tw(ro,sync)
+    权限规则
+        rw              该目录分享的权限是可擦写(read-write)
+        ro              该目录分享的权限是可擦写(read-only)
+        sync            数据会同步写入到内存与硬盘中
+        async           数据会先暂存于内存当中，而非直接写入硬盘！
+        no_root_squash  允许客户端以root身份操作文件，不转换身份
+        root_squash     当客户端的身份为root时，自动转换为nfsnobody
+        all_squash      客户端任何身份都会被压缩为匿名用户，通常是nobody(nfsnobody)
+        anonuid         anonymous匿名UID设定
+        anongid         anonymous匿名GID设定
+    rpcinfo  显示RPC服务状态
+        -p   针对某 IP (未写则预设为本机) 显示出所有的 port 与 porgram 的信息；
+        -t   针对某主机的某支程序检查其 TCP 封包所在的软件版本；
+        -u   针对某主机的某支程序检查其 UDP 封包所在的软件版本；
+    showmount  查看NFS联机状态
+        -a   显示目前主机与客户端的 NFS 联机分享的状态；
+        -e   显示某部主机的 /etc/exports 所分享的目录数据。
+    exportfs  重新处理设置文件
+        -a  全部加载(或卸除)/etc/exports 档案内的设定
+        -r  重新加载/etc/exports 里面的设定，同时更新 /etc/exports 及 /var/lib/nfs/xtab
+        -u  卸除某一目录
+        -v  在 export 的时候，将分享的目录显示到屏幕上！
+</code></pre><h2 id="NIS-帐号管控服务器"><a href="#NIS-帐号管控服务器" class="headerlink" title="NIS 帐号管控服务器"></a>NIS 帐号管控服务器</h2><pre><code>NIS提供的数据
+    /etc/passwd         提供用户账号、UID、GID、家目录所在、Shell 等等
+    /etc/group          提供群组数据以及 GID 的对应，还有该群组的加入人员
+    /etc/hosts          主机名与 IP 的对应，常用于 private IP 的主机名对应
+    /etc/services       每一种服务 (daemons) 所对应的端口 (port number)
+    /etc/protocols      基础的 TCP/IP 封包协定，如 TCP, UDP, ICMP 等
+    /etc/rpc            每种 RPC 服务器所对应的程序号码
+    /var/yp/ypservers   NIS 服务器所提供的数据库
+
+NIS环境组件
+    NIS Master server   将档案建置成数据库，并提供 slave server 来更新；
+    NIS Slave server    以 Master server 的数据库作为本身的数据库来源；
+    NIS client          向 master/server 要求登入者的验证数据。
+
+NIS运行流程
+    NIS Server (master/slave) 的运作程序：
+        1.NIS Master 先将本身的账号密码相关档案制作成为数据库档案；
+        2.NIS Master 可以主动的告知 NIS slave server 来更新；
+        3.NIS slave 亦可主动的前往 NIS master server 取得更新后的数据库档案；
+        4.若有账号密码的异动时，需要重新制作 database 与重新同步化 master/slave。
+    NIS Client 有任何登入查询的需求时：
+        1.NIS client 若有登入需求时，会先查询其本机的 /etc/passwd, /etc/shadow 等档案；
+        2.若在 NIS Client 本机找不到相关的账号数据，才开始向整个 NIS 网域的主机广播查询；
+        3.每部 NIS server (不论 master/slave) 都可以响应，基本上是『先响应者优先』。
+
+NIS Server 设置
+    NIS 服务器所需要的软件
+        yp-tools   提供 NIS 相关的查寻指令功能
+        ypbind     提供 NIS Client 端的设定软件
+        ypserv     提供 NIS Server 端的设定软件
+        rpcbind    就是 RPC 一定需要的数据啊
+    NIS 服务器相关的配置文件
+        /etc/ypserv.conf        主要配置文件，可以规范 NIS 客户端是否可登入的权限。
+        /etc/hosts              NIS server/client 需要主机和IP的对应关系
+        /etc/sysconfig/network  可以在这个档案内指定 NIS 的网域 (nisdomainname)。
+        /var/yp/Makefile        NIS 数据库相关的配置文件
+    NIS 服务器提供的服务
+        /usr/sbin/ypserv         NIS 服务器的主要提供服务；
+        /usr/sbin/rpc.yppasswdd  提供NIS 客户端用户通过yppasswd修改密码的服务
+    与账号密码的数据库有关的指令
+        /usr/lib64/yp/ypinit  建立数据库的指令(32位的系统/usr/lib/yp/ypinit)；
+        /usr/bin/yppasswd     NIS客户端有关，主要在让用户修改服务器上的密码。
+    NIS server 的设定与启动
+        1.设定 NIS 的域名 (NIS domain name)
+            vim /etc/sysconfig/network
+                NISDOMAIN=vbirdnis       设定NIS域名
+                YPSERV_ARGS=&quot;-p 1011&quot;    设定NIS每次都启动在固定的端口
+        2.编辑主要配置文件 /etc/ypserv.conf
+        3.设定主机名与 IP 的对应 (/etc/hosts)
+        4.启动与观察所有相关的服务
+        5.处理账号并建立数据库
+            /usr/lib64/yp/ypinit -m
+
+NIS Client端的设定
+    NIS client 端所需要的软件
+        ypbind     与 ypserv 互相沟通的客户端联机软件
+        yp-tools   是提供查询的软件
+    相关配置文件
+        /etc/sysconfig/network     设置NIS的域名
+        /etc/hosts                 设置NIS服务器的IP与主机名对应关系
+        /etc/yp.conf               ypbind 的主要配置文件，里面主要设定 NIS 服务器所在
+        /etc/sysconfig/authconfig  规范账号登入时的允许认证机制；
+        /etc/pam.d/system-auth     需要在 PAM 模块内加入 NIS 的支持
+        /etc/nsswitch.conf         这个文件可以规范账号密码与相关信息的查询顺序
+    相关程序
+        /usr/bin/yppasswd  更改你在 NIS database(NIS Server 所制作的数据库)的密码
+        /usr/bin/ypchsh    更改你在 NIS database 的 shell
+        /usr/bin/ypchfn    更改你在 NIS database 的一些用户的讯息
+    NIS client 的设定与启动（两种方式）
+        1，通过Linux distributions的配置工具，如CentOS的setup
+        2，手动修改配置如下配置文件
+            /etc/sysconfig/network      加入 NISDOMAIN 项目
+            /etc/nsswitch.conf          修改许多主机验证功能的顺序
+            /etc/sysconfig/authconfig   CentOS 的认证机制
+            /etc/pam.d/system-auth      许多登入所需要的 PAM 认证过程
+            /etc/yp.conf                亦即是 ypbind 的配置文件
+    NIS client 端的检验
+        yptest    可测试NIS数据库
+        ypwhich   可检验数据库数量
+        ypcat     读取数据库内
+</code></pre><h2 id="NTP服务器"><a href="#NTP服务器" class="headerlink" title="NTP服务器"></a>NTP服务器</h2><pre><code>相关概念
+    GMT      格林威治时间为标准时间 (Greenwich Mean Time, GMT 时间)
+    UTC      Coordinated Universal Time (协和标准时间)，利用原子震荡周期计时。
+    NTP      Network Time Protocol
+    DTSS     Digital Time Synchronization Protocol
+    软件时钟  由 Linux 操作系统根据 1970/01/01 开始计算的总秒数；
+    硬件时钟  主机硬件系统上面的时钟，例如 BIOS 记录的时间；
+
+NTP服务运行过程
+    1.首先，主机当然需要启动这个 daemon ，之后，
+    2.Client 会向 NTP Server 发送出调校时间的 message ，
+    3.然后 NTP Server 会送出目前的标准时间给 Client ，
+    4.Client 接收了来自 Server 的时间后，会据以调整自己的时间，就达成了网络校时咯！
+
+相关程序
+    ntp      就是 NTP 服务器的主要软件啦，包括配置文件以及执行档等等。
+    tzdata   软件名称为『 Time Zone data 』的缩写，提供各时区对应的显示格式。
+
+配置文件
+    /etc/ntp.conf         NTP服务器的主要配置文件，也是唯一的一个；
+    /usr/share/zoneinfo/  由tzdata所提供，为各时区的时间格式对应文件。
+    /etc/sysconfig/clock  设定时区与是否使用UTC时间钟的配置文件。
+    /etc/localtime        本地端的时间配置文件，复制clock指定的zoneinfo文件
+
+相关命令
+    /bin/date          用于 Linux 时间 (软件时钟) 的修改与显示的指令；
+    /sbin/hwclock      用于 BIOS 时钟 (硬件时钟) 的修改与显示的指令。
+    /usr/sbin/ntpd     主要提供NTP服务的程序！配置文件为 /etc/ntp.conf
+    /usr/sbin/ntpdate  用于客户端的时间校正，不启动NTP仅需要矫正时间时使用
+
+NTP服务配置 ntp.conf
+    通过restrict来管理权限控制
+        restrict [你的IP] mask [netmask_IP] [parameter]
+        parameter包括：
+            ignore      拒绝所有类型的NTP联机
+            nomodify    客户端不能使用ntpc与ntpq这两支程序来修改服务器的时间参数，
+                        但客户端仍可透过这部主机来进行网络校时的；
+            noquery     不提供NTP的网络校时，客户端不能使用ntpq,ntpc指令查询时间服务器
+            notrap      不提供trap这个远程事件登录 (remote event logging) 的功能。
+            notrust     拒绝没有认证的客户端。
+    通过server设定上层 NTP 服务器
+        server [IP or hostname] [prefer]
+    通过driftfile记录时间差异
+        driftfile [可以被 ntpd 写入的目录与档案]
+        driftfile 后面接的档案需要使用完整路径文件名；
+            driftfile 后面接的档案需要使用完整路径文件名；
+            该档案不能是连结档；
+            该档案需要设定成 ntpd 这个 daemon 可以写入的权限。
+            该档案所记录的数值单位为：百万分之一秒 (ppm)。
+    ntpstat  查看ntp运行状态
+    ntpq     NTP查询程序
+        -p   列出目前我们的 NTP 与相关的上层 NTP 的状态
+            remote    亦即是 NTP 主机的 IP 或主机名，*为正在起作用，+为候选
+            refid     参考的上一层 NTP 主机的地址
+            st        就是 stratum 阶层啰！
+            when      几秒钟前曾经做过时间同步化更新的动作；
+            poll      下一次更新在几秒钟之后；
+            reach     已经向上层 NTP 服务器要求更新的次数
+            delay     网络传输过程当中延迟的时间，单位为 10^(-6) 秒
+            offset    时间补偿的结果，单位与 10^(-3) 秒
+            jitter    Linux 系统时间与 BIOS 硬件时间的差异时间， 单位为 10^(-6) 秒。
+    date  显示或设置系统时间
+        时间格式 MMDDhhmmYYYY
+    hwclock  显示或设置Bios时间
+        -r   亦即 read ，读出目前 BIOS 内的时间参数；
+        -w   亦即 write ，将目前的 Linux 系统时间写入 BIOS 当中啊！
+    ntpdate  手动进行网络校时
+</code></pre><h2 id="Samba服务器"><a href="#Samba服务器" class="headerlink" title="Samba服务器"></a>Samba服务器</h2><pre><code>相关概念
+    NFS      Unix Like上面可以分享档案数据的file system
+    CIFS     Windows网上邻居所使用的文件系统 (Common Internet File System)
+    SAMBA    支持Unix Like和Windows数据分享的文件系统 (Server Message Block - SMB)
+    NetBIOS  由IBM开发 (Network Basic Input/Output System)
+
+SAMBA使用的daemons
+    nmbd   用来管理工作组、NetBIOS name 等等的解析。使用UDP协议，port 137,138
+    smbd   管理SAMBA主机分享的目录、档案与打印机等等。使用TCP协议，port 139,445
+
+联机模式
+    peer/peer (对等模式)
+    domain model (主控模式)
+
+SAMBA服务器设置
+    所需软件
+        samba         提供SMB服务器所需的各项服务程序 (smbd及nmbd)文件、
+                      以及其他与 SAMBA 相关的 logrotate 配置文件及开机默认选项档案等；
+        samba-client  提供当Linux做为SAMBA Client端时，所需要的工具指令，
+                      如挂载SAMBA文件格式的 mount.cifs、获取网邻相关树形图的smbtree等；
+        samba-common  这个软件提供的则是服务器与客户端都会使用到的数据，
+                      包括SAMBA的主要配置文件(smb.conf)、语法检验指令(testparm)等；
+    相关配置文件
+        /etc/samba/smb.conf    Samba的主要配置文件
+        /etc/samba/lmhosts     lmhosts的NetBIOS name对应的IP文件，非必须，早期使用
+        /etc/sysconfig/samba   提供启动 smbd, nmbd 时，你还想要加入的相关服务参数。
+        /etc/samba/smbusers    Windows与Linux在管理员与访客的帐号对应文件
+        /var/lib/samba/private/{passdb.tdb,secrets.tdb}   帐号密码数据库文件
+        /usr/share/doc/samba-&lt;版本&gt;  这个目录包含了SAMBA的所有相关的文档手册
+    可执行文件
+        Server
+            /usr/sbin/smbd       权限管理
+            /usr/sbin/nmbd       NetBIOS name查询
+            /usr/bin/tdbdump     查看Samba TDB数据库内容。
+            /usr/bin/tdbtool     进入TBD数据库操作接口直接手动修改帐密参数。
+            /usr/bin/smbstatus   可以列出目前 Samba 的联机状况。
+            /usr/bin/smbpasswd   修改Samba账户的密码
+            /usr/bin/pdbedit     用来管理用户账号密码
+            /usr/bin/testparm    检查配置文件smb.conf的语法是否正确
+        Client
+            /sbin/mount.cifs     挂载Samba远程分享的文件
+            /usr/bin/smbclient   查看其他计算机分享的目录
+            /usr/bin/nmblookup   类似 nslookup，检查 NetBIOS name
+            /usr/bin/smbtree     查询工作组与计算机名称的树状目录分布图
+    Server配置流程
+        1.服务器整体设定方面：在smb.conf中设定工作组、NetBIOS name、密码使用状态等
+        2.规划准备分享的目录参数：在smb.conf中设定要分享的目录或装置以及可供使用的账号数据
+        3.建立所需要的文件系统：建立好分享出去的档案或装置，以及相关的权限参数
+        4.建立可用Samba的账号：建立所需的Linux实体账号，再以pdbedit建立使用Samba的密码
+        5.启动服务：启动 Samba 的 smbd, nmbd 服务，开始运转
+    smb.conf设置
+        参数意义
+            workgroup          工作组的名称：注意，主机群要相同；
+            netbios name       主机的 NetBIOS 名称啊，每部主机均不同；
+            server string      主机的简易说明，这个随便写即可。
+            log file           日志文件位置，文件名可能会使用变量处理
+            max log size       日志最大仅能到多少 Kbytes ，若大于该数字，则会被rotate掉。
+            security           [share|user|domain]三选一，这三个设定值分别代表：
+                share          分享的数据不需要密码，大家均可使用 (没有安全性)；
+                user           使用 SAMBA 服务器本身的密码数据库
+                domain         使用外部服务器的密码，需 password server = IP 的设置
+            encrypt passwords  是否需要加密
+            passdb backend     数据库格式
+            comment            只是这个目录的说明而已
+            path               分享目录
+            browseable         是否让所有的用户看到这个项目
+            writable           是否可以写入
+            create mask        新文件权限
+            directory mask     目录权限
+            writelist          使用者, @群组
+        smb.conf 内的可用变量
+            %S    目前的设定项目值
+            %m    Client 端的 NetBIOS 主机名喔！
+            %M    Client 端的 Internet 主机名喔！就是 HOSTNAME。
+            %L    SAMBA 主机的 NetBIOS 主机名。
+            %H    用户的家目录。
+            %U    目前登入的使用者的使用者名称
+            %g    登入的使用者的组名。
+            %h    目前这部 SAMBA 主机的 HOSTNAME！不是 NetBIOS name
+            %I    Client 的 IP
+            %T    目前的日期与时间
+    testparm  检查smb.conf的语法设定正确性
+        -v    检查完整的参数设定，连同默认值也会显示出来
+    pdbedit   管理用户账号密码
+        -L    列出目前在数据库当中的账号与 UID 等相关信息；
+        -v    需要搭配 -L 来执行，可列出更多的讯息，包括家目录等数据；
+        -w    需要搭配 -L 来执行，使用旧版的 smbpasswd 格式来显示数据；
+        -a    新增一个可使用 Samba 的账号，后面的账号需要在 /etc/passwd 内存在者；
+        -r    修改一个账号的相关信息，需搭配很多特殊参数，请 man pdbedit；
+        -x    删除一个可使用 Samba 的账号，可先用 -L 找到账号后再删除；
+        -m    后面接的是机器的代码 (machine account)，与 domain model 有关！
+    smbpasswd  修改密码
+
+Linux客户端设置
+    smbclient  查看计算机分享的目录
+        -L //[IP|hostname] [-U username]  查看指定计算机分享的目录
+    mount -t cifs  挂载远程分享的Samba目录
+        -t cifs //IP/分享资源 /挂载点 [-o options]
+        options 可用参数
+            username=你的登入账号：例如 username=smb1
+            password=你的登入密码：需要与上面 username 相对应啊！
+            iocharset=本机的语系编码方式，如 big5 或 utf8 等等；
+            codepage=远程主机的语系编码方式，例如繁体中文为cp950
+    nmblookup   查询 NetBIOS name 与 IP 及其他相关信息：
+        -S   除了查询 name 的 IP 之外，亦会找出该主机的分享资源与 MAC 等；
+        -U   后面一般可接 Windows 的主要名称管理服务器的 IP ，可与 -R 互用；
+        -R   与 -U 互用，以 Wins 服务器来查询某个 Netbios name；
+        -A   相对于其他的参数， -A 后面可接 IP ，藉 IP 来找出相对的 NetBIOS 数据；
+    smbtree  网络邻居浏览器显示模式！
+        -b   以广播的方式取代主要浏览器的查询
+        -D   仅列出工作组，不包括分享的资源
+        -S   列出工作组与该工作组下的计算机名称 (NetBIOS) 不包括各项资源目录
+    smbstatus  查看SAMBA的状态
+        -p   列出已经使用 SAMBA 联机的程序 PID ；
+        -S   列出已经被使用的资源共享状态；
+        -u   只列出某个用户相关的分享数据
+</code></pre><h2 id="代理服务器"><a href="#代理服务器" class="headerlink" title="代理服务器"></a>代理服务器</h2><pre><code>需要的软件
+    squid
+相关文件
+    /etc/squid/squid.conf   squid的主要的配置文件
+    /etc/squid/mime.conf    设定squid所支持的mime文件格式
+    /usr/sbin/squid         提供 squid 的主程序啊！
+    /var/spool/squid        默认的 squid 缓存放置的目录。
+    /usr/lib64/squid/       提供 squid 额外的控制模块，如影响认证密码方面的程序
+</code></pre><h2 id="DNS服务器"><a href="#DNS服务器" class="headerlink" title="DNS服务器"></a>DNS服务器</h2><pre><code>Client端配置
+    相关配置
+        /etc/hosts           hostname 对应 IP 的文件；
+        /etc/resolv.conf     重要！就是 ISP 的 DNS 服务器 IP 记录处；
+        /etc/nsswitch.conf   决定先要使用 /etc/hosts 还是 /etc/resolv.conf
+        host   查询域名信息
+            -a        代表列出该主机所有的相关信息，包括 IP、TTL 与除错讯息等等
+            -l        如指定的domain允许allow-transfer，则列出所管理的所有主机名对应数据
+            server    不使用/etc/resolv.conf 而指定 DNS 来查询主机名与 IP 的对应
+        nslookup
+        dig
+            -t   指定查询PR类型
+            -x   反向解析，由IP地址解析域名
+            查询结果格式
+                [domain] [ttl] IN [[RR type] [RR data]]
+                [待查数据] [暂存时间(秒)] IN [[资源类型] [资源内容]]
+            RR类型
+                A           IPv4 的 IP 地址
+                AAAA        IPv6 的 IP 地址
+                NS          管理这个领域名的服务器主机名字.
+                SOA         管理这个领域名的七个重要参数(容后说明)
+                MX          顺序数字  接收邮件的服务器主机名字
+                CNAME       实际代表这个主机别名的主机名字.
+
+Server搭建DNS
+    涉及软件
+        BIND    Berkeley Internet Name Domain
+    配置文件
+        /etc/named.conf       我们的主配置文件啦
+        /etc/sysconfig/named  是否启动 chroot 及额外的参数，就由这个档案控制
+        /var/named/           数据库档案默认放置在这个目录
+        /var/run/named        named 这支程序执行时默认放置 pid-file 在此目录内
+    named.conf设置
+        listen-on      监听在这部主机系统上面的哪个网络接口。
+        directory      默认的zone file正反解析文件目录地址
+        allow-query    设置哪些客户端可以使用搭建的 DNS 服务
+        forward only   这个设定可以让你的 DNS 服务器仅进行 forward
+        forwarders     上层DNS服务器，可设置多个，每个IP以为 &quot;;&quot; 分号结尾
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/12/ES2015-笔记/" rel="next" title="ES2015-笔记.md">
+                <i class="fa fa-chevron-left"></i> ES2015-笔记.md
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/26/Git-笔记/" rel="prev" title="Git-笔记">
+                Git-笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Cao Zheng" />
+          <p class="site-author-name" itemprop="name">Cao Zheng</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#声明"><span class="nav-number">1.</span> <span class="nav-text">声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件操作命令"><span class="nav-number">2.</span> <span class="nav-text">文件操作命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件查看命令"><span class="nav-number">3.</span> <span class="nav-text">文件查看命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录处理命令"><span class="nav-number">4.</span> <span class="nav-text">目录处理命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件搜索命令"><span class="nav-number">5.</span> <span class="nav-text">文件搜索命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#帮助命令"><span class="nav-number">6.</span> <span class="nav-text">帮助命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#压缩和解压缩命令"><span class="nav-number">7.</span> <span class="nav-text">压缩和解压缩命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关机和重启命令"><span class="nav-number">8.</span> <span class="nav-text">关机和重启命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挂载命令"><span class="nav-number">9.</span> <span class="nav-text">挂载命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户登入查看命令"><span class="nav-number">10.</span> <span class="nav-text">用户登入查看命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SHELL-基础"><span class="nav-number">11.</span> <span class="nav-text">SHELL 基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bash-配置文件"><span class="nav-number">12.</span> <span class="nav-text">bash  配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-script"><span class="nav-number">13.</span> <span class="nav-text">shell script</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-的账号与群组"><span class="nav-number">14.</span> <span class="nav-text">Linux 的账号与群组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户管理"><span class="nav-number">15.</span> <span class="nav-text">用户管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件系统管理"><span class="nav-number">16.</span> <span class="nav-text">文件系统管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定时任务"><span class="nav-number">17.</span> <span class="nav-text">定时任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看系统信息"><span class="nav-number">18.</span> <span class="nav-text">查看系统信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#硬件信息"><span class="nav-number">19.</span> <span class="nav-text">硬件信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统备份"><span class="nav-number">20.</span> <span class="nav-text">系统备份</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软件安装"><span class="nav-number">21.</span> <span class="nav-text">软件安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统服务"><span class="nav-number">22.</span> <span class="nav-text">系统服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统日志"><span class="nav-number">23.</span> <span class="nav-text">系统日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动流程模块管理-Loader"><span class="nav-number">24.</span> <span class="nav-text">启动流程模块管理 Loader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统设置"><span class="nav-number">25.</span> <span class="nav-text">系统设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心编译"><span class="nav-number">26.</span> <span class="nav-text">核心编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#硬件设备名"><span class="nav-number">27.</span> <span class="nav-text">硬件设备名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#apt-get包管理工具"><span class="nav-number">28.</span> <span class="nav-text">apt-get包管理工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用快捷键"><span class="nav-number">29.</span> <span class="nav-text">常用快捷键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录作用"><span class="nav-number">30.</span> <span class="nav-text">目录作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络基础"><span class="nav-number">31.</span> <span class="nav-text">网络基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络配置"><span class="nav-number">32.</span> <span class="nav-text">网络配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#路由"><span class="nav-number">33.</span> <span class="nav-text">路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#防火墙设置"><span class="nav-number">34.</span> <span class="nav-text">防火墙设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DHCP服务"><span class="nav-number">35.</span> <span class="nav-text">DHCP服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NFS文件服务器"><span class="nav-number">36.</span> <span class="nav-text">NFS文件服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NIS-帐号管控服务器"><span class="nav-number">37.</span> <span class="nav-text">NIS 帐号管控服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NTP服务器"><span class="nav-number">38.</span> <span class="nav-text">NTP服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Samba服务器"><span class="nav-number">39.</span> <span class="nav-text">Samba服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代理服务器"><span class="nav-number">40.</span> <span class="nav-text">代理服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS服务器"><span class="nav-number">41.</span> <span class="nav-text">DNS服务器</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cao Zheng</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

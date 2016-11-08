@@ -1,0 +1,1515 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="进程和线程的概念进程
+    说明
+        进程是指在系统中正在运行的一个应用程序
+        每个进程间是独立的，每个进程均运行在其专用且受保护的内存空间内
+
+线程
+    说明
+        一个进程要执行任务，必须有线程（每一个进程至少要一个线程）
+        一个进程（程序）的所有人物都在线程中执行
+        线程是进程中的一条执行路径
+
+线程的串行
+    说明">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS-多线程网络">
+<meta property="og:url" content="http://blog.uiideas.com/2016/11/20/iOS-多线程网络/index.html">
+<meta property="og:site_name" content="Uiideas Blog">
+<meta property="og:description" content="进程和线程的概念进程
+    说明
+        进程是指在系统中正在运行的一个应用程序
+        每个进程间是独立的，每个进程均运行在其专用且受保护的内存空间内
+
+线程
+    说明
+        一个进程要执行任务，必须有线程（每一个进程至少要一个线程）
+        一个进程（程序）的所有人物都在线程中执行
+        线程是进程中的一条执行路径
+
+线程的串行
+    说明">
+<meta property="og:updated_time" content="2016-11-08T07:24:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS-多线程网络">
+<meta name="twitter:description" content="进程和线程的概念进程
+    说明
+        进程是指在系统中正在运行的一个应用程序
+        每个进程间是独立的，每个进程均运行在其专用且受保护的内存空间内
+
+线程
+    说明
+        一个进程要执行任务，必须有线程（每一个进程至少要一个线程）
+        一个进程（程序）的所有人物都在线程中执行
+        线程是进程中的一条执行路径
+
+线程的串行
+    说明">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> iOS-多线程网络 | Uiideas Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?559798d21c881907a6a2339e025bbc03";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Uiideas Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章列表
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                iOS-多线程网络
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-20T15:47:52+08:00" content="2016-11-20">
+              2016-11-20
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="进程和线程的概念"><a href="#进程和线程的概念" class="headerlink" title="进程和线程的概念"></a>进程和线程的概念</h2><pre><code>进程
+    说明
+        进程是指在系统中正在运行的一个应用程序
+        每个进程间是独立的，每个进程均运行在其专用且受保护的内存空间内
+
+线程
+    说明
+        一个进程要执行任务，必须有线程（每一个进程至少要一个线程）
+        一个进程（程序）的所有人物都在线程中执行
+        线程是进程中的一条执行路径
+
+线程的串行
+    说明
+        一个线程里面任务的执行顺序是串行的
+        如果要子1个线程中执行多个任务，那么只能一个一个的按照顺序执行这些任务
+
+主线程
+    说明
+        一个iOS程序运行后，默认会开启一条线程，称为 主线程 或 UI线程
+        iOS中的和UI相关的所有操作必须在主线程中执行
+    作用
+        显示\刷新UI界面
+        处理UI事件(比如点击事件,滚动事件,拖拽事件)
+    使用注意
+        不要将比较耗时的操作放倒主线程中
+        耗时操作会阻塞主线程，严重影响UI的流畅度，给用户一种卡的体验
+        可将耗时操作放在子线程中执行
+
+子线程
+    说明
+        iOS中除了主线程之外的线程都是子线程
+        子线程也称为(后台线程，非主线程)
+
+多线程
+    说明
+        一个进程中可以开启多条线程，每个线程可以并行执行不同的任务
+    原理
+        同一时间，CPU只能处理一条线程，只有1条线程在执行
+        多线程的并发执行，其实是CPU快速的在多条线程之间调度(切换)
+        如果CPU调度线程的时间足够快，就造成了多线程并发执行的假象
+    优点
+        能适当提高程序的执行效率
+        能适当的提高资源的利用率(CPU,内存的利用率)
+    缺点
+        创建线程是有开销的，iOS下主要成本包括:
+            内核数据结构(大约1KB)
+            栈空间(子线程512KB,主线程1MB,可使用-setStackSize设置，最小16K)
+            创建线程答曰需要90毫秒的时间
+        如果开启大量的线程，会降低程序的性能
+        线程越多，CPU在调度线程上的开销就越大
+        程序设计更佳复杂，比如线程之间的通信，多线程的数据共享
+    资源共享
+        一块资源可能会被多个线程共享，也就是多个线程可能会访问同一块资源
+        多个线程访问同一个对象，同一个变量，同一个文件
+    安全隐患
+        当多个线程访问同一块资源时，很容易引发数据错乱和安全问题
+        可用 @synchronized 加入互斥锁来解决此问题
+
+进程和线程的比较
+    线程是CPU调用(执行任务)的最小单位。
+    进程是CPU分配资源和调度的单位
+    一个程序可以对应多个线程，一个进程中可以有多个线程，但至少有一个线程
+    同一个进程内的线程共享进程的资源
+</code></pre><h2 id="线程在iOS中的使用"><a href="#线程在iOS中的使用" class="headerlink" title="线程在iOS中的使用"></a>线程在iOS中的使用</h2><pre><code>iOS中多线程实现方案
+    pthread
+        C语言API，由程序员管理生命周期
+        通用的多线程API
+        适用于Unix\Linux\Window等系统
+        跨平台可移植，使用难度大
+    NSThread
+        OC语言API，程序员负责生命周期中的创建系统处理释放
+        面向对象的API
+        使用简单，可直接操作线程对象
+    GCD
+        C语言API，生命周期系统自动管理
+        旨在替代NSThread等线程技术
+        充分利用CPU的多核
+    NSOperation
+        OC语言API，生命周期系统自动管理
+        基于GCD (底层是GCD)
+        比GCD多了一些更简单实用的功能
+        使用更面相对象
+
+pthread
+    说明
+        使用需导入 pthread.h 头文件
+        iOS较少使用
+    函数
+        pthread_create                    创建线程
+        pthread_equal                     判断两条线程是否相等
+        pthread_detach                    分离线程
+        pthread_exit                      退出线程
+    范例
+        pthread_t thread;
+        pthread_create(&amp;thread, NULL, task, NULL);
+        void *task(void *param){
+            return NULL;
+        }
+
+NSThread
+    说明
+        iOS中线程的类
+        一个NSThread对象代表一条线程
+        线程number属性为1时，该线程为主线程
+    生命周期
+        当线程内的任务执行完毕后，线程自动释放
+        当线程死亡后无法执行任务
+    状态
+        新建状态-New             通过initWithTarget方法创建后
+        就绪状态-Runnable        调用start方法后，会放入可调度线程池
+        运行状态-Running         当CPU调度到线程中的任务执行时
+        阻塞状态-Blocked         调用了sleep方法\等待同步锁
+        死亡状态-Dead            当线程执行结束或意外退出
+    互斥锁
+        说明
+            互斥锁能有效的防止因多线程抢夺资源造成的数据安全问题
+            缺点是需要消耗大量CPU资源
+            加锁是需注意加锁的位置
+            加锁会造成 线程同步(多条线程在同一线上按顺序执行任务)
+        格式
+            @synchronized(锁对象){ //需要锁定的代码 };
+    原子和非原子属性
+        atomic     原子属性，为setter方法加锁，默认为atomic
+        noatomic   非原子属性，不会为setter方法加锁
+    线程间通信
+        performSelectorOnMainThread       回到主线程继续执行任务
+        performSelector:onThread:         转到指定线程执行任务
+    类方法
+        mainThread                        获取主线程
+        currentThread                     获取当前线程
+        isMainThread                      当前线程是否是主线程
+        detachNewThreadSelector           分离出来子线程
+        sleepUntilDate                    睡到指定时间再继续执行,进入阻塞状态
+        sleepForTimeInterval              暂定指定的时间,让线程进入阻塞状态
+        exit                              终止线程,死亡状态
+    对象方法
+        start                             启动线程，线程进行就绪状态
+        isMainThread                      判断该线程对象是否是主线程对象
+    对象属性
+        name                              线程的名称
+        threadPriority                    线程优先级,0.0-1.0之间,默认0.5
+    范例
+        创建线程,init方式
+            NSThread *thread = [[NSThread alloc]initWithTarget:self selector:@selector(task:) object:@&quot;ABC&quot;];
+            [thread start];
+            -(void)task:(NSString *)param{
+                NSLog(@&quot;%@&quot;,param);
+            }
+        创建线程方法2
+            [NSThread detachNewThreadSelector:@selector(task:) toTarget:self withObject:@&quot;ABC&quot;];
+            -(void)task:(NSString *)param{
+                NSLog(@&quot;%@&quot;,param);
+            }
+        创建线程方式3
+            [self performSelectorInBackground:@selector(task) withObject:self];
+            -(void)task{
+                NSLog(@&quot;%@&quot;,param);
+            }
+
+GCD
+    说明
+        全程是 Grand Central Dispatch，可译为中央调度器
+        纯C语言，提供了很多强大的函数
+    GCD的优势
+        GCD是苹果公司为多核的并行运算提供的解决方法
+        GCD会自动利用更多的CPU内核
+        GCD会自动管理线程的生命周期，包括创建，调度，销毁
+        程序员只需要告诉GCD想要执行什么任务，不需要编写任何线程管理代码
+    任务和队列
+        GCD有两个非常核心的概念
+        任务: 执行的操作
+        队列: 用来存放任务，任务的取出遵循FIFO原则(先进先出)。
+    队列类型
+        并发队列 (Concurrent Dispatch Queue)
+            可以让多个任务并发执行，自动开启多个线程同时执行任务
+            多个任务时，并非每个任务都开启一个线程
+            并发功能只有在异步函数(dispatch_async)下才有效
+            创建队列时候参数为:DISPATCH_QUEUE_SERIAL
+        串行队列 (Serial Dispatch Queue)
+            让任务一个一个接着执行，一个任务执行完毕才执行下一个
+            创建队列时候参数为:DISPATCH_QUEUE_SERIAL
+    主队列
+        主队列是GCD自带的一种特殊的串行队列
+        放在主队列中的任务都会放到主线程中执行
+        使用 dispatch_get_main_queue() 获得主队列
+    队列优先级
+        DISPATCH_QUEUE_PRIORITY_HIGH         高优先级
+        DISPATCH_QUEUE_PRIORITY_DEFAULT      默认优先级
+        DISPATCH_QUEUE_PRIORITY_LOW          低优先级
+        DISPATCH_QUEUE_PRIORITY_BACKGROUND   后台优先级，最低
+    使用步骤
+        1.定制任务
+        2.将任务添加到队列中
+    函数
+        dispatch_queue_create        创建队列，可指定标识和队列类型
+        dispatch_sync                用同步的方式执行任务，不开启新线程
+        dispatch_async               用异步的方式执行任务，开启新线程执行任务
+        dispatch_async_f             和dispatch_async的区别是用函数执行任务
+        dispatch_get_global_queue    获取全局并发队列
+        dispatch_get_main_queue      获取主队列
+        dispatch_after               延迟执行指定任务，可指定队列和延迟时间
+        dispatch_source_timer        定时器，比NSTimer更加精准，不受RunLoop影响
+        dispatch_once                一次性代码，整个应用程序运行中只执行一次
+        dispatch_barrier_async       栅栏，可控制并发队列的顺序(不能使用全局并发队列)
+        dispatch_apply               快速迭代，异步并发执行指定的代码(只能并发队列)
+        dispatch_group_create        创建队列组
+        dispatch_group_async         把任务添加到异步队列，并在完成后通知队列组
+        dispatch_group_notify        当队列组中所有任务执行完成后，执行指定block
+        dispatch_group_wait          当队列组的任务执行指定的时间后执行后面的代码
+        dispatch_group_enter         在该函数后面的任务会被纳入到队列组
+        dispatch_group_leave         任务执行成功后通知队列组
+    范例
+        异步并行队列: 开多条线程，并发执行
+            dispatch_queue_t queue = dispatch_queue_create(&quot;asyncConcurrent&quot;, DISPATCH_QUEUE_CONCURRENT);
+            dispatch_async(queue, ^{
+                NSLog(@&quot;%@&quot;,[NSThread currentThread]);
+            });
+        异步串行队列: 开一条线程，串行执行
+            dispatch_queue_t queue = dispatch_queue_create(&quot;asyncConcurrent&quot;, DISPATCH_QUEUE_SERIAL);
+            dispatch_async(queue, ^{
+                NSLog(@&quot;%@&quot;,[NSThread currentThread]);
+            });
+        同步串行队列: 不开线程，串行执行
+            dispatch_queue_t queue = dispatch_queue_create(&quot;asyncConcurrent&quot;, DISPATCH_QUEUE_SERIAL);
+            dispatch_sync(queue, ^{
+                NSLog(@&quot;%@&quot;,[NSThread currentThread]);
+            });
+        异步函数和主队列: 不开线程，串行执行
+            dispatch_queue_t queue = dispatch_get_main_queue();
+            dispatch_async(queue, ^{
+                NSLog(@&quot;%@&quot;,[NSThread currentThread]);
+            });
+        同步函数和主队列: 无法执行，造成死锁
+            dispatch_queue_t queue = dispatch_get_main_queue();
+            dispatch_sync(queue, ^{
+                NSLog(@&quot;%@&quot;,[NSThread currentThread]);
+            });
+        获取全局并发队列
+            dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        快速迭代: 子线程和主线程一起完成并发任务
+            dispatch_queue_t queue = dispatch_queue_create(&quot;asyncConcurrent&quot;, DISPATCH_QUEUE_CONCURRENT);
+            dispatch_apply(10, queue, ^(size_t index) {
+                NSLog(@&quot;%ld----%@&quot;,index,[NSThread currentThread]);
+            });
+        队列组
+            dispatch_queue_t queue = dispatch_queue_create(&quot;asyncConcurrent&quot;, DISPATCH_QUEUE_CONCURRENT);
+            dispatch_group_t group = dispatch_group_create();
+            dispatch_async(queue, ^{
+                NSLog(@&quot;%@&quot;,[NSThread currentThread]);
+            });
+            dispatch_async(queue, ^{
+                NSLog(@&quot;%@&quot;,[NSThread currentThread]);
+            });
+            dispatch_async(queue, ^{
+                NSLog(@&quot;%@&quot;,[NSThread currentThread]);
+            });
+            dispatch_group_notify(group, queue, ^{
+                NSLog(@&quot;All task success&quot;);
+            });
+        GCD定时器定时执行任务: 需保持timer的引用才会执行
+            @property (nonatomic, strong) dispatch_source_t timer;
+            dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(0, 0));
+            dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC, 0 * NSEC_PER_SEC);
+            dispatch_source_set_event_handler(timer, ^{
+                //需要执行的任务
+            });
+            dispatch_resume(timer);
+            self.timer = timer;
+
+NSOperation
+    说明
+        基于GCD的OC语言API，使用更面相对象。
+        NSOperation和NSOperationQueue配合使用可实现多线程编程
+        NSOperation是抽象类，并不具备封装操作的能力，需使用其子类
+    使用步骤
+        1. 将要执行的操作封装到一个NSOperation对象中
+        2. 然后将NSOperation对象添加到NSOperationQueue中
+        3. 系统会自动将NSOperationQueue中的操作放到一条新线程中执行
+    自定义NSOperation
+        可在自定义继承自NSOperation的类重写-(void)main方法来封装任务
+        NSOperationQueue对象的addOperation方法会调用自定义对象的start方法
+        NSOperation对象的start方法内部会调用main方法
+    子类
+        NSInvocationOperation
+        NSBlockOperation             通过Block的方式封装任务            
+    NSBlockOperation对象方法
+        addExecutionBlock            追加任务，如果对象内的任务大于1会开多线程并发
+        start                        开始任务
+        addDependency                添加依赖，指定某个操作完成后才执行
+        completionBlock              当所有任务执行完成后执行的Block
+    NSOperationQueue
+        属性
+            maxConcurrentOperationCount  最大并发数量,设置为1时串行执行
+            suspended                    暂停或恢复
+        类方法
+            mainQueue                    获取主队列，串行队列，主线程中执行
+        对象方法
+            init                         同时具备并发和串行队列，默认并发非主队列
+            addOperation                 把任务添加到队列中
+            cancelAllOperations          取消队列中所有操作
+            setSuspended                 设置暂停或恢复
+    范例
+        NSInvocationOperation基本使用
+            NSInvocationOperation *op = [[NSInvocationOperation alloc]initWithTarget:self selector:@selector(task:) object:@&quot;param&quot;];
+            [op start];
+            -(void)task:(NSString *)param{
+                NSLog(@&quot;%@-----%@&quot;,param,[NSThread currentThread]);
+            }
+        NSBlockOperation基本使用
+            NSBlockOperation *bop = [NSBlockOperation blockOperationWithBlock:^{
+                NSLog(@&quot;%@&quot;,[NSThread currentThread]);
+            }];
+            [bop addExecutionBlock:^{
+                NSLog(@&quot;%@&quot;,[NSThread currentThread]);
+            }];
+            [bop start];
+        通过队列执行NSInvocationOperation操作
+            NSInvocationOperation *op1 = [[NSInvocationOperation alloc]initWithTarget:self selector:@selector(task:) object:@&quot;param&quot;];
+            NSInvocationOperation *op2 = [[NSInvocationOperation alloc]initWithTarget:self selector:@selector(task:) object:@&quot;param&quot;];
+            NSOperationQueue *queue = [[NSOperationQueue alloc]init];
+            [queue addOperation:op1];
+            [queue addOperation:op2];
+        通过队列执行NSBlockOperation操作
+            NSBlockOperation *op1 = [NSBlockOperation blockOperationWithBlock:^{
+                NSLog(@&quot;%@&quot;,[NSThread currentThread]);
+            }];
+            NSBlockOperation *op2 = [NSBlockOperation blockOperationWithBlock:^{
+                NSLog(@&quot;%@&quot;,[NSThread currentThread]);
+            }];
+            NSOperationQueue *queue = [[NSOperationQueue alloc]init];
+            [queue addOperation:op1];
+            [queue addOperation:op2];
+        队列添加任务的简洁操作
+            NSOperationQueue *queue = [[NSOperationQueue alloc]init];
+            [queue addOperationWithBlock:^{
+                NSLog(@&quot;%@&quot;,[NSThread currentThread]);
+            }];
+</code></pre><h2 id="NSCache"><a href="#NSCache" class="headerlink" title="NSCache"></a>NSCache</h2><pre><code>说明
+    NSCache是苹果官方提供的缓存类，使用和NSDictionary类似
+    NSCache在系统内存很低时，会自动释放对象(模拟器中不会)
+    NSCache是线程安全的，在多线程操作中，不需要对NSCache加锁
+    NSCache的key只是对对象的Strong引用，而不是靠谱
+
+属性
+    name                 名称
+    delegate             代理对象
+    totlaCostLimit       缓存空间的总成本，超出会自动回收前面的对象，默认为0表示无限制
+    countLimit           能够缓存的对象的最大数量，默认为0，表示无限制
+
+代理方法
+    willEvictObject      即将回收对象时调用
+
+范例
+    基本操作
+        NSCache *cache = [[NSCache alloc]init];
+        [cache setObject:@&quot;value&quot; forKey:@&quot;key&quot;];
+        [cache objectForKey:@&quot;key&quot;];
+        [cache removeAllObjects];
+    设置成本
+        NSCache *cache = [[NSCache alloc]init];
+        cache.totalCostLimit = 5;
+        for (int i = 0; i &lt; 10; i++) {
+            [cache setObject:[NSString stringWithFormat:@&quot;value-%d&quot;,i] forKey:[NSString stringWithFormat:@&quot;key-%d&quot;,i] cost:1];
+        };
+        for (int i = 0; i &lt; 10; i++) {
+            NSString *str = [cache objectForKey:[NSString stringWithFormat:@&quot;key-%d&quot;,i]];
+            NSLog(@&quot;%@&quot;,str);
+        };
+</code></pre><h2 id="RunLoop"><a href="#RunLoop" class="headerlink" title="RunLoop"></a>RunLoop</h2><pre><code>说明
+    运行循环，是一个永远不会结束的死循环
+    如果没有Runloop，程序会在main函数执行完成后退出
+    RunLoop是在UIApplicationMain中开启的
+    UIApplicationMain因为启动了RunLoop，所以一直没有返回值，始终运行状态
+    iOS中有两套API访问RunLoop，分别是 Foundation 框架中的 NSRunLoop 类
+    和 Core Foundation 框架中的 CFRunLoopRef (Ref 为 reference 缩写)
+    NSRunLoop 是基于 CFRunLoopRef 的一层OC的包装
+
+基本作用
+    保持程序的持续运行
+    处理App中的各种事件，如触摸事件，定时器事件，Selector事件
+    节省CPU资源，提高程序性能。该做事情时做事，该休息时休息
+
+官方资料
+    [苹果官方文档][https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Multithreading/RunLoopManagement/RunLoopManagement.html]
+    [CFRunLoopRef开源地址][http://opensource.apple.com/source/CF/CF-1151.16/]
+
+RunLoop模式
+    在RunLoop中有多个运行模式，但是RunLoop只能选择一种模式运行
+    Mode里面至少要有一个 Timer或Source
+
+RunLoop与线程
+    每条线程都有唯一的一个与之对应的RunLoop对象
+    RunLoop在第一次获取时创建，在线程结束时销毁
+    主线程的RunLoop已经自动创建好了，子线程的RunLoop需要主动创建
+
+RunLoop与自动释放池
+    当启动的时候创建自动释放池
+    当RunLoop即将睡眠的时候销毁之前的释放池，并重新创建新的释放池
+    当RunLoop退出的时候最后一次销毁释放池
+
+NSRunLoop
+    说明
+        在子线程中调用 [NSRunLoop currentRunLoop] 会自动创建对应的RunLoop
+    类方法
+        currentRunLoop             获取当前线程的RunLoop对象
+        mainRunLoop                获取主线程的RunLoop对象
+    对象方法
+        run                        开启RunLoop
+        runMode                    开启RunLoop，指定运行模式和时间
+        runUntilDate               开启RunLoop，指定时间
+    对象属性
+        currentMode                当前RunLoop的运行模式
+    范例
+        创建一个不自动退出的子线程
+            //创建线程
+            self.thread = [[NSThread alloc]initWithTarget:self selector:@selector(task1) object:nil];
+            [self.thread start];
+            -(void)task
+            {
+                //获得子线程对应的runloop
+                NSRunLoop *runloop = [NSRunLoop currentRunLoop];
+                //保证runloop不退出
+                [runloop addPort:[NSPort port] forMode:NSDefaultRunLoopMode];
+                //开启RunLoop,默认是没有开启
+                [runloop run];
+            }
+            执行
+            [self performSelector:@selector(otherTask) onThread:self.thread withObject:nil waitUntilDone:YES];
+
+CFRunLoopRef
+    函数
+        CFRunLoopGetCurrent();     获得当前线程的RunLoop对象
+        CFRunLoopGetMain();        获取主线程的RunLoop对象
+
+CFRunLoopModeRef
+    说明
+        CFRunLoopModeRef代表RunLoop的运行模式
+        一个RunLoop包含若干个Mode，每个Mode又包含若干个Source/Timer/Observer
+        每次RunLoop启动时，只能指定其中一个Mode，这个Mode被称为CurrentMode
+        如果需要切换Mode，只能退出RunLoop，再重新指定一个Mode进入
+        这样做主要是为了分离开不同组的Source/Timer/Observer，使其互不影响
+    系统默认注册的5个Mode
+        kCFRunLoopDefaultMode
+            App的默认Mode，通常主线程是在这个Mode下运行
+        UITrackingRunLoopMode
+            界面跟踪Mode，用于ScrollView追踪触摸滑动，
+            保证界面滑动时不受其他Mode影响
+        UIInitializationRunLoopMode
+            在刚启动App时进入的第一个Mode，启动完成后就不再使用
+        GSEventReceiveRunLoopMode
+            接受系统事件的内部Mode，通常用不到
+        kCFRunLoopCommonMode
+            这是一个占位用的Mode，不是真正的Mode
+            addTimer时如果forMode为kCFRunLoopCommonMode相当于把定时器同时添加到kCFRunLoopDefaultMode和UITrackingRunLoopMode中
+            凡是添加到NSRunLoopCommonModes中的事件都会被同时添加到打上common标签的运行模式上
+
+CFRunLoopSourceRef
+    说明
+        事件源，输入源相关的类
+    以前的分类方式
+        Port-Based Sources                 基于端口的事件
+        Cuntom Input Sources               自定义事件
+        Cocoa Perform Selector Sources     performSelector事件
+    目前的分类方式(依据函数调用栈区分)
+        Sources0                           非基于Port的，用户触发的消息事件
+        Sources1                           基于Port的，系统内部的消息事件
+    函数调用栈
+        可在Xcode中，通过断点调试的方式查看函数调用栈
+
+CFRunLoopTimerRef
+    说明
+        定时器事件类，本质上就是NSTimer
+
+CFRunLoopObserverRef
+    说明
+        观察者，能够监听RunLoop的状态变化
+    可监听的时间点
+        kCFRunLoopEntry         = (1UL &lt;&lt; 0),    即将进入Loop
+        kCFRunLoopBeforeTimers  = (1UL &lt;&lt; 1),    即将处理Timer
+        kCFRunLoopBeforeSources = (1UL &lt;&lt; 2),    即将处理Source
+        kCFRunLoopBeforeWaiting = (1UL &lt;&lt; 5),    即将进入休眠
+        kCFRunLoopAfterWaiting  = (1UL &lt;&lt; 6),    刚从休眠中唤醒
+        kCFRunLoopExit          = (1UL &lt;&lt; 7),    即将退出Loop
+    范例
+        CFRunLoopObserverRef observer = CFRunLoopObserverCreateWithHandler(CFAllocatorGetDefault(), 0, YES, 0, ^(CFRunLoopObserverRef observer, CFRunLoopActivity activity) {
+            //状态改变的回调
+        });
+        CFRunLoopAddObserver(CFRunLoopGetCurrent(), observer, kCFRunLoopDefaultMode);
+</code></pre><h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><pre><code>HTTP方案
+    苹果元生
+        NSURLConnection    用法简单，最古老经典直接的一种方案
+        NSURLSession       2103年推出，比NSURLConnection强大，苹果目前推荐
+        CFNetWork          NSURL*的底层，C语言
+    第三方框架
+        ASIHttpRequest     外号HTTP终结者，功能强大，已停止更新
+        AFNetworking       简单易用，提供了基本够用的功能，维护者众多
+        MKNetworkkit       简单易用，印度人维护，维护和使用者少
+
+相关类
+    NSURL                  URL相关类
+    NSURLRequest           请求对象，一个NSURLRequest对象代表一个请求
+    NSMutableURLRequest    NSURLRequest的子类，可变
+    NSURLConnection        负责建立连接，发送请求，接收相应数据
+    NSURLHTTPResponse      相应头对象，用来接收服务器响应头信息
+
+NSMutableURLRequest
+    对象属性
+        HTTPMethod         请求方法
+        HTTPBody           请求体
+        timeoutInterval    请求超时时间
+    对象方法
+        setValue:forHTTPHeaderField:   设置请求头信息
+
+NSURLHTTPResponse
+    说明
+        NSURLResponse的子类，用来接收服务器响应头信息
+    属性
+        statusCode         响应的HTTP状态码
+
+中文转码
+    说明
+        GET请求中的URL如果包含中文呢需要进行转码
+        POST中请求的请求体在调用dataUsingEncoding时不需要再次转码
+        可通过分类方式重写NSDictionary的descriptionWithLocale方法来解决系统输出乱码
+    范例
+        NSString *urlStr = @&quot;http://120.25.226.186:32812/login?username=用户名&amp;pwd=密码&quot;;
+        urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSURL *url = [NSURL URLWithString:urlStr];
+
+JSON解析
+    第三方框架
+        JSONKit,SBJson,TouchJSON（性能从左到右越差）
+    苹果原生
+        NSJSONSerialization（性能最好）
+
+NSJSONSerialization
+    说明
+        苹果官方提供的JSON序列化反序列化工具，相对第三方框架性能最好
+        并不是所有的OC对象都可以转换为JOSN,详情见isValidJSONObject注释
+    类方法
+        JSONObjectWithData         JSON转换为OC对象
+        dataWithJSONObject         OC对象转化为JSON数据
+        isValidJSONObject          判断指定的对象是否能转换为JSON
+    范例
+        OC对象转换为JSON
+            NSDictionary *dict = @{
+                @&quot;name&quot;:@&quot;jack&quot;,
+                @&quot;age&quot;:@12,
+                @&quot;num&quot;:@[@1,@2,@3],
+            };
+            NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
+            NSString *jsonStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        JSON转换成OC对象
+            NSString *jsonStr = @&quot;{\&quot;error\&quot;:\&quot;用户名不存在\&quot;,\&quot;code\&quot;:999,\&quot;arr\&quot;:[1,3,5]}&quot;;
+            NSData *jsonData = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
+
+NSURLConnection
+    说明
+        苹果官方的HTTP请求类，使用简单，目前已过期
+        当通过代理的方式发起请求时，connectionWithRequest方法内部会将NSURLConnection对象作为一个source添加到当前的RunLoop中，并指定运行模式为默认
+        在子线程中调用connectionWithRequest方法需要手动开启RunLoop
+        调用start方法时，如果当前RunLoop会自动获取当前线程的RunLoop并开启
+    使用步骤
+        1. 创建一个NSURL对象，设置请求路径
+        2. 创建NSURLRequest请求对象，并设置请求地址，请求头，请求体
+        3. 使用NSURLConnection发送请求
+    类方法
+        sendSynchronousRequest        发送同步请求
+        sendAsynchronousRequest       发送异步请求
+        connectionWithRequest         通过代理的方式发送网络请求
+    对象方法
+        initWithRequest               通过代理的方式发送网络请求
+        start                         开始发送请求
+        cancel                        取消当前请求
+        setDelegateQueue              设置代理方法在哪个线程调用，无法设置主队列
+    NSURLConnectionDataDelegate代理方法
+        didReceiveResponse            接收到服务器响应时调用
+        didReceiveData                接收到服务器返回数据时调用，可能多次
+        didFailWithError              当请求失败时调用
+        connectionDidFinishLoading    请求结束时调用
+    范例
+        同步GET请求
+            //设置URL
+            NSURL *url = [NSURL URLWithString:@&quot;http://120.25.226.186:32812/login?username=520it&amp;pwd=520it&amp;type=JSON&quot;];
+            //初始化请求对象
+            NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url];
+            //定义接收相应头的对象
+            NSURLResponse *response = nil;
+            //发送请求并获取响应体
+            NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&amp;response error:nil];
+            NSString *responseStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        异步GET请求
+            //设置URL
+            NSURL *url = [NSURL URLWithString:@&quot;http://120.25.226.186:32812/login?username=520it&amp;pwd=520it&amp;type=JSON&quot;];
+            //初始化请求对象
+            NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url];
+            //发送请求并获取响应体
+            [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc]init] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+                //请求完成的回调
+                NSLog(@&quot;响应头:%@,相应体:%@&quot;,response,[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]);
+            }];
+        代理方式GET请求
+            -(NSData *)responseData{
+                if(_responseData == nil){
+                    _responseData = [[NSMutableData alloc]init];
+                }
+                return _responseData;
+            }
+            -(void)delegateRequest{
+                //设置URL
+                NSURL *url = [NSURL URLWithString:@&quot;http://120.25.226.186:32812/login?username=520it&amp;pwd=520it&amp;type=JSON&quot;];
+                //初始化请求对象
+                NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url];
+                [NSURLConnection connectionWithRequest:request delegate:self];
+            }
+            //当受到服务器响应时调用
+            -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
+            }
+            //接收到服务器返回数据时调用，可能多次
+            -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
+                [self.responseData appendData:data];
+            }
+            //当请求失败时调用
+            -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
+            }
+            //请求结束时调用
+            -(void)connectionDidFinishLoading:(NSURLConnection *)connection{
+                NSLog(@&quot;%@&quot;,[[NSString alloc]initWithData:self.responseData encoding:NSUTF8StringEncoding]);
+            }
+        POST异步请求
+            //设置URL
+            NSURL *url = [NSURL URLWithString:@&quot;http://120.25.226.186:32812/login&quot;];
+            //创建可变请求对象
+            NSMutableURLRequest *request = [[NSURLRequest alloc]initWithURL:url];
+            //修改请求方法
+            request.HTTPMethod = @&quot;POST&quot;;
+            //设置请求体
+            request.HTTPBody = [@&quot;username=520it&amp;pwd=520it&amp;type=JSON&quot; dataUsingEncoding:NSUTF8StringEncoding];
+            //发送请求并获取响应体
+            [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc]init] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+                //请求完成的回调
+                NSLog(@&quot;响应头:%@,相应体:%@&quot;,response,[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]);
+            }];
+
+NSURLSession
+    说明
+        目前苹果官网推荐的请求类
+        当使用代理时，NSURLSession对象会存在一个强引用，这个引用是不会被释放的
+        当NSURLSession不用时需要手动释放，否则会有内存泄漏问题
+        使用代理方式发送请求和上传文件时时需遵守NSURLSessionDataDelegate协议
+        使用代理方式下载文件时需遵守NSURLSessionDownloadDelegate协议
+    使用步骤
+        1. 使用NSURLSession创建Task
+        2. 执行Task
+    Task类
+        NSURLSessionTask                抽象类，其他类继承此类
+        NSURLSessionDataTask            用来传输数据，例如POST请求GET请求
+        NSURLSessionUploadTask          上传任务的类，继承NSURLSessionDataTask
+        NSURLSessionDownloadTask        处理下载任务的类
+    NSURLSessionConfiguration
+        说明
+            NSURLSession的配置信息类，用法和
+        类方法
+            defaultSessionConfiguration     默认配置信息
+            ephemeralSessionConfiguration   不会做持久性缓存
+            backgroundSessionConfigurationWithIdentifier  创建后台会话
+        属性
+            HTTPAdditionalHeaders       请求头部信息
+            allowsCellularAccess        是否允许蜂窝访问
+            networkServiceType          网络服务类型
+            timeoutIntervalForRequest   请求超时时间
+    类方法
+        sharedSession                   获取共享的NSURLSession对象
+        sessionWithConfiguration        自定义NSURLSession对象，可设置代理
+    对象方法
+        dataTaskWithURL                 通过NSURL直接发送请求，只能发送GET请求
+        dataTaskWithRequest             以request对象方式创建task
+        downloadTaskWithURL             通过URL创建下载任务
+        downloadTaskWithRequest         通过Request创建下载任务
+        downloadTaskWithResumeData      通过恢复数据创建下载任务
+        invalidateAndCancel             释放NSURLSession对象 
+        finishTasksAndInvalidate        释放NSURLSession对象
+    代理方法
+        didReceiveResponse              接收到服务器的响应时调用
+        didReceiveData                  接收到服务器数据时调用，会调用多次
+        didCompleteWithError            请求结束或者失败时调用
+        didWriteData                    下载文件正在写入数据时调用
+        didResumeAtOffset               恢复文件下载时调用
+        didFinishDownloadingToURL       下载完成时调用
+        didSendBodyData                 上传数据时重复调用，可用来计算进度
+        didReceiveChallenge             可用来安装SSL证书
+    Task对象方法
+        resume                          发送网络请求，默认是暂停的 
+        suspend                         暂停
+        cancel                          取消
+        cancelByProducingResumeData     可恢复的取消
+    范例
+        异步GET请求
+            NSURL *url = [NSURL URLWithString:@&quot;http://120.25.226.186:32812/login?username=123&amp;pwd=456&amp;type=JSON&quot;];
+            NSURLRequest *request = [NSURLRequest requestWithURL:url];
+            NSURLSession *session = [NSURLSession sharedSession];
+            NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                NSLog(@&quot;%@&quot;,[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]);
+            }];
+            [dataTask resume];
+        异步发送POST请求
+            NSURL *url = [NSURL URLWithString:@&quot;http://120.25.226.186:32812/login&quot;];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+            request.HTTPMethod = @&quot;POST&quot;;
+            request.HTTPBody = [@&quot;username=123&amp;pwd=456&amp;type=JSON&quot; dataUsingEncoding:NSUTF8StringEncoding];
+            NSURLSession *session = [NSURLSession sharedSession];
+            NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                NSLog(@&quot;%@&quot;,[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]);
+            }];
+            [dataTask resume];
+        下载文件
+            NSURL *url = [NSURL URLWithString:@&quot;http://120.25.226.186:32812/resources/videos/minion_01.mp4&quot;];
+            NSURLRequest *request = [NSURLRequest requestWithURL:url];
+            NSURLSession *session = [NSURLSession sharedSession];
+            NSURLSessionDownloadTask *downTask = [session downloadTaskWithRequest:request completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                //设置目标文件路径
+                NSString *filePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+                filePath = [filePath stringByAppendingPathComponent:[url lastPathComponent]];
+                //location为文件下载的位置
+                [[NSFileManager defaultManager] moveItemAtURL:location toURL:[NSURL fileURLWithPath:filePath] error:nil];
+                NSLog(@&quot;%@&quot;,filePath);
+            }];
+            [downTask resume];
+        上传文件
+            //fromData参数需要严格按照格式拼接字符串
+            NSURL *url = [NSURL URLWithString:@&quot;http://120.25.226.186:32812/upload&quot;];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+            request.HTTPMethod = @&quot;POST&quot;;
+            [request setValue:@&quot;multipart/form-data; boundary=----WebKitFormBoundaryBT24noDCZdQWr8JQ&quot; forHTTPHeaderField:@&quot;Content-Type&quot;];
+            NSURLSession *session = [NSURLSession sharedSession];
+
+            NSURLSessionUploadTask *uploadTask = [session uploadTaskWithRequest:request fromData:[NSData data] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            }];
+            [uploadTask resume];
+        代理方法安装SSL证书
+            -(void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler{
+                if(![challenge.protectionSpace.authenticationMethod isEqualToString:@&quot;NSURLAuthenticationMethodServerTrust&quot;]){
+                    return;
+                }
+                NSURLCredential *credential = [[NSURLCredential alloc]initWithTrust:challenge.protectionSpace.serverTrust];
+                completionHandler(NSURLSessionAuthChallengeUseCredential,credential);
+            }
+
+AFNetworking
+    说明
+        使用普遍的HTTP请求框架，内部基于NSURLSession实现
+        使用时需导入AFNetworking头文件，其内部会导入其他头文件
+    AFHTTPSessionManager
+        说明
+            HTTP请求管理者
+            发送请求时参数为字典方式
+            默认响应数据会序列化JSON数据为OC对象
+            在成功回调的task任务对象中包含了相应头信息
+            发送网络请求是在子线程中处理的，框架内部会自动处理RunLoop相关工作
+        类方法
+            manager                     创建请求管理者对象，非单例
+        对象方法
+            GET                         发送GET请求，请求参数为Dict类型
+            POST                        发送POST请求，请求参数为Dict类型
+            downloadTaskWithRequest     通过Request方式下载文件
+            downloadTaskWithResumeData  恢复下载
+            uploadTaskWithRequest       通过request上传文件
+        对象属性
+            responseSerializer          可设置数据解析方式，可解析类型等
+    AFNetworkReachabilityManager
+        说明
+            网络状态监测管理者
+        类方法
+            sharedManager                     获取单例对象
+        对象方法
+            setReachabilityStatusChangeBlock  监测网络状态
+            startMonitoring                   开始监听
+            stopMonitoring                    结束监听
+        网络状态
+            AFNetworkReachabilityStatusUnknown            未知网络
+            AFNetworkReachabilityStatusNotReachable       无网络
+            AFNetworkReachabilityStatusReachableViaWWAN   蜂窝网络
+            AFNetworkReachabilityStatusReachableViaWiFi   WiFi
+    范例
+        发送GET请求
+            //创建会话管理者
+            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+            //发送GET请求
+            [manager GET:@&quot;http://120.25.226.186:32812/login&quot; parameters:@{@&quot;username&quot;:@&quot;user&quot;,@&quot;pwd&quot;:@&quot;123&quot;} progress:^(NSProgress * _Nonnull downloadProgress) {
+                //进度的回调
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                //成功的回调
+                NSLog(@&quot;%@&quot;,responseObject);
+                NSLog(@&quot;%@&quot;,task.response);
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                //失败的回调
+            }];
+        发送POST请求
+            //创建会话管理者
+            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+            //发送GET请求
+            [manager POST:@&quot;http://120.25.226.186:32812/login&quot; parameters:@{@&quot;username&quot;:@&quot;user&quot;,@&quot;pwd&quot;:@&quot;123&quot;} progress:^(NSProgress * _Nonnull uploadProgress) {
+                //进度的回调
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                //成功的回调
+                NSLog(@&quot;%@&quot;,responseObject);
+                NSLog(@&quot;%@&quot;,task.response);
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                //失败的回调
+            }];
+        下载文件
+            //创建会话管理者
+            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+            //创建request请求对象
+            NSURL *url = [NSURL URLWithString:@&quot;http://120.25.226.186:32812/resources/videos/minion_01.mp4&quot;];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+            NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
+                //进度回调
+                NSLog(@&quot;%f&quot;,1.0 * downloadProgress.completedUnitCount/downloadProgress.totalUnitCount);
+            } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+                //指定目标位置的回调，targetPath为临时文件路径，response为响应头信息
+                NSString *filePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+                filePath = [filePath stringByAppendingPathComponent:response.suggestedFilename];
+                return [NSURL fileURLWithPath:filePath];
+            } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+                //下载完成的毁掉，filePath为最终文件路径
+            }];
+            //执行下载任务
+            [downloadTask resume];
+        文件上传
+            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+            [manager POST:@&quot;http://120.25.226.186:32812/upload&quot; parameters:@{@&quot;name&quot;:@&quot;username&quot;} constructingBodyWithBlock:^(id&lt;AFMultipartFormData&gt;  _Nonnull formData) {
+                //拼接用来上传的文件数据
+                [formData appendPartWithFileURL:[NSURL URLWithString:@&quot;/User/xxx/xxx.png&quot;] name:@&quot;file&quot; error:nil];
+            } progress:^(NSProgress * _Nonnull uploadProgress) {
+                NSLog(@&quot;%f&quot;,1.0 * uploadProgress.completedUnitCount/uploadProgress.totalUnitCount);
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                //成功回调
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                //失败回调
+            }];
+        网络状态检测
+            AFNetworkReachabilityManager *manger = [AFNetworkReachabilityManager sharedManager];
+            [manger setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+                NSLog(@&quot;%ld&quot;,status);
+            }];
+            [manger startMonitoring];
+</code></pre><h2 id="编码和加密"><a href="#编码和加密" class="headerlink" title="编码和加密"></a>编码和加密</h2><pre><code>BASE64
+    NSData的对象方法
+        base64EncodedStringWithOptions   对NSData进行Base64编码，返回字符串
+        base64EncodedDataWithOptions     对NSData进行Base64编码，返回NSData
+        initWithBase64EncodedData        对Base64的NSData进行解码
+        initWithBase64EncodedString      对Base64的字符串解码
+    范例 
+        编码
+            NSString *str = @&quot;ABC&quot;;
+            NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+            NSString *base64 = [data base64EncodedStringWithOptions:0];
+        解码
+            NSString *base64Str = @&quot;QUJD&quot;;
+            NSData *data = [[NSData alloc]initWithBase64EncodedString:base64Str options:0];
+</code></pre><h2 id="SDWebImage"><a href="#SDWebImage" class="headerlink" title="SDWebImage"></a>SDWebImage</h2><pre><code>结构说明
+    SDWebImageManager               其他类的管理类
+    SDImageCache                    处理缓存的类
+    SDWebImageDownloader            处理图片下载的工具类
+    SDWebImageDownloaderOpertion    具体图片下载任务的类
+
+框架细节
+    最大并发数默认为6
+    缓存问价的命名为图片URL的MD5散列之后的值
+    框架内部通过监听内存警告通知来清空缓存
+    框架内部通过NSCache来处理患处
+    框架内部通过图片的二进制数据中第一个字节来判断图片类型
+    框架内部通过NSURLConnection发送网络请求来下载图片
+    框架内部的请求超时时间为15S
+
+设置UIImageView图片
+    说明
+        方法内部会对图片做 内存缓存 + 磁盘缓存
+        需包涵 UIImageView+WebCache.h 头文件
+    范例
+        [self.imageView sd_setImageWithURL:[NSURL URLWithString:@&quot;http://xxx.xxx.jpg&quot;] placeholderImage:nil options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+
+        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        }];
+
+下载图片(缓存)
+    说明
+        默认方法内部会对图片做 内存缓存 + 磁盘缓存
+        缓存方案可通过options参数修改
+        需包涵 SDWebImageManager.h 头文件
+    范例
+        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:@&quot;http://xxx.xxx.jpg&quot;] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+        }];
+
+下载图片(不做缓存)
+    说明
+        不做缓存，单纯下载图片
+        completed 中的Block是在子线程中处理的
+        需包涵 SDWebImageDownloader.h 头文件
+    范例
+        [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:@&quot;http://xxx.xxx.jpg&quot;] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+        } completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+        }];
+
+播放GIF图片
+    说明
+        需要引入 UIImage+GIF.h 头文件
+        图片名不需要gif后缀
+    范例
+        UIImage *image = [UIImage sd_animatedGIFNamed:@&quot;imageName&quot;];
+
+清空缓存
+    cleanDisk
+        说明
+            清除过期缓存，过期时间默认7天
+            计算当前缓存大小，和设置的最大缓存比较，如果操作会继续删除
+            删除按照文件创建的删除顺序
+        范例
+            [[SDWebImageManager sharedManager].imageCache cleanDisk];
+    clearDisk
+        说明
+            直接删除缓存目录下的文件，然后重新创建缓存文件夹
+        范例
+            [[SDWebImageManager sharedManager].imageCache clearDisk];
+
+取消当前所有操作
+    说明
+        可在内存警告时使用
+    范例
+        [[SDWebImageManager sharedManager] cancelAll];
+</code></pre><h2 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h2><pre><code>图片下载框架
+    [SDWebImage][https://github.com/rs/SDWebImage]
+文件压缩解压框架
+    [ZipArchive][https://github.com/ZipArchive/ZipArchive]
+HTTP请求框架
+    [AFNetworking][https://github.com/AFNetworking/AFNetworking]
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/03/frp-内网穿透/" rel="next" title="frp-内网穿透">
+                <i class="fa fa-chevron-left"></i> frp-内网穿透
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Cao Zheng" />
+          <p class="site-author-name" itemprop="name">Cao Zheng</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#进程和线程的概念"><span class="nav-number">1.</span> <span class="nav-text">进程和线程的概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程在iOS中的使用"><span class="nav-number">2.</span> <span class="nav-text">线程在iOS中的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSCache"><span class="nav-number">3.</span> <span class="nav-text">NSCache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RunLoop"><span class="nav-number">4.</span> <span class="nav-text">RunLoop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络"><span class="nav-number">5.</span> <span class="nav-text">网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编码和加密"><span class="nav-number">6.</span> <span class="nav-text">编码和加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SDWebImage"><span class="nav-number">7.</span> <span class="nav-text">SDWebImage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#框架"><span class="nav-number">8.</span> <span class="nav-text">框架</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cao Zheng</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

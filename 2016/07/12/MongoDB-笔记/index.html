@@ -1,0 +1,931 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="声明本文为阅读极客学院 - Mongodb 教程时的笔记，内容主要为知识点的梳理和备忘，建议大家查看原版。
+概述collection   集合就是一组 MongoDB 文档。相当于关系型数据库（RDBMS）中的表这种概念
+document     文档就是一组键-值对。文档有着动态的模式
+_id          12位十六进制数，它保证了每一个文档的唯一性。插入文档时如不提供会自动生成。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB-笔记">
+<meta property="og:url" content="http://blog.uiideas.com/2016/07/12/MongoDB-笔记/index.html">
+<meta property="og:site_name" content="Uiideas Blog">
+<meta property="og:description" content="声明本文为阅读极客学院 - Mongodb 教程时的笔记，内容主要为知识点的梳理和备忘，建议大家查看原版。
+概述collection   集合就是一组 MongoDB 文档。相当于关系型数据库（RDBMS）中的表这种概念
+document     文档就是一组键-值对。文档有着动态的模式
+_id          12位十六进制数，它保证了每一个文档的唯一性。插入文档时如不提供会自动生成。">
+<meta property="og:updated_time" content="2016-11-08T08:25:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MongoDB-笔记">
+<meta name="twitter:description" content="声明本文为阅读极客学院 - Mongodb 教程时的笔记，内容主要为知识点的梳理和备忘，建议大家查看原版。
+概述collection   集合就是一组 MongoDB 文档。相当于关系型数据库（RDBMS）中的表这种概念
+document     文档就是一组键-值对。文档有着动态的模式
+_id          12位十六进制数，它保证了每一个文档的唯一性。插入文档时如不提供会自动生成。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> MongoDB-笔记 | Uiideas Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?559798d21c881907a6a2339e025bbc03";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Uiideas Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章列表
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                MongoDB-笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-12T11:47:52+08:00" content="2016-07-12">
+              2016-07-12
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><p>本文为阅读<a href="http://wiki.jikexueyuan.com/project/mongodb/" target="_blank" rel="external">极客学院 - Mongodb 教程</a>时的笔记，内容主要为知识点的梳理和备忘，建议大家查看原版。</p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><pre><code>collection   集合就是一组 MongoDB 文档。相当于关系型数据库（RDBMS）中的表这种概念
+document     文档就是一组键-值对。文档有着动态的模式
+_id          12位十六进制数，它保证了每一个文档的唯一性。插入文档时如不提供会自动生成。
+             组成:当前的时间戳(4位)，机器id号(3位)，服务器进程id(4位)，递增值(2位)
+</code></pre><h2 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h2><pre><code>MongoDB 相比 RDBMS 的优势
+    模式较少
+    采用单个对象的模式，清晰简洁
+    没有复杂的连接功能
+    深度查询功能MongoDB，支持对文档执行动态查询
+    具有调优功能
+    易于扩展
+    不需要从应用对象到数据库对象的转换/映射
+    使用内部存储存储（窗口化）工作集，能够更快地访问数据
+
+为何选择使用 MongoDB
+    面向文档的存储：以 JSON 格式的文档保存数据。
+    任何属性都可以建立索引。
+    复制以及高可扩展性。
+    自动分片。
+    丰富的查询功能。
+    快速的即时更新。
+    来自 MongoDB 的专业支持。
+
+MongoDB 适用的领域
+    大数据
+    内容管理及交付
+    移动及社会化基础设施
+    用户数据管理
+    数据中心
+</code></pre><h2 id="安装-MongoDB"><a href="#安装-MongoDB" class="headerlink" title="安装 MongoDB"></a>安装 MongoDB</h2><pre><code>安装
+    apt-get install mongodb
+
+启动服务
+    sudo service mongodb start|stop|restart
+
+使用客户端
+    mongo
+
+获得帮助
+    hlep                客户端帮助
+    db.help()           数据库方法帮助
+    db.mycoll.help()    集合方法帮助 
+
+MongoDB 统计信息
+    客户端中输入 db.stat()
+</code></pre><h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><pre><code>创建或切换数据库
+    use DATABASE_NAME
+
+查看当前选定的数据库
+    db
+
+查看数据库列表
+    show dbs
+
+删除选中的数据库
+    db.dropDatabase()
+</code></pre><h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><pre><code>创建集合
+    语法
+        db.createCollection(name, options) 
+            name      字符串 所要创建的集合名称
+            options   文档 可选。指定有关内存大小及索引的选项
+                capped       布尔 (可选) 是否创建固定大小的集合。
+                autoIndexID  布尔 (可选) 是否在_id字段创建索引，默认false
+                size         数值 capped为true时必选。指定一个最大值（以字节计）
+                max          数值 (可选) 指定固定集合中包含文档的最大数量。
+    范例
+        不带有选项
+            db.createCollection(&quot;mycollection&quot;)
+        带有选项
+            db.createCollection(&quot;mycollection&quot;, {
+                capped : true, 
+                autoIndexID : 
+                true, size : 6142800, 
+                max : 10000 
+            })
+
+查看集合
+    show collections
+
+删除集合
+    db.COLLECTION_NAME.drop()
+</code></pre><h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><pre><code>String               字符串。存储数据常用的数据类型。编码为UTF-8
+Integer              整型数值。根据你所采用的服务器，可分为 32 位或 64 位
+Boolean              布尔值
+Double               双精度浮点值。用于存储浮点值
+Min/Max keys         将一个值与 BSON（二进制的 JSON）元素的最低值和最高值相对比
+Arrays               用于将数组或列表或多个值存储为一个键
+Timestamp            时间戳。记录文档修改或添加的具体时间
+Object               用于内嵌文档
+Null                 用于创建空值
+Symbol               符号。类似字符串，不同的是它一般用于采用特殊符号类型的语言
+Date                 日期时间。UNIX 时间格式
+Object ID            对象 ID。用于创建文档的 ID
+Binary Data          二进制数据。用于存储二进制数据
+Code                 代码类型。用于在文档中存储 JavaScript 代码
+Regular expression   正则表达式类型。用于存储正则表达式
+</code></pre><h2 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h2><pre><code>插入文档
+    语法
+        db.COLLECTION_NAME.insert(document)
+    范例
+        db.mycol.insert({
+           _id: ObjectId(7df78ad8902c)
+        })
+    范例
+        db.mycol.insert([
+            {
+               title: &apos;MongoDB Overview&apos;
+            },
+            {
+               title: &apos;NoSQL Database&apos;
+            }
+        ])
+
+查询文档
+    语法
+        db.COLLECTION_NAME.find()             查询所有文档
+        db.COLLECTION_NAME.findOne()          只返回一个文档
+        db.COLLECTION_NAME.find().pretty()    格式化查询内容
+    条件查询
+        等于  
+            {&lt;key&gt;:&lt;value&gt;} 
+            db.mycol.find({&quot;by&quot;:&quot;tutorials point&quot;}).pretty()    
+        小于  
+            {&lt;key&gt;:{$lt:&lt;value&gt;}}   
+            db.mycol.find({&quot;likes&quot;:{$lt:50}}).pretty()  
+        小于或等于   
+            {&lt;key&gt;:{$lte:&lt;value&gt;}}  
+            db.mycol.find({&quot;likes&quot;:{$lte:50}}).pretty() 
+        大于  
+            {&lt;key&gt;:{$gt:&lt;value&gt;}}   
+            db.mycol.find({&quot;likes&quot;:{$gt:50}}).pretty()  
+        大于或等于   
+            {&lt;key&gt;:{$gte:&lt;value&gt;}}  
+            db.mycol.find({&quot;likes&quot;:{$gte:50}}).pretty() 
+        不等于 
+            {&lt;key&gt;:{$ne:&lt;value&gt;}}   
+            db.mycol.find({&quot;likes&quot;:{$ne:50}}).pretty()
+    AND 条件
+        语法
+            db.COLLECTION_NAME.find({key1:value1, key2:value2}).pretty()
+    OR 条件
+        语法
+            db.COLLECTION_NAME.find({$or:[{key1:value1}, {key2:value2}]}).pretty()
+    结合 AND 与 OR 条件
+        语法
+            db.COLLECTION_NAME.find(key1:value1,$or:[{key2:value2}, {key3:value3}]).pretty()
+
+更新文档
+    语法 update
+        db.COLLECTION_NAME.update(SELECTIOIN_CRITERIA, UPDATED_DATA)
+    范例
+        db.mycol.update({&apos;title&apos;:&apos;MongoDB Overview&apos;},{$set:{&apos;title&apos;:&apos;New MongoDB Tutorial&apos;}})
+    范例 更新多个文档
+        db.mycol.update({&apos;title&apos;:&apos;MongoDB Overview&apos;},{$set:{&apos;title&apos;:&apos;New MongoDB Tutorial&apos;}},{multi:true})
+    语法 save
+        db.COLLECTION_NAME.save({_id:ObjectId(),NEW_DATA})
+    范例
+        db.mycol.save({&quot;_id&quot;:ObjectId(5983548781331adf45ec7), &quot;title&quot;:&quot;Tutorials Point New Topic&quot;, &quot;by&quot;:&quot;Tutorials Point&quot;})
+
+删除文档
+    语法
+        删除所有符合的文档
+            db.COLLECTION_NAME.remove(DELLETION_CRITTERIA)
+        只删除符合的第一条文档
+            db.COLLECTION_NAME.remove(DELETION_CRITERIA,1)
+        删除所有文档
+            db.COLLECTION_NAME.remove()
+    范例
+        db.mycol.remove({&apos;title&apos;:&apos;MongoDB Overview&apos;})
+</code></pre><h2 id="映射"><a href="#映射" class="headerlink" title="映射"></a>映射</h2><pre><code>概念
+    映射（Projection）指的是只选择文档中的必要数据，而非全部数据。
+
+语法
+    db.COLLECTION_NAME.find({...},{KEY:1|0})
+
+范例 显示title 不显示_id
+    db.mycol.find({...},{&quot;title&quot;:1,_id:0})
+</code></pre><h2 id="限制记录"><a href="#限制记录" class="headerlink" title="限制记录"></a>限制记录</h2><pre><code>limit()
+    概念
+        显示查询结果中前两条数据
+    语法
+        db.COLLECTION_NAME.find().limit(NUMBER)
+
+skip()
+    概念
+        跳过指定条数数据显示
+    语法
+        db.COLLECTION_NAME.find().skip(NUMBER)
+</code></pre><h2 id="记录排序"><a href="#记录排序" class="headerlink" title="记录排序"></a>记录排序</h2><pre><code>sort()
+    语法
+        db.COLLECTION_NAME.find().sort({KEY:1|-1})
+    说明
+        sort() 方法可以通过一些参数来指定要进行排序的字段，1表示升序，-1表示降序。
+</code></pre><h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><pre><code>创建索引 ensureIndex()
+    语法
+        db.COLLECTION_NAME.ensureIndex({KEY:1[,options]}
+    说明
+        key 是想创建索引的字段名称，1 代表按升序排列字段值。-1 代表按降序排列。
+    options 说明
+        background          布尔值 在后台构建索引，默认值为 false
+        unique              布尔值 创建一个唯一的索引，默认值为 false。
+        name                字符串 索引名称。如果未指定，MongoDB自动生成
+        dropDups            布尔值 在可能有重复的字段内创建唯一性索引。。
+        sparse              布尔值 如果为 true，索引只引用带有指定字段的文档
+        expireAfterSeconds  整型值 单位秒，控制 MongoDB 保持集合中文档的时间。
+        v                   索引版本 索引版本号。
+        weights             文档  数值，范围从 1 到 99, 999。表示重要性。
+        default_language    字符串 用于确定停止词列表，以及词干分析器（stemmer）
+                            与断词器（tokenizer）的规则。默认值为 english。
+        language_override   字符串 对文本索引而言，指定了文档所包含的字段名
+                            该语言将覆盖默认语言。默认值为 language。
+    范例 为多个字段建立索引
+        db.mycol.ensureIndex({&quot;title&quot;:1,&quot;description&quot;:-1})
+</code></pre><h2 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h2><pre><code>概念
+    聚合操作能够处理数据记录并返回计算结果。聚合操作能将多个文档中的值组合起来，对成组数据执行各种操作，返回单一的结果。它相当于 SQL 中的 count(*) 组合 group by。
+
+语法
+    db.mycoll.aggregate([pipeline], &lt;optional params&gt; )
+
+聚合表达式列表
+    $sum
+        描述  
+            对集合中所有文档的定义值进行加和操作  
+        范例
+            db.mycol.aggregate([{$group : {_id : &quot;$key&quot;, num : {$sum : &quot;$likes&quot;}}}])
+    $avg
+        描述
+            对集合中所有文档的定义值进行平均值   
+        范例
+            db.mycol.aggregate([{$group : {_id : &quot;$key&quot;, num : {$avg : &quot;$likes&quot;}}}])
+    $min
+        描述
+            计算集合中所有文档的对应值中的最小值  
+        范例
+            db.mycol.aggregate([{$group : {_id : &quot;$key&quot;, num : {$min : &quot;$likes&quot;}}}])
+    $max
+        描述
+            计算集合中所有文档的对应值中的最大值  
+        范例
+            db.mycol.aggregate([{$group : {_id : &quot;$key&quot;, num : {$max : &quot;$likes&quot;}}}])
+    $push
+        描述
+            将值插入到一个结果文档的数组中 
+        范例
+            db.mycol.aggregate([{$group : {_id : &quot;$key&quot;, url : {$push: &quot;$url&quot;}}}])
+    $addToSet
+        描述
+            将值插入到一个结果文档的数组中，但不进行复制  
+        范例
+            db.mycol.aggregate([{$group : {_id : &quot;$key&quot;, url : {$addToSet : &quot;$url&quot;}}}])
+    $first
+        描述
+            根据成组方式，从源文档中获取第一个文档。但只有对之前应用过 $sort 管道操作符的结果才有意义。   
+        范例
+            db.mycol.aggregate([{$group : {_id : &quot;$key&quot;, first_url : {$first : &quot;$url&quot;}}}])
+    $last
+        描述
+            根据成组方式，从源文档中获取最后一个文档。但只有对之前进行过 $sort 管道操作符的结果才有意义。  
+        范例
+            db.mycol.aggregate([{$group : {_id : &quot;$key&quot;, last_url : {$last : &quot;$url&quot;}}}])
+
+pipeline
+    概念
+        能够在一些输入上执行一个操作，然后将输出结果用作下一个命令的输入。MongoDB 的聚合架构也支持这种概念。管道中有很多阶段（stage），在每一阶段中，管道操作符都会将一组文档作为输入，产生一个结果文档（或者管道终点所得到的最终 JSON 格式的文档），然后再将其用在下一阶段。
+    管道操作符
+        $project  用来选取集合中一些特定字段。
+        $match    过滤操作。减少用作下一阶段输入的文档的数量。
+        $group    如上所述，执行真正的聚合操作。
+        $sort     对文档进行排序。
+        $skip     在一组文档中，跳过指定数量的文档。
+        $limit    将查看文档的数目限制为从当前位置处开始的指定数目。
+        $unwind   解开使用数组的文档。当使用数组时，数据处于预连接状态，
+                  通过该操作，数据重新回归为各个单独的文档的状态。
+                  利用该阶段性操作可增加下一阶段性操作的文档数量。
+</code></pre><h2 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h2><pre><code>概念
+    复制是一种在多个服务器上同步数据的过程。通过在不同的数据库服务器上实现多个数据副本，复制能够实现数据冗余，提高数据的可用性，从而避免了仅仅因为一台服务器故障后就会产生的数据库灾难。
+
+为什么需要复制
+    保持数据安全
+    保证数据的高可用性（24 小时 × 7 天，全年无休）
+    灾难恢复
+    无需停机维护（比如进行备份、索引重建，压缩等任务）
+    读取的可扩展性（可读取其他副本）
+    副本集对应用的公开性
+
+复制在 MongoDB 中的运作方式
+    概念
+        MongoDB 使用副本集（replica set）来实现复制操作。副本集是一组托管同一数据集的 mongod 对象。在副本集中，主节点负责接收写入操作。所有其他的实例（从节点）则通过执行主节点的操作来拥有同样的数据集。副本集中只有一个主节点。
+    运行方式
+        副本集具有 2 个或多个节点（但一般最少需要 3 个节点）。
+        副本集只有一个主节点，其他全是从节点。
+        所有数据都是从主节点复制到从节点上的。
+        当发生自动故障转移或维护时，会重新推举一个新的主节点。
+        当失败节点恢复后，该节点重新又连接到副本集中，重新作为从节点。
+
+副本集特点
+    具有 N 个节点的集群
+    任何节点都可能成为主节点
+    所有写入操作必须由主节点来完成
+    自动故障转移
+    自动故障恢复
+    重新推举主节点
+
+建立副本集
+    命令
+        mongod --port &quot;PORT&quot; --dbpath &quot;YOUR_DB_DATA_PATH&quot; --replSet &quot;REPLICA_SET_INSTANCE_NAME&quot;
+    范例
+        mongod --port 27017 --dbpath &quot;D:\set up\mongodb\data&quot; --replSet rs0
+    说明
+        该命令会在端口 27017 处启动一个名为 rs0 的 MongoDB 实例。在命令行提示符上输入命令连接到该 MongoDB 对象上。在 MongoDB 客户端使用 rs.initiate() 命令来初始化一个新的副本集。检查该副本集设置，则需使用 rs.conf()。检查副本集状态使用 rs.status()。
+
+为副本集添加成员
+    语法
+        rs.add(HOST_NAME:PORT)
+</code></pre><h2 id="分片"><a href="#分片" class="headerlink" title="分片"></a>分片</h2><pre><code>概念
+    分片是一种在多台机器上存储数据记录的操作，它是 MongoDB 为应对数据增长需求而采取的办法。当数据量增长时，单台机器有可能无法存储数据或可接受的读取写入吞吐量。通过横向扩展，分片技术解决了这个问题。利用分片技术，我们可以添加更多的机器来应对数据量增加以及读写操作的要求
+
+为何要分片
+    将所有的写入操作复制到主节点
+    对延迟敏感的查询将在主节点上完成
+    单个副本集的节点数限制为 12 个
+    当活跃数据集过大时，内存有可能不够
+    本地磁盘空间不足
+    纵向扩展太过昂贵
+</code></pre><h2 id="备份"><a href="#备份" class="headerlink" title="备份"></a>备份</h2><pre><code>创建备份
+    mongodump
+
+恢复备份
+    mongorestore
+</code></pre><h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><pre><code>mongostat
+    该命令检查所有运行中的 mongod 实例的状态，返回数据库操作的统计结果。这些统计命令包括插入数、查询数、更新数、删除数以及游标的操作等。有些命令还能显示碰到页面错误的时间，以及写锁的时间百分比。这意味着你遇到一些问题：内存低，写入及性能上出现了一些问题。
+
+mongotop
+    该命令能够记录并报告 MongoDB 实例基于每个集合的读写活动。mongotop 默认每秒返回一次结果，但我们可以修改间隔时间。你应该检查读写活动是否符合应用预期状态。理想情况下，不应该出现对数据库进行过多的写操作，过于频繁地读取磁盘，或者超出了工作集的容量等情况。
+</code></pre><h2 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h2><pre><code>概念
+    MongoDB 中的关系表示文档之间的逻辑相关方式。关系可以通过内嵌（Embedded）或引用（Referenced）两种方式建模。这样的关系可能是 1:1、1:N、N:1，也有可能是 N:N。
+
+内嵌
+    {
+       &quot;_id&quot;:ObjectId(&quot;52ffc33cd85242f436000001&quot;),
+       &quot;address&quot;: [
+          {
+             &quot;city&quot;: &quot;Los Angeles&quot;,
+             &quot;state&quot;: &quot;California&quot;
+          },
+          {
+             &quot;city&quot;: &quot;Chicago&quot;,
+             &quot;state&quot;: &quot;Illinois&quot;
+          }]
+    } 
+
+手动引用       
+    {
+       &quot;_id&quot;:ObjectId(&quot;52ffc33cd85242f436000001&quot;),
+       &quot;address_ids&quot;: [
+          ObjectId(&quot;52ffc4a5d85242602e000000&quot;),
+          ObjectId(&quot;52ffc4a5d85242602e000001&quot;)
+       ]
+    }
+
+数据库引用
+    字段
+        $ref  该字段指定所引用文档的集合。
+        $id   该字段指定引用文档的 -id
+        $db   该字段是可选的，包含引用文档所在数据库的名称。
+    范例
+        {
+           &quot;_id&quot;:ObjectId(&quot;53402597d852426020000002&quot;),
+           &quot;address&quot;: {
+               &quot;$ref&quot;: &quot;address_home&quot;,
+               &quot;$id&quot;: ObjectId(&quot;534009e4d852427820000002&quot;),
+               &quot;$db&quot;: &quot;tutorialspoint&quot;
+           }
+        }
+</code></pre><h2 id="相关资源"><a href="#相关资源" class="headerlink" title="相关资源"></a>相关资源</h2><pre><code>[极客学院 - Mongodb 教程](http://wiki.jikexueyuan.com/project/mongodb/)
+[MongoDB权威指南](http://www.ituring.com.cn/book/1172)
+[官方 - MongoDB Documentation](https://docs.mongodb.com/)
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/11/C语言-笔记/" rel="next" title="C语言-笔记">
+                <i class="fa fa-chevron-left"></i> C语言-笔记
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/03/MySQL-笔记/" rel="prev" title="MySQL-笔记">
+                MySQL-笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Cao Zheng" />
+          <p class="site-author-name" itemprop="name">Cao Zheng</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#声明"><span class="nav-number">1.</span> <span class="nav-text">声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">2.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优势"><span class="nav-number">3.</span> <span class="nav-text">优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-MongoDB"><span class="nav-number">4.</span> <span class="nav-text">安装 MongoDB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库"><span class="nav-number">5.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合"><span class="nav-number">6.</span> <span class="nav-text">集合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型"><span class="nav-number">7.</span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文档"><span class="nav-number">8.</span> <span class="nav-text">文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#映射"><span class="nav-number">9.</span> <span class="nav-text">映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#限制记录"><span class="nav-number">10.</span> <span class="nav-text">限制记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#记录排序"><span class="nav-number">11.</span> <span class="nav-text">记录排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引"><span class="nav-number">12.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚合"><span class="nav-number">13.</span> <span class="nav-text">聚合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复制"><span class="nav-number">14.</span> <span class="nav-text">复制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分片"><span class="nav-number">15.</span> <span class="nav-text">分片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#备份"><span class="nav-number">16.</span> <span class="nav-text">备份</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署"><span class="nav-number">17.</span> <span class="nav-text">部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关系"><span class="nav-number">18.</span> <span class="nav-text">关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关资源"><span class="nav-number">19.</span> <span class="nav-text">相关资源</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cao Zheng</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

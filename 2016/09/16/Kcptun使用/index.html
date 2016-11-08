@@ -1,0 +1,637 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="声明Kcptun的作用主要是配合SS用来做加速，试过把Kcptun安装到路由器中，由于性能和稳定性的问题效果不如安装到树莓派上面效果好，配合systemd可以做到开机启动和进程断掉重启服务。配置比较简单，下文的配置方式用来给大家参考。
+相关资料官网
+    https://github.com/xtaci/kcptun
+
+下载地址
+    https://github.com/xtaci/kcpt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Raspberry Pi 安装 Kcptun">
+<meta property="og:url" content="http://blog.uiideas.com/2016/09/16/Kcptun使用/index.html">
+<meta property="og:site_name" content="Uiideas Blog">
+<meta property="og:description" content="声明Kcptun的作用主要是配合SS用来做加速，试过把Kcptun安装到路由器中，由于性能和稳定性的问题效果不如安装到树莓派上面效果好，配合systemd可以做到开机启动和进程断掉重启服务。配置比较简单，下文的配置方式用来给大家参考。
+相关资料官网
+    https://github.com/xtaci/kcptun
+
+下载地址
+    https://github.com/xtaci/kcpt">
+<meta property="og:updated_time" content="2016-11-08T08:33:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Raspberry Pi 安装 Kcptun">
+<meta name="twitter:description" content="声明Kcptun的作用主要是配合SS用来做加速，试过把Kcptun安装到路由器中，由于性能和稳定性的问题效果不如安装到树莓派上面效果好，配合systemd可以做到开机启动和进程断掉重启服务。配置比较简单，下文的配置方式用来给大家参考。
+相关资料官网
+    https://github.com/xtaci/kcptun
+
+下载地址
+    https://github.com/xtaci/kcpt">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Raspberry Pi 安装 Kcptun | Uiideas Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?559798d21c881907a6a2339e025bbc03";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Uiideas Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章列表
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Raspberry Pi 安装 Kcptun
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-16T11:47:52+08:00" content="2016-09-16">
+              2016-09-16
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><p>Kcptun的作用主要是配合SS用来做加速，试过把Kcptun安装到路由器中，由于性能和稳定性的问题效果不如安装到树莓派上面效果好，配合systemd可以做到开机启动和进程断掉重启服务。配置比较简单，下文的配置方式用来给大家参考。</p>
+<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><pre><code>官网
+    https://github.com/xtaci/kcptun
+
+下载地址
+    https://github.com/xtaci/kcptun/releases/latest
+
+其他资源
+    https://blog.kuoruan.com/102.html
+</code></pre><h2 id="服务搭建"><a href="#服务搭建" class="headerlink" title="服务搭建"></a>服务搭建</h2><pre><code>下载
+    cd /usr/local/opt/
+    mkdir kcptun
+    cd kcptun
+    wget .../kcptun-linux-amd64.tar.gz
+    tar -zxf kcptun-linux-amd64.tar.gz
+
+创建 systemd service
+    vi /etc/systemd/system/kcptun-server.service
+
+kcptun-server.service 文件内容
+    [Unit]
+    Description=Start or stop the kcptun-server
+    After=network.target
+    Wants=network.target
+    [Service]
+    ExecStart=/usr/local/opt/kcptun/server_linux_amd64 --key &quot;username&quot; -t &quot;127.0.0.1:443&quot; -mtu 1400 -sndwnd 2048 -rcvwnd 2048 -mode fast2
+    Restart=1
+    [Install]
+    WantedBy=multi-user.target
+
+配置说明
+    -t &quot;127.0.0.1:443&quot;     指定的是本机地址和shadowsocks的端口
+    -mode                  加速模式，fast3 &gt; fast2 &gt; fast &gt; normal &gt; default
+    -h                     可查看其他参数说明
+
+启动
+    systemctl start kcptun-server
+
+关闭
+    systemctl stop kcptun-server
+
+查看状态
+    systemctl status kcptun-server
+
+设置开机启动
+    systemctl enable kcptun-server
+</code></pre><h2 id="Raspberry-Pi-设置"><a href="#Raspberry-Pi-设置" class="headerlink" title="Raspberry Pi 设置"></a>Raspberry Pi 设置</h2><pre><code>下载安装
+    cd /usr/local/opt/
+    mkdir kcptun
+    cd kcptun
+    wget .../kcptun-linux-arm.tar.gz
+    tar -zxf kcptun-linux-arm.tar.gz
+
+创建 systemd service
+    vi /etc/systemd/system/kcptun-client.service
+
+kcptun-client.service 文件内容
+    [Unit]
+    Description=Start or stop the kcptun-client
+    After=network.target
+    Wants=network.target
+    [Service]
+    ExecStart=/usr/local/opt/kcptun/client_linux_arm7 --key &quot;username&quot; -r &quot;45.78.32.99:29900&quot; -l &quot;:443&quot; -mtu 1400 -sndwnd 256 -rcvwnd 2048 -mode fast2 -dscp 46
+    Restart=1
+    [Install]
+    WantedBy=multi-user.target
+
+启动
+    systemctl start kcptun-client
+
+关闭
+    systemctl stop kcptun-client
+
+查看状态
+    systemctl status kcptun-client
+
+设置开机启动
+    systemctl enable kcptun-client
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/04/Swift-笔记/" rel="next" title="Swift-笔记">
+                <i class="fa fa-chevron-left"></i> Swift-笔记
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/21/iOS-UI框架-笔记/" rel="prev" title="iOS-UI框架-笔记">
+                iOS-UI框架-笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Cao Zheng" />
+          <p class="site-author-name" itemprop="name">Cao Zheng</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#声明"><span class="nav-number">1.</span> <span class="nav-text">声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关资料"><span class="nav-number">2.</span> <span class="nav-text">相关资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务搭建"><span class="nav-number">3.</span> <span class="nav-text">服务搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Raspberry-Pi-设置"><span class="nav-number">4.</span> <span class="nav-text">Raspberry Pi 设置</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cao Zheng</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

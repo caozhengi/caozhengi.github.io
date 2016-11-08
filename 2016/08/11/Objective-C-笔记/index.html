@@ -1,0 +1,1968 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="概念Cocoa框架
+    说明
+        是苹果公司为Mac OS X所创建的原生面向对象的编程环境
+        是Mac OS X上五大API之一（其它四个是Carbon、POSIX、X11和Java）
+        Cocoa中包含Foundation 和 UIKit
+
+Foundation/Foundation.h
+    说明
+        包含了其他大量头文件，等于引入O">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Objective-C-笔记">
+<meta property="og:url" content="http://blog.uiideas.com/2016/08/11/Objective-C-笔记/index.html">
+<meta property="og:site_name" content="Uiideas Blog">
+<meta property="og:description" content="概念Cocoa框架
+    说明
+        是苹果公司为Mac OS X所创建的原生面向对象的编程环境
+        是Mac OS X上五大API之一（其它四个是Carbon、POSIX、X11和Java）
+        Cocoa中包含Foundation 和 UIKit
+
+Foundation/Foundation.h
+    说明
+        包含了其他大量头文件，等于引入O">
+<meta property="og:updated_time" content="2016-11-08T07:29:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Objective-C-笔记">
+<meta name="twitter:description" content="概念Cocoa框架
+    说明
+        是苹果公司为Mac OS X所创建的原生面向对象的编程环境
+        是Mac OS X上五大API之一（其它四个是Carbon、POSIX、X11和Java）
+        Cocoa中包含Foundation 和 UIKit
+
+Foundation/Foundation.h
+    说明
+        包含了其他大量头文件，等于引入O">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Objective-C-笔记 | Uiideas Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?559798d21c881907a6a2339e025bbc03";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Uiideas Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章列表
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Objective-C-笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-11T15:47:52+08:00" content="2016-08-11">
+              2016-08-11
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><pre><code>Cocoa框架
+    说明
+        是苹果公司为Mac OS X所创建的原生面向对象的编程环境
+        是Mac OS X上五大API之一（其它四个是Carbon、POSIX、X11和Java）
+        Cocoa中包含Foundation 和 UIKit
+
+Foundation/Foundation.h
+    说明
+        包含了其他大量头文件，等于引入OC库
+    位置
+        /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks
+
+NS
+    说明
+        是 NeXT Software 的建成
+        OC不支持命名空间，NS是为了避免命名冲突而给的前缀
+        看到NS前缀就知道是Cocoa中的系统类的名称
+
+@
+    说明
+        OC中@由特殊用法
+        @&quot;&quot;  表示将C字符串转换为NSString
+        @标识符  OC中大部分关键字是以@开头的，比如@interface,@class,@end等
+
+注释
+    单行注释
+        // ......
+    多行注释
+        /* ...... */
+    文档注释
+        /**
+         * ......
+         */
+
+@class
+    说明
+        声明类，可用来替换 #import; 可避免引入的文件修改后，需重新编译的问题。
+        当大量文件#import同一个文件时，此文件修改，所有引入它的文件都需要重新编译
+        @class也可避免两个文件互相#import时的循环引入问题
+        缺点是没有代码提示，可通过在.m中#import头文件来解决此问题
+    范例
+        .h   @class Person
+        .m   #import &quot;Person.h&quot;
+
+源文件
+    .h       头文件
+    .c       C语言源文件
+    .cpp     C++语言的源文件，VC里用cpp作后缀名
+    .cc      C++语言的源文件，GCC里采用cc作为后缀名
+    .m       Objective-C的源文件
+    .mm      Objective-C++的源文件
+
+OC新增关键字
+    @interface,@implementation,@end,@public,@protected,@private,@selector,,@try,@catch,@throw,@finally,@protocol,@optional,@required,,@class,@property,@synthesize,@dynamic,BOOL,Class,YES,NO,id,self,super,nil,atomic,noatomic,,retain,assign,copy,block
+
+OC和C数据类型差异
+    C语言数据类型
+        基本类型
+            整型
+                短整型 short
+                整型 int
+            字符型 char
+            实型
+                单精度型 float
+                双精度型 double
+        构造类型
+            数组
+            结构体 struct
+            共用型 union
+            枚举类型 enum
+        指针类型
+        空类型 void
+        定义类型 typeof
+    OC数据类型
+        基本数据类型
+            数值型
+                整形
+                浮点型
+            字符形 char
+            布尔型 BOOL
+            空类型 void
+        Block类型
+        指针数据类型
+            类 class
+            id类型
+        特殊类型（SEL, Nil）
+
+nil,Nil,NULL区别
+    nil            为对象赋值空指针
+    Nil            为类对象赋值空指针
+    NULL           通用指针（泛型指针）
+    [NSNull null]  空对象，用在不能使用nil的场合
+</code></pre><h2 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h2><pre><code>#import
+    说明
+        引入文件，相当于 #include
+        import可以防止重复包涵，不需要手动编写防止重复包含的代码
+        &lt;&gt; 内包含的是系统头文件， &quot;&quot; 包含的是用户自己编写的文件
+
+#pragma mark
+    说明
+        对代码进行分组，方便对代码进行查找和导航
+    范例
+        #pragma mark Person类的声明
+        #pragma mark -
+</code></pre><h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><pre><code>Boolean
+    说明
+        用来存储 true false 两个逻辑值
+        实质是 unsigned char 类型
+    范例
+        Boolean flag = true;
+
+BOOL
+    说明
+        用来存储 YES NO 两个逻辑值
+    范例
+        BOOL flag = YES;
+
+NSString
+    说明
+        NSString 是 Objective-C 中核心处理字符串的类之一
+    范例
+        创建常量字符串
+            NSString *str = @&quot;Hello World&quot;;
+        类的方式创建字符串
+            NSString *str = [NSString new];
+            str = @&quot;Hello World&quot;;
+        格式化创建字符串
+            NSString *str = [NSString stringWithFormat:@&quot;%d.jpg&quot;,i];
+        用一个已存在的字符串创建字符串
+            NSString *str1 = @&quot;Hello World&quot;;
+            NSString *str2 = [[NSString alloc] initWithString:str1];
+        计算字符串长度(不计算 \0 中文算一个字符)
+            NSString *str = @&quot;Hello World&quot;;
+            int length = [str length];
+
+NS_ENUM
+    说明
+        可定义类型的枚举
+    格式
+        typedef NS_ENUM(枚举类型, 枚举名称) {枚举值};
+    范例
+        typedef NS_ENUM(NSInteger, Alignment) {
+            Center = 0,
+            Left   = 1,
+            Right  = 2,
+            Fill   = 3,
+        };
+
+NS_OPTIONS
+    说明
+        位枚举
+        一个参数可传多个值
+        1 &lt;&lt; 0 相当于 00000001, 等于1
+        1 &lt;&lt; 1 相当于 00000010, 等于2
+        1 &lt;&lt; 2 相当于 00000100, 等于4
+        1 &lt;&lt; 3 相当于 00001000, 等于8
+        1 &lt;&lt; 0 | 1 &lt;&lt; 1 | 1 &lt;&lt; 2  或位运算结果为 00000111, 等于7
+        00000111 &amp; 00000001 与位运算结果为1，结果为真
+        00000111 &amp; 00000010 与位运算结果为2，结果为真
+        00000111 &amp; 00001000 与位运算结果为0，结果为假
+    范例
+        typedef NS_OPTIONS(NSUInteger, State) {
+            Normal       = 0,
+            Highlighted  = 1 &lt;&lt; 0,
+            Disabled     = 1 &lt;&lt; 1,
+            Selected     = 1 &lt;&lt; 2,
+        };
+
+id
+    说明
+        id是一种通用的对象类型，可以用来存储属于任何类的对象，也可以理解为万能指针
+        id编译时不检查类型，运行时检查。编译器变异id类型时认为是动态类型
+        NSObject编译时检查类型，需强制转换
+    范例
+        Person *person = [Person new];
+        Student *student = [Student new];
+        id obj = student;
+        [obj eat];
+
+instancetype
+    说明
+        和id一样同为万能指针。iOS_5 之后推出，
+        和id都可以做为方法的返回类型
+        instancetype可以返回和方法所在类相同类型的对象，id只能返回未知类型的对象
+        instancetype只能做为返回值，不能像id那样做为参数
+
+block
+    说明
+        block类型是一个C级别的语法和运营机制
+        和标准的C函数区别是除了可执行代码，还包含了于堆栈内存绑定的变量
+        block可同时兼容C，C++，OC三种语言
+        block也是一个代码段，和函数相比没有名称
+        可定义一个变量来存储block代码段，这个变量为block类型
+    格式
+        返回值类型 (^block变量名)(形参列表) = ^(形参列表) {
+        };
+    范例
+        无参无返回值
+            void (^myBlock)() = ^{
+                NSLog(@&quot;hello world!&quot;);
+            };
+            myBlock();
+        有参无返回值
+            void (^sum)(int,int) = ^(int a,int b){
+                NSLog(@&quot;a+b=%d&quot;,a + b);
+            };
+            sum(1,2);
+        无参有返回值
+            NSString * (^myBlock)() = ^{
+                return @&quot;hello world!&quot;;
+            };
+            NSLog(@&quot;%@&quot;,myBlock());
+        有参有返回值
+            int (^sum)(int,int);
+            sum = ^(int a,int b){
+                return a + b;
+            };
+            NSLog(@&quot;a+b=%d&quot;,sum(1,2));
+    block 的 typedef
+        说明
+            block的别名
+        格式
+            typedef 返回值类型 (^新别名)(参数类型列表);
+        范例
+            没有返回值没有参数的block别名
+                typedef void (^Block)();
+                Block b1 = ^{
+                    NSLog(@&quot;Hello World!&quot;);
+                };
+                b1();
+            有返回值有参数的block别名
+                typedef int (^Block)(int,int);
+                Block sum = ^(int a, int b){
+                    return a + b;
+                };
+                NSLog(@&quot;a + b = %d&quot;,sum(1,2));
+    block外部变量
+        说明
+            block内部不允许修改外部非全局变量值
+            定义block时，block会把外部局部变量以const方式复制一份存放到block所在内存中
+            外部变量可通过增加 __block 修饰符而允许block内部修改，但修改的仍是复制值
+        block分类
+            全局block  定义在函数外面的block，或定义在函数内部却没有捕获任何白能量
+            栈block    区别为是否引用了外部变量
+            堆block    对栈block拷贝而来
+    block做为函数的返回值
+        说明
+            需先用 typedef 定义一个 block 类型别名
+            用新定义的类型做为函数的返回值类型
+        范例
+            typedef int (^Block)(int,int);
+            Block fun(){
+                return ^(int a, int b){
+                    return a + b;
+                };
+            }
+            fun()(1,2);
+    block做为对象的属性
+        范例
+            @property(nonatomic,copy) void (^block)();
+    block做为对象方法的参数
+        范例
+            -(void)test:(void (^)()) block;
+    block做为对象方法的返回值
+        范例
+            -(void (^)())test;
+    技巧
+        助记符: 输入inlineblock，tab切换输入内容
+</code></pre><h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><pre><code>类文件
+    .h 类声明文件，用于声明成员变量，方法。声明使用@interface和@end。
+    .m 类的实现文件，用于实现.h中声明的方法。实现使用@implementation和@end。
+
+方法
+    方法的声明和实现必须要 + 和 - 开头
+    + 表示类方法(静态方法)
+    - 表示对象方法(动态方法)
+
+成员变量（实例变量，属性）
+    作用域（访问修饰符）
+        @public      公开的，任意地方通过实例对象都可访问
+        @protected   (默认)只能在类的内部和子类中方法
+        @private     只能在类的内部访问
+        @package     同一框架内才可以访问（介于私有和公开之间）
+
+声明
+    格式
+        @interface 类名:父类名
+        {
+            定义类的属性
+        }
+        方法类型标识符(返回值类型)方法名1:(参数类型)参数名 方法名2:(参数类型)参数名;
+        @end
+    范例
+        typedef enum color{white,black,gold} iColor;
+        @interface iPhone : NSString
+        {
+            @public
+            iColor   _color;
+            float    _size;
+            NSString *_cpu;
+        }
+        - (void)aboutMyPhone;
+        - (void)callPhone:(NSString *) telNum;
+        - (void)sendMessage:(NSString *)telNum content:(NSString *)content;
+        @end
+
+实现
+    格式
+        @implementation 类名
+            方法的具体实现
+        @end
+    范例
+        @implementation iPhone
+        - (void)aboutMyPhone{
+            NSLog(@&quot;颜色：%d，尺寸：%f，CPU：%@&quot;,_color,_size,_cpu);
+        }
+        - (void)callPhone:(NSString *) telNum{
+            NSLog(@&quot;给%@打电话！&quot;,telNum);
+        }
+        - (void)sendMessage:(NSString *)telNum content:(NSString *)content{
+            NSLog(@&quot;给%@发送短信，短信内容是：%@！&quot;,telNum,content);
+        }
+        @end
+
+创建对象
+    说明
+        ClassName new 会实例化一个对象
+        new做了如下三件事请
+        分配内存空间 (相当于 alloc)
+        给实例变量初始化 (相当于 init)
+        返回空间的首地址
+    范例
+        常用方式
+            iPhone *iphone6 = [[iPhone alloc] init];
+        简洁方式
+            iPhone *iphone6 = [iPhone new];
+
+属性访问
+    格式
+        对象名-&gt;属性名;
+    范例
+        iphone6-&gt;_color = black;
+        iphone6-&gt;_size = 4.7f;
+        iphone6-&gt;_cpu = @&quot;A8&quot;;
+
+方法调用
+    格式
+        [类名或对象名 方法名];
+    范例
+        [iphone6 aboutMyPhone];
+        [iphone6 callPhone:@&quot;10086&quot;];
+        [iphone6 sendMessage:@&quot;18688730820&quot; content:@&quot;你好&quot;];
+
+匿名对象调用方法
+    范例
+        [[iPhone new] aboutMyPhone];
+
+self
+    用在类方法中
+        说明
+            self此时指向当前的类
+        范例
+            @interface Person : NSObject
+            +(void)eat;
+            +(void)run;
+            @end
+            @implementation Person
+            +(void)eat{
+                NSLog(@&quot;人在吃东西！&quot;);
+                [self run];
+            }
+            +(void)run{
+                NSLog(@&quot;人在走路！&quot;);
+            }
+            @end
+            [Person eat];
+    用在对象方法中
+        说明
+            self此时指向当前调用方法的对象
+        范例
+            @interface Person : NSObject
+            -(void)eat;
+            -(void)run;
+            @end
+            @implementation Person
+            -(void)eat{
+                NSLog(@&quot;人在吃东西！&quot;);
+            }
+            -(void)run{
+                NSLog(@&quot;人在走路！&quot;);
+                [self eat];
+            }
+            @end
+    访问成员变量
+        说明
+            在对象方法中可通过self访问对象成员变量
+        范例
+            @interface Dog : NSObject{
+                int speed;
+            }
+            -(void)run;
+            @end
+            @implementation Dog
+            -(void)run:(int)speed{
+                self-&gt;speed = speed;
+            }
+            @end
+    self在OC的内存管理特殊作用
+
+私有方法
+    说明
+        .h中没有声明，在.m文件中直接实现的方法
+        此时该方法只能通过self调用，且无法被子类继承
+
+@property
+    说明
+        省略方法声明和实现，免去手写set和get方法繁琐的代码
+        告诉编译器声明属性的访问器(getter/setter)方法
+        只能写在 @interface @end 之间
+        Xcode4.4后不需@synthesize，可直接生成实现
+        调用 对象.属性 时，会操作名为 _属性 的实例变量，不存在会自动生成
+        @property增强模式下，get和set方法可手动实现其中之一，不能同时手动实现
+    格式
+        @property (参数1,参数2) 类型名 变量名(去掉_)
+    参数
+        控制set方法的内存管理
+            retain     MRC模式下，release旧值，retain新值（用于OC对象）
+            strong     ARC模式下强指针，用于OC气体对象
+            weak       ARC模式下弱指针，通常用于UI控件
+            assign     直接赋值，不做任何内存管理(默认，用于非OC对象类型)
+            copy       release旧值，copy新值（一般用于NSString\block）
+        控制需不需要生成set方法
+            readwrite  同时生成set方法和get方法（默认）
+            readonly   只会生成get方法
+        多线程管理
+            atomic     对属性加锁，多线程下属性安全，性能低（默认）
+            nonatomic  对属性不加锁，多线程下不安全，性能高
+        控制set方法和get方法的名称
+            setter     设置set方法的名称，一定有个冒号:
+            getter     设置get方法的名称
+    范例
+        只省略声明
+            @interface iPhone : NSString
+            {
+                float    _size;
+            }
+            @property float size;
+            @end
+            @implementation iPhone
+            + (void)setSize:(float)size{
+                _size = size;
+            }
+            + (float)size{
+                return _size;
+            }
+            @end
+            iPhone *p = [iPhone new];
+            p.size = 5.3f;
+            NSLog(@&quot;size=%f&quot;,p-&gt;_size);
+        @property增强模式同时省略声明和实现
+            @interface iPhone : NSString
+            @property float size;
+            @end
+            @implementation iPhone
+            @end
+            iPhone *p = [iPhone new];
+            p.size = 5.3f;
+
+@synthesize
+    说明
+        省略set和get方法的实现，需配合@property使用
+        生成.h中声明的get和set方法
+        @synthesize不指定实例变量时会自动生成
+        Xcode4.4后不需要此方法，@property可直接生成实现
+    格式
+        @synthesize 变量名1,变量名2,变量名3;
+        @synthesize 变量名 = 实例变量名;
+    范例
+        @interface iPhone : NSString
+        {
+            float    _size;
+        }
+        @property float size;
+        @end
+        @implementation iPhone
+        @synthesize size = _size;
+        @end
+        iPhone.size = 4.7f;
+
+封装
+    说明
+        隐藏内部实现，只暴露接口
+        避免外部修改对象内部的属性
+    setter命名规范
+        方法必须是set开头
+        set后跟上成员变量的名，变量名首字母大写
+        返回值一定是void
+        一定要接收一个参数，而且参数类型需要和变量类型一致
+        形参名不能和成员变量名一样（苹果官方推荐属性名前加 _ ）
+    getter命名规范
+        一定要有返回值，返回值类型和成员变量的类型一致
+        方法名和成员变量名一样(去掉 _ )
+        不需要接受任何参数
+    点语法
+        通过 对象.属性 可调用对象的set和get方法，用来存储读取属性
+        对象.属性 并不是直接访问属性，而是Xcode识别点语法后替换为对象set或get方法
+        如果没有set和get方法，无法使用点语法
+    范例
+        @interface iPhone : NSString
+        {
+            float    _size;
+        }
+        - (void)setSize:(float)size;
+        - (float)size;
+        @end
+        @implementation iPhone
+        - (void)setSize:(float)size{
+            _size = size;
+        }
+        - (float)size{
+            return _size;
+        }
+        @end
+        iPhone *iphone6 = [iPhone new];
+        [iPhone setSize:4.7f];
+        iPhone.size = 5.3f;
+        float s = iPhone.siz;
+
+继承
+    注意事项
+        子类不同定义和父类同名的属性
+        OC类只支持单一继承，不支持多继承
+        OC类支持多层继承
+    范例
+        @interface Animal : NSObject{
+            int _age;
+        }
+        -(void)eat:(NSString*)foodName;
+        -(void)run;
+        @end
+        @implementation Animal
+        -(void)eat:(NSString*)foodName{
+            NSLog(@&quot;正在吃%@&quot;,foodName);
+        }
+        -(void)run{
+            NSLog(@&quot;正在跑&quot;);
+        }
+        @end
+        @interface Dog : Animal
+        -(void)lookHome;
+        @end
+        @implementation Dog
+        -(void)lookHome{
+            NSLog(@&quot;正在看家&quot;);
+        }
+        @end
+        [[Dog new] eat:@&quot;粑粑&quot;];
+
+多态
+    说明
+        不同的对象以自己的方式相应相同名称方法的能力称为多态
+    多态的条件
+        有继承关系，有方法重写
+        父类的声明变量指向子类对象
+        例: 父类 *p=[子类 new];
+    多态的优点
+        简化编程接口，允许在类和类之间重用一些习惯性的命名
+    多态原理
+        动态绑定：程序直到执行时才知道对象所属类型和调用的实际方法
+        OC可在运行时加入新的数据类型和新的程序模块：动态类型识别，动态绑定，动态加载
+    范例
+        @interface Animal : NSObject
+        -(void)run;
+        @end
+        @implementation Animal
+        -(void)run{
+            NSLog(@&quot;动物在跑&quot;);
+        }
+        @end
+        @interface Dog : Animal
+        @end
+        @implementation Dog
+        -(void)run{
+            NSLog(@&quot;狗在跑&quot;);
+        }
+        @end
+        Animal *p = [Dog new];
+        [p run];
+
+super
+    说明
+        指代父类，可在子类方法中调用父类的方法
+        super是一个编译指示器，用来给编译器使用，而不是一个指针。
+        编译器识别到super后会让当前对象调用父类方法。
+        调用者还是当前对象，调用的是父类的方法。
+    范例
+        //类结构如下: NSObject -&gt; Person -&gt; SubPerson
+        //下面代码在SubPerson中调用
+        [self class]               //SubPerson
+        [self superclass]          //Person
+        [super class]              //SubPerson
+        [super superclass]         //Person
+
+class
+    说明
+        获取当前方法调用者的类   
+
+superclass
+    说明
+        获取当前方法调用者的父类
+
+构造方法
+    重写构造方法
+        说明
+            用来初始化对象的方法，OC中初始化对象的方法为init
+            init为一个对象方法，返回调用init方法的对象
+            重写构造方法可让对象初始化后成员变量就有默认值
+        范例
+            @interface Person : NSObject
+            {
+                int _age;
+            }
+            @end
+            @implementation Person
+            -(instancetype)init{
+                //先让父类吧父类原来的事情做完
+                self = [super init];
+                //判断父类是否初始化成功
+                if(self){
+                    _age = 10;
+                }
+                return self;
+            }
+            @end
+    自定义构造方法
+        说明
+            创建对象时，可用指定的值初始化对象
+            一定是对象方法，以减号开头
+            返回值一般是id或instancetype类型
+            方法名一般以initWith开头
+        范例
+            @interface Person : NSObject
+            @property NSString* name;
+            -(instancetype)initWithName:(NSString *) name;
+            @end
+            @implementation Person
+            -(instancetype)initWithName:(NSString *)name{
+                if(self=[super init]){
+                    _name = name;
+                }
+                return self;
+            }
+            @end
+            Person *p = [[Person alloc]initWithName:@&quot;Jack&quot;];
+</code></pre><h2 id="动态类型检测"><a href="#动态类型检测" class="headerlink" title="动态类型检测"></a>动态类型检测</h2><pre><code>判断类和之类的实例
+    说明
+        判断实例对象是否是这个类或者是这个类子类的实例
+    格式
+        [对象 isKindOfClass:类对象];
+    范例
+        Person *person = [Person new];
+        Student *student = [Student new];
+        BOOL isInstance = [student isKindOfClass:[Person class]];
+
+判断类的实例
+    说明
+        判断实例对象是否是这个类的实例，不包括子类
+    格式
+        [对象 isMemberOfClass:类对象];
+    范例
+        Person *person = [Person new];
+        Student *student = [Student new];
+        BOOL isInstance = [student isMemberOfClass:[Person class]];
+
+判断是否是类的子类
+    说明
+        判断类是否是指定类的子类
+    格式
+        [类 isSubclassOfClass:类对象];
+    范例
+        Person *person = [Person new];
+        Student *student = [Student new];
+        BOOL isSub = [Student isSubclassOfClass:[Person class]];
+
+判断对象实例能否响应指定方法
+    说明
+        判断实例是否有指定方法，返回BOOL类型
+    格式
+        [对象 respondsToSelector:SEL];
+    范例
+        Person *person = [Person new];
+        SEL sel = @selector(run);
+        BOOL isRespond = [person respondsToSelector:sel];
+
+判断类是否能调用指定方法
+    说明
+        判断类是否能调用指定方法，返回BOOL类型
+    格式
+        [对象 instancesRespondToSelector:SEL];
+    范例
+        Person *person = [Person new];
+        BOOL isRespond = [Person instancesRespondToSelector:sel];
+
+SEL方式响应方法
+    说明
+        可以调用无参数的方法或者一个参数和两个参数的方法
+        可以延时调用
+    范例
+        @interface Person : NSObject
+        -(void)play;
+        -(void)run:(NSString *)speed;
+        -(void)eat:(NSString *) food andNumber:(NSString *) number;
+        @end
+        @implementation Person
+        -(void)play{}
+        -(void)run:(NSString *)speed{}
+        -(void)eat:(NSString *) food andNumber:(NSString *) number{}
+        @end
+        Person *p = [Person new];
+        [p performSelector:@selector(play)];
+        [p performSelector:@selector(run:) withObject:@&quot;10&quot;];
+        [p performSelector:@selector(eat:andNumber:) withObject:@&quot;food&quot; withObject:@&quot;10&quot;];
+</code></pre><h2 id="MRC-手动内存管理"><a href="#MRC-手动内存管理" class="headerlink" title="MRC-手动内存管理"></a>MRC-手动内存管理</h2><pre><code>引用计数器操作
+    方法
+        retain        使引用计数器 +1
+        release       使得引用计数器 -1
+        retainCount   得到引用计数器的值
+    范例
+        Person *p = [Person new];
+        Person *p2 = [p retain];
+        printf(&quot;%lu\n&quot;,[p retainCount]);
+
+dealloc
+    说明
+        当系统引用计数器为0时，系统会自动调用对象的dealloc方法
+        通常可重写dealloc方法
+    范例
+        @interface Person : NSObject
+        @end
+        @implementation Person
+        -(void)dealloc{
+            [super dealloc];
+        }
+        @end
+
+@autorelease
+    说明
+        自动释放池
+        当对象通过autorelease方法加入自动释放池后引用计数不会变化
+        自动释放池结束后，会给池中每个对象发送release消息
+    注意
+        并不是把代码放入到自动化释放池就会自动释放,需执行autorelease方法
+        无论对象是否是@autoreleasepoll内部创建，但需要在内部执行对象的autorelease方法
+    范例
+        @autoreleasepoll
+        {
+            Person *p = [[Person new] autorelease];
+        }
+</code></pre><h2 id="ARC-自动内存管理"><a href="#ARC-自动内存管理" class="headerlink" title="ARC - 自动内存管理"></a>ARC - 自动内存管理</h2><pre><code>说明
+    ARC下不需要写retain,release,autorelease
+    ARC是编译器特性，是在代码编译时候插入release,autorelease
+    ARC的判断准则是只要没有强指针指向对象，对象就会被立即释放
+    ARC下允许重写dealloc，但不允许调用[super dealloc]
+    GC垃圾回收机制是运行特性
+
+指针分类
+    强指针     默认情况下所有的指针都是强指针，可用 __strong 修饰
+    弱指针     __weak 关键字修饰的指针,例 __weak Person = [Person new];
+
+ARC模式下兼容非ARC的类
+    说明
+        targets-&gt;build phases中修改compiler Flags
+    参数
+        -fno-objc-arc    让原来的非ARC项目不使用ARC编译
+        -fobjc-arc       指定.m文件按照ARC方式编译
+</code></pre><h2 id="Category-分类"><a href="#Category-分类" class="headerlink" title="Category - 分类"></a>Category - 分类</h2><pre><code>说明
+    是OC的特有语法，其他语言中没有此语法，类似C#中的扩展方法
+    可在不修改原有类的基础上增加新的方法
+    可把一个庞大的类分模块开发
+    可对现有类进行扩展，如可扩展 Cocoa touch 中的类
+    可以做为子类的替代手段
+    可对类中的方法归类
+
+注意
+    分类只能增加方法，不能增加成员变量
+    可以在分类方法中访问原来类的成员变量
+    如果分类和原来类中出现同名方法，优先分类方法
+    如果多个分类中出现同名方法，最后编译的优先
+    分类中的@property只会增加get和set方法，不会增加下划线的成员属性
+
+非正式协议
+    凡是NSObject或是其子类的类别，都是非正式协议
+
+使用步骤
+    声明分类
+        格式
+            @interface 待扩展的类名 (分类的名称)
+            @end
+        范例
+            @interface Person : NSObject
+            @end
+            @implementation Person
+            @end
+            @interface Person (base)
+                -(void)eat;
+                -(void)run;
+            @end
+    实现分类
+        格式
+            @implementation 待扩展的类名 (分类的名称)
+            @end
+        范例
+            @implementation Person (base)
+                -(void)eat{
+                    NSLog(@&quot;eatting&quot;);
+                }
+                -(void)run{
+                    NSLog(@&quot;running&quot;);
+                }
+            @end
+    使用分类
+        说明
+            和使用类中原有的对象方法一样
+        范例
+            Person *p = [Person new];
+            [p run];
+
+Extendsion - 扩展
+    说明
+        扩展又称为延展，是Category的一个特例
+        一定用来声明只在内部使用的私有方法或属性
+        Extendsion 的名字为空，并且新添加的方法一定要予以实现
+        可为类添加额外的原来没有的变量，方法，或合成属性
+        只能在原.m文件中的@implementation内实现方法
+        定义在.m中的类扩展方法为私有的，定义在.h文件中的类扩展方法为公有的
+    范例
+        @interface Person ()
+        @end
+</code></pre><h2 id="copy"><a href="#copy" class="headerlink" title="copy"></a>copy</h2><pre><code>说明
+    OC中的copy指的是对象的拷贝
+    目的是使用某个对象的数据，但是在修改对象的时候不影响原对象内容
+    一个对象可以调用copy或mutableCopy方法来创建一个副本对象
+    使用copy或mutableCopy时，必须遵守copy或mutableCopy的协议
+    copy:创建不可变的副本，如NSString,NSArray,NSDictionary
+    mutableCopy:创建的是可变的副本,如NSMutableString,NSMutableArray
+    无论是否是可变对象，copy后是不可变的，mutableCopy后是可变的
+    copy是浅拷贝，不会重新分配内存空间，原对象引用计数+1
+    mutableCopy是深拷贝，会在内存中重新分配空间
+
+范例
+    字符串的mutableCopy
+        NSString *str = @&quot;ABCDE&quot;;
+        NSMutableString *strCopy = [str mutableCopy];
+        [strCopy appendString:@&quot;FG&quot;];
+    为自定义类实现copy
+        @interface Person : NSObject &lt;NSCopying&gt;
+        @property (nonatomic,assign) int age;
+        @end
+        @implementation Person
+        -(id)copyWithZone:(NSZone *)zone{
+            Person *p = [[Person alloc]init];
+            p.age = self.age;
+            return p;
+        }
+        @end
+</code></pre><h2 id="protocol"><a href="#protocol" class="headerlink" title="protocol"></a>protocol</h2><pre><code>说明
+    协议是一些方法的声明，一般写在.h文件中
+    如果一个类采用一个协议，需实现这个协议中定义的必须实现的方法
+
+使用流程
+    定义协议
+    在类中采用指定的协议
+    实现协议中的方法（方法有必须实现和选择实现）
+
+使用注意
+    Protocol用来声明一大堆的方法(不能声明成员变量),不能写实现
+    只要采用协议，便拥有了这个协议的声明（不需要在.h文件中重复声明）
+    只要父类遵守了某个协议，子类也遵守
+    Protocol声明的方法可以让任何类去实现
+    OC不能继承多个类，但是可采用多个协议
+    基协议&lt;NSObject&gt;是最基本的协议，其中声明了许多基本方法
+    一个协议可以遵守另外的协议
+
+基协议
+    NSObject是一个基类，最根本最基本的类，任何其他类最终都要继承它
+    还有名字也叫NSObject的协议，它是一个基协议，最根本最基本的协议
+    NSObject协议中声明很多最基本的方法
+    建议每个新的协议都要遵守NSObject协议
+
+协议声明关键字
+    @required   这个方法必须要实现（若不实现，编译器会发出警告）
+    @optional   这个方法不一定要实现
+
+定义协议
+    格式
+        @protocol 协议名称 &lt;NSObject&gt;
+            //方法列表
+        @end
+    范例
+        @protocol baseProtocol &lt;NSObject&gt;
+        @required
+        -(void)eat;
+        @optional
+        -(void)run;
+        @end
+
+采用协议
+    一般格式
+        #import &quot;协议名称1&quot;
+        #import &quot;协议名称2&quot;
+        @interface 类名:父类 &lt;协议名称1,协议名称2&gt;
+        @end
+    避免协议相互引用和大量编译的方式
+        .h
+            @protocol &quot;协议名称&quot;
+            @interface 类名:父类 &lt;协议名称&gt;
+            @end 
+        .m
+            #import &quot;协议名称&quot;
+        main.m
+            #import &quot;协议名称&quot;
+
+类型限制
+    说明
+        可对赋给变量的值做限制，必须满足指定协议的条件下才可赋值
+    格式
+        数据类型&lt;协议名称&gt; 变量名
+    范例
+        限制协议
+            id &lt;baseProtocol&gt; p = [[Person alloc] init];
+        同时限制协议和类型
+            Person &lt;baseProtocol&gt; p = [[Person alloc] init];
+        对类中的属性限制
+            @interface Student : Person
+            @property(nonatomic,strong) Dog&lt;baseProtocol&gt; *dog;
+            @end
+</code></pre><h2 id="Foundation-框架"><a href="#Foundation-框架" class="headerlink" title="Foundation 框架"></a>Foundation 框架</h2><pre><code>NSString
+    写入文件
+        - (BOOL)writeToURL
+    读取文件
+        + (nullable instancetype)stringWithContentsOfFile
+    字符串比较
+        - (BOOL)isEqualToString:(NSString *)aString;
+    判断字符串是否相等
+        - [str1 (NSComparisonResult)compare:(NSString *)string;:str2];
+    全部字符转为大写字母
+        - (NSString *)uppercaseString;
+    全部字符转为小写字母
+        - (NSString *)lowercaseString
+    首字母变大写，其他字母都变小写
+        - (NSString *)capitalizedString
+    判断字符串的前缀
+        - (BOOL)hasPrefix:(nonnull NSString * )
+    判断字符串的后缀
+        - (BOOL)hasSuffix:(NSString *)str;
+    字符串查找
+        - (NSRange)rangeOfString:(NSString *)searchString;
+    字符串截取
+        - (NSString *)substringFromIndex:(NSUInteger)from;
+        - (NSString *)substringToIndex:(NSUInteger)to;
+        - (NSString *)substringWithRange:(NSRange)range;
+    字符串替换
+        - (NSString *)stringByReplacingOccurrencesOfString
+    字符串和其他类型转换
+        @property doubleValue;
+        @property floatValue;
+        @property intValue;
+    转换为C语言字符串
+        @property UTF8String
+    C语言字符串转换为NSString
+        + (nullable instancetype)stringWithUTF8String
+
+NSMutableString
+    说明
+        继承自NSString，可任意动态的在字符串中添加删除和修改
+        NSMutableString可使用NSString中的所有方法
+    范例
+        NSMutableArray *str = [NSMutableString string];
+
+NSURL
+    说明
+        OC中URL处理的类
+    范例
+        NSURL *url = [NSURL URLWithString:@&quot;file:///root/tmp.txt&quot;];
+
+NSRange
+    说明
+        表示事物的范围，通常是字符串里的字符范围或数组里的元素范围
+        是Foundation框架中比较常用的结构体，包括location和length
+        location 表示该范围的起始位置
+        length 表示该范围的长度
+    范例
+        创建方法1
+            NSRange range;
+            range.location = 10;
+            range.length = 3;
+        创建方法2
+            NSRange range = {10,3};
+        创建方法3
+            NSRange range;
+            range = (NSRange){10,3};
+        OC结构赋值
+            NSRange range = NSMakeRange(7, 3);
+        转换为NSString
+            NSStringFromRange(NSRange range);
+
+NSArray
+    说明
+        OC中的数组类，可存放任意OC对象
+        不能存储 int,float,double,char,enum,struct 类型的数据
+        一旦初始化完毕，里面的内容是永远固定的，不能删除或添加数组
+        NSArray不能存储nil，nil做为元素最后一个结束符
+        如果想在NSArray中存储NULL，可存储 [NSNull null]
+        NSArray可用 NSLog(@&quot;%A&quot;) 打印
+        C语言中的数组只能存放一种类型数据
+        C语言的数组不能方便的动态添加删除数组元素
+    创建
+        - (instancetype)array;
+        - (instancetype)arrayWithObject:(id)anObject;
+        - (instancetype)arrayWithObjects:(id)firstObj, ...;
+        - (instancetype)arrayWithArray:(NSArray *)array;
+        - (id)arrayWithContentsOfFile:(NSString *)path;
+        - (id)arrayWithContentsOfURL:(NSURL *)url;
+    常见方法
+        获取集合元素个数
+            - (NSUInteger)count;
+        获得index位置的元素
+            - (id)objectAtIndex:(NSUInteger)index;
+        是否包含某一个元素
+            - (BOOL)containsObject:(id)anObject;
+        返回最后一个元素
+            - (id)lastObject;
+        返回最后一个元素
+            - (id)firstObject;
+        查找anObject元素在数组中的位置(如果找不到，返回-1)
+            - (NSUInteger)indexOfObject:(id)anObject;
+        在range范围内查找anObject元素在数组中的位置
+            - (NSUInteger)indexOfObject:(id)anObject inRange:(NSRange)range;
+    范例
+        创建空数组
+            NSArray *arr = [NSArray array];
+        创建数组只有一个元素
+            NSArray *arr = [NSArray arrayWithObject:@&quot;a&quot;];
+        创建数组有多个元素
+            NSArray *arr = [NSArray arrayWithObjects:@&quot;a&quot;,@1,nil];
+        调用对象方法 创建数组
+            NSArray *arr = [NSArray alloc]initWithObjects:@&quot;a&quot;,nil];
+        用已存在的数组创建数组
+            NSArray *arr = [NSArray arrayWithArray:(nonnull NSArray *);
+        简洁方法
+            NSArray *arr = @[@&quot;Jack&quot;, @&quot;Rose&quot;, @&quot;Jim&quot;];
+            arr[1];
+    遍历
+        NSArray的下标遍历
+            NSArray *arr = @[@&quot;Jack&quot;, @&quot;Rose&quot;, @&quot;Jim&quot;];
+            for (int i = 0; i &lt; arr.count; ++i) {
+                NSLog(@&quot;%@&quot;,arr[i]);
+            }
+        NSArray的快速遍历
+            NSArray *arr = @[@&quot;Jack&quot;, @&quot;Rose&quot;, @&quot;Jim&quot;];
+            for (Person *p in arr) {
+                NSLog(@&quot;%@&quot;,p);
+            }
+        NSArray 使用block进行遍历
+            NSArray *arr = @[@&quot;Jack&quot;, @&quot;Rose&quot;, @&quot;Jim&quot;];
+            [arr enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                NSLog(@&quot;obj = %@, idx = %lu&quot;, obj, idx);
+            }];
+    写入至文件
+        NSArray *arr = @[@&quot;a&quot;,@&quot;b&quot;,@&quot;c&quot;];
+        if([arr writeToFile:@&quot;/root/tmp.plist&quot; atomically:YES]){
+            NSLog(@&quot;写入成功&quot;);
+        };
+    从文件读取数组
+        NSArray *arr = [NSArray arrayWithContentsOfFile:@&quot;/root/tmp.plist&quot;];
+        NSLog(@&quot;%@&quot;,arr);
+    格式化字符串
+        NSArray *arr = @[@&quot;a&quot;,@&quot;b&quot;,@&quot;c&quot;];
+        NSString *str = [arr componentsJoinedByString:@&quot;-&quot;];
+    字符串分割为数组
+        NSString *str = @&quot;a-b-c-d&quot;;
+        NSArray *arr = [str componentsSeparatedByString:@&quot;-&quot;];
+
+NSMutableArray
+    说明
+        继承自NSArray，可使用NSArray的方法
+        NSMutableArray是可变的，可以随时添加修改删除元素
+    范例
+        创建数组
+            创建数组
+                NSMutableArray *arr = [NSMutableArray array];
+            创建并初始化
+                NSMutableArray *arr = [NSMutableArray arrayWithObjects:@&quot;a&quot;,@&quot;b&quot;, nil];
+            创建数组并指定长度
+                NSMutableArray *arr = [NSMutableArray arrayWithCapacity:5];
+        添加元素
+            NSMutableArray *arr = [NSMutableArray array];
+            [arr addObject:@&quot;a&quot;];
+        插入元素
+            [arr insertObject:@&quot;d&quot; atIndex:1];        
+        删除元素
+            [arr removeObject:@&quot;a&quot;];
+            [arr removeObjectAtIndex:1];
+        修改元素
+            [arr replaceObjectAtIndex:1 withObject:@&quot;d&quot;];
+            arr[2] = @&quot;d&quot;;
+        查找元素
+            BOOL isSearch = [arr containsObject:@&quot;a&quot;];
+        交换元素
+            [arr exchangeObjectAtIndex:1 withObjectAtIndex:2];
+
+NSDictionary
+    说明
+        字典是用来存储Key,Value对应关系的数据结构
+        不可变，初始化后内容不可修改
+    范例
+        创建空字典
+            NSDictionary *dist = [NSDictionary dictionary];
+        创建只有一组键值对的字典
+            NSDictionary *dist = [NSDictionary dictionaryWithObject:@&quot;value&quot; forKey:@&quot;key&quot;];
+        创建多组键值对的字典
+            NSDictionary *dist = [NSDictionary dictionaryWithObjectsAndKeys:@&quot;value1&quot;,@&quot;key1&quot;,@&quot;value2&quot;,@&quot;key2&quot;,nil];
+        简洁创建方式
+            NSDictionary *dist = @{
+                @&quot;key1&quot;:@&quot;value1&quot;,
+                @&quot;key2&quot;:@&quot;value2&quot;,
+                @&quot;key3&quot;:@&quot;value3&quot;
+            };
+        返回键值对数
+            long int n = [dist count];
+        取值
+            [dist objectForKey:@&quot;key1&quot;];
+        取值简写
+            dict[@&quot;key1&quot;];
+        遍历
+            for (NSString *key in dist) {
+                NSLog(@&quot;%@=%@&quot;,key,[dist objectForKey:key]);
+            }
+        遍历通过block
+            [dist enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL * stop) {
+                NSLog(@&quot;%@=%@&quot;,key,value);
+            }];
+        把字典存储至文件
+            if([dist writeToFile:@&quot;/root/tmp.plist&quot; atomically:YES]){
+                NSLog(@&quot;写入成功&quot;);
+            };
+        从文件读取字典
+            NSDictionary *dist = [NSDictionary dictionaryWithContentsOfFile:@&quot;/root/tmp.plist&quot;];
+
+NSMutableDictionary
+    说明
+        NSMutableDictionary是NSDictionary的子类
+        NSMutableDictionary是可变的，可增删改查
+    范例
+        创建
+            NSMutableDictionary *dist = [NSMutableDictionary dictionary];
+        添加
+            [dist setValue:@&quot;value&quot; forKey:@&quot;key&quot;];
+        删除
+            [dist removeObjectForKey:@&quot;key&quot;];
+        修改
+            [dist setObject:@&quot;value&quot; forKey:@&quot;key&quot;];
+        修改简写
+            dist[@&quot;key&quot;] = @&quot;value&quot;;
+
+NSFileManager
+    说明
+        用来管理文件系统，可对文件进行拷贝剪贴创建等操作
+        也包括查看文件读写权限，目录修改创建等
+    范例
+        判断文件是否存在
+            NSString *path = @&quot;/Users/caozheng/Downloads/tmp.plist&quot;;
+            NSFileManager *fm = [NSFileManager defaultManager];
+            if([fm fileExistsAtPath:path]){
+                NSLog(@&quot;文件存在&quot;);
+            }
+        判断是否是一个目录
+            BOOL isDirectory;
+            [fm fileExistsAtPath:path isDirectory:&amp;isDirectory];
+        判断文件是否可读
+            if([fm isReadableFileAtPath:path]){
+                NSLog(@&quot;文件可读&quot;);
+            }
+        判断文件是否可写
+            if([fm isWritableFileAtPath:path]){
+                NSLog(@&quot;文件可写&quot;);
+            }
+        判断文件是否可删除
+            if([fm isDeletableFileAtPath:path]){
+                NSLog(@&quot;文件可删除&quot;);
+            }
+        获取文件属性
+            NSDictionary *dist = [fm attributesOfItemAtPath:path error:nil];
+            NSLog(@&quot;%@&quot;,dist);
+        获取指定目录下的文件和目录（递归，包括后代）
+            NSArray *arr = [fm subpathsAtPath:path];
+        获取指定目录下的文件和目录（非递归，包括后代）
+            NSArray *arr = [fm subpathsOfDirectoryAtPath:path error:nil];
+        获取指定目录下的子目录和文件（不包括后代）
+            NSArray *arr = [fm contentsOfDirectoryAtPath:path error:nil];
+        创建文件
+            NSString *str= @&quot;abc&quot;;
+            NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+            if([fm createFileAtPath:path contents:data attributes:nil]){
+                NSLog(@&quot;创建成功&quot;);
+            };
+        创建目录
+            if([fm createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil]){
+                NSLog(@&quot;创建成功&quot;);
+            };
+        复制文件
+            [fm copyItemAtPath:path toPath:@&quot;/root/&quot; error:nil]
+        移s动文件
+            [fm moveItemAtPath:path toPath:@&quot;/root/&quot; error:nil];
+        删除文件
+            [fm removeItemAtPath:path error:nil];
+
+NSPoint/CGPoint
+    说明
+        表示二纬平面的一个点的结构体，包含x,y两个值
+    范例
+        NSPoint p = {10,20};
+
+NSSize/CGSize
+    说明
+        表示二纬平面中宽度和高度的结构，包含height,width两个值
+    范例
+        NSSize s = {100,200};
+
+NSRect/CGRect
+    说明
+        表示二纬平面中左上角是某个点的矩形区域,包含origin,size
+    范例
+        NSRect r = {{10,10},{100,100}};
+
+NSNumber
+    说明
+        是OC中处理数字的类
+        把int/float/double包装成一个对象
+        可把基本类型的数据保存到数组或字典中
+    范例
+        简写
+            NSNumber *n = @100;
+        使用@转换为Number
+            int i = 100;
+            NSNumber *n = @(100); 
+        int转换为NSNumber
+            NSNumber *n = [NSNumber numberWithInt:10];
+        float转换为NSNumber
+            NSNumber *n = [NSNumber numberWithFloat:3.14f];
+        double转换为NSNumber
+            NSNumber *n = [NSNumber numberWithDouble:3.14];
+        数组内NSNumber相加   
+            NSArray *arr = @[@1,@3.14f];
+            NSLog(@&quot;%f&quot;,[arr[0] intValue] + [arr[1] floatValue]);
+
+NSValue
+    说明
+        可把指针和结构体包装为NS对象
+        NSNumber是NSValue的子类
+    范例
+        NSPoint转换为NSValue
+            NSPoint p = {10,20};
+            NSValue *value = [NSValue valueWithPoint:p];
+        NSRect转换为转换为NSValue
+            NSRect r = {{10,20},{100,200}};
+            NSMutableArray *arr = [NSMutableArray array];
+            [arr addObject:[NSValue valueWithRect:r]];
+        NSValue转换为NSRect
+            NSRect r = {{10,20},{100,200}};
+            NSValue *vlaue = [NSValue valueWithRect:r];
+            NSLog(@&quot;%@&quot;,NSStringFromRect([vlaue rectValue]));
+        转换C结构体为NSValue并取值
+            typedef struct D{
+                int year;
+                int month;
+                int day;
+            } MyDate;
+            MyDate data = {2016,8,15};
+            NSValue *value = [NSValue valueWithBytes:&amp;data objCType:@encode(MyDate)];
+            MyData data1;
+            [value getValue:&amp;data1]          
+
+NSData
+    说明
+        OC中处理时间日期的类
+        可以用来表示时间，可以进行一些常见的日期\时间处理
+        一个NSData对象代表一个时间
+    范例
+        获取当前时间（GMT 0时区）
+            NSDate *date = [NSDate date];
+        格式化显示时间
+            NSDate *date = [NSDate date];
+            NSDateFormatter *formatter = [NSDateFormatter new];
+            formatter.dateFormat = @&quot;yyyy年MM月DD日 HH:mm:ss&quot;;
+            NSString *str = [formatter stringFromDate:date];
+            NSLog(@&quot;%@&quot;,str);
+        计算时间
+            NSTimeInterval t = 24 * 60 * 60;
+            NSDate *tomorrow = [NSDate dateWithTimeIntervalSinceNow:t];
+        单独获取年月日
+            NSDate *d = [NSDate date];
+            NSCalendar *cal = [NSCalendar currentCalendar];
+            NSDateComponents *coms = [cal components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:d];
+            NSLog(@&quot;year:%ld,month:%ld,day:%ld&quot;,coms.year,coms.month,coms.day);
+</code></pre><h2 id="Sandbox-沙盒机制"><a href="#Sandbox-沙盒机制" class="headerlink" title="Sandbox - 沙盒机制"></a>Sandbox - 沙盒机制</h2><pre><code>说明
+    是一种文件系统，每个应用程序只能访问自己的沙盒
+    iOS8开始开放了几个固定区域用于其它程序访问
+
+文件目录
+    MyApp.app
+        该目录包含了应用程序本身的数据，包括资源文件和可执行文件等。程序启动以后，会根据需要从该目录中动态加载代码或资源到内存，这里用到了lazy loading的思想。
+        整个目录是只读的，
+        不会被iTunes同步       
+    Documents
+        我们可以将应用程序的数据文件保存在该目录下。不过这些数据类型仅限于不可再生的数据，可再生的数据文件应该存放在Library/Cache目录下。
+        会被iTunes同步
+    Documents/Inbox
+        该目录用来保存由外部应用请求当前应用程序打开的文件。
+    Library
+        苹果建议用来存放默认设置或其它状态信息。
+    Library/Caches
+        主要是缓存文件，用户使用过程中缓存都可以保存在这个目录中。前面说过，Documents目录用于保存不可再生的文件，那么这个目录就用于保存那些可再生的文件，比如网络请求的数据。鉴于此，应用程序通常还需要负责删除这些文件。
+        不会被iTunes同步        
+    Library/Preferences
+        应用程序的偏好设置文件。我们使用NSUserDefaults写的设置数据都会保存到该目录下的一个plist文件中，这就是所谓的写道plist中！
+        会被iTunes同步
+    tmp
+        各种临时文件，保存应用再次启动时不需要的文件。而且，当应用不再需要这些文件时应该主动将其删除，因为该目录下的东西随时有可能被系统清理掉，目前已知的一种可能清理的原因是系统磁盘存储空间不足的时候。
+        不会被iTunes同步       
+
+数据存储方式
+    XML属性列表(plist)归档
+    Preference(偏好设置),是plist的封装，使用比plist方便
+    NSkeyedArchiver归档(NSCoding),用来保存自定义对象
+    SQLite3
+    Core Data,对SQLite3进行了封装。
+
+路径获取
+    MyApp.app
+        [[NSBundle mainBundle] bundlePath]
+    沙盒路径
+        NSHomeDirectory();
+    Documents
+        NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+    tmp
+        NSTemporaryDirectory()
+
+Preferences的读写
+    存储信息
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:@&quot;Value&quot; forKey:@&quot;Key&quot;];
+        [defaults setInteger:10 forKey:@&quot;age&quot;];
+        [defaults synchronize];
+    读取信息
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults objectForKey:@&quot;Key&quot;];
+        [defaults integerForKey:@&quot;age&quot;];
+
+NSkeyedArchiver的读写
+    说明
+        能实现对象的存取
+        归档的对象需遵守&lt;NSCoding&gt;协议
+        归档的对象需实现encodeWithCoder方法，用来指定保存的信息
+        归档的对象需实现initWithCoder方法，用来指定读取文件时解析的属性
+    存储信息
+        @interface Person : NSObject &lt;NSCoding&gt;
+        @property (nonatomic,copy) NSString *name;
+        @property (nonatomic,assign) int age;
+        @end
+        @implementation Person
+        //保存对象时告诉保存当前对象的哪些的速写
+        -(void)encodeWithCoder:(NSCoder *)aCoder{
+            [aCoder encodeObject:self.name forKey:@&quot;name&quot;];
+            [aCoder encodeInteger:self.age forKey:@&quot;age&quot;];
+        }
+        -(instancetype)initWithCoder:(NSCoder *)aDecoder{
+            if(self = [super init]){
+                self.name = [aDecoder decodeObjectForKey:@&quot;name&quot;];
+                self.age = [aDecoder decodeIntForKey:@&quot;age&quot;];
+            }
+            return self;
+        }
+        @end
+        Person *person = [[Person alloc]init];
+        person.name = @&quot;ZhangShan&quot;;
+        person.age = 18;
+        NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:@&quot;Person.data&quot;];
+        [NSKeyedArchiver archiveRootObject:person toFile:path];
+    读取信息
+        NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:@&quot;Person.data&quot;];
+        Person *person = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+</code></pre><h2 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h2><pre><code>NSLog
+    说明
+        是cocoa框架提供的函数
+        类似printf,参数为NSString
+        相比printf，NSLog增加了日子时间换行等功能
+    例子
+        NSString *str = @&quot;张三丰&quot;;
+        NSLog(@&quot;%@&quot;,str);
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/03/MySQL-笔记/" rel="next" title="MySQL-笔记">
+                <i class="fa fa-chevron-left"></i> MySQL-笔记
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/04/Swift-笔记/" rel="prev" title="Swift-笔记">
+                Swift-笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Cao Zheng" />
+          <p class="site-author-name" itemprop="name">Cao Zheng</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预处理"><span class="nav-number">2.</span> <span class="nav-text">预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型"><span class="nav-number">3.</span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类"><span class="nav-number">4.</span> <span class="nav-text">类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态类型检测"><span class="nav-number">5.</span> <span class="nav-text">动态类型检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MRC-手动内存管理"><span class="nav-number">6.</span> <span class="nav-text">MRC-手动内存管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ARC-自动内存管理"><span class="nav-number">7.</span> <span class="nav-text">ARC - 自动内存管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Category-分类"><span class="nav-number">8.</span> <span class="nav-text">Category - 分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#copy"><span class="nav-number">9.</span> <span class="nav-text">copy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#protocol"><span class="nav-number">10.</span> <span class="nav-text">protocol</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Foundation-框架"><span class="nav-number">11.</span> <span class="nav-text">Foundation 框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sandbox-沙盒机制"><span class="nav-number">12.</span> <span class="nav-text">Sandbox - 沙盒机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用函数"><span class="nav-number">13.</span> <span class="nav-text">常用函数</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cao Zheng</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

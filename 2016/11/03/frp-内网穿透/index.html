@@ -1,0 +1,646 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="声明最近电信分配的IP变成了内网IP，导致之前在家里树莓派上开放的服务在外网无法连接。偶然看到frp项目，配置和使用非常简单，只需要一个外网的vps作为代理即可。虽然这样绕了一大圈速度比之前慢了很多，总算可以使用。
+官方资料[文档](https://github.com/fatedier/frp/blob/master/README_zh.md)
+[下载地址](https://github.com">
+<meta property="og:type" content="article">
+<meta property="og:title" content="frp-内网穿透">
+<meta property="og:url" content="http://blog.uiideas.com/2016/11/03/frp-内网穿透/index.html">
+<meta property="og:site_name" content="Uiideas Blog">
+<meta property="og:description" content="声明最近电信分配的IP变成了内网IP，导致之前在家里树莓派上开放的服务在外网无法连接。偶然看到frp项目，配置和使用非常简单，只需要一个外网的vps作为代理即可。虽然这样绕了一大圈速度比之前慢了很多，总算可以使用。
+官方资料[文档](https://github.com/fatedier/frp/blob/master/README_zh.md)
+[下载地址](https://github.com">
+<meta property="og:updated_time" content="2016-11-08T08:40:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="frp-内网穿透">
+<meta name="twitter:description" content="声明最近电信分配的IP变成了内网IP，导致之前在家里树莓派上开放的服务在外网无法连接。偶然看到frp项目，配置和使用非常简单，只需要一个外网的vps作为代理即可。虽然这样绕了一大圈速度比之前慢了很多，总算可以使用。
+官方资料[文档](https://github.com/fatedier/frp/blob/master/README_zh.md)
+[下载地址](https://github.com">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> frp-内网穿透 | Uiideas Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?559798d21c881907a6a2339e025bbc03";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Uiideas Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章列表
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                frp-内网穿透
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-03T15:47:52+08:00" content="2016-11-03">
+              2016-11-03
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><p>最近电信分配的IP变成了内网IP，导致之前在家里树莓派上开放的服务在外网无法连接。偶然看到frp项目，配置和使用非常简单，只需要一个外网的vps作为代理即可。虽然这样绕了一大圈速度比之前慢了很多，总算可以使用。</p>
+<h2 id="官方资料"><a href="#官方资料" class="headerlink" title="官方资料"></a>官方资料</h2><pre><code>[文档](https://github.com/fatedier/frp/blob/master/README_zh.md)
+[下载地址](https://github.com/fatedier/frp/releases)
+</code></pre><h2 id="外网安装"><a href="#外网安装" class="headerlink" title="外网安装"></a>外网安装</h2><pre><code>下载
+    wget .../frp_0.8.1_linux_amd64.tar.gz
+
+解压
+    tar -zxvf frp_0.8.1_linux_amd64.tar.gz
+
+移动到/usr/local/
+    mv frp_0.8.1_linux_amd64/ /usr/local/opt/frp 
+
+编辑 frps.ini
+    [common]
+    bind_port = 7000
+    dashboard_port = 7500
+    log_file = /var/log/frps.log
+    log_level = info
+    log_max_days = 3
+    [ssh]
+    listen_port = 6000
+    auth_token = 123
+
+创建systemd service
+    vi /etc/systemd/system/frps.service
+
+配置文件内容
+    [Unit]
+    Description=Start or stop the frps
+    After=network.target
+    Wants=network.target
+    [Service]
+    ExecStart=/usr/local/opt/frp/frps -c /usr/local/opt/frp/frps.ini
+    Restart=1
+    [Install]
+    WantedBy=multi-user.target
+
+启动并设置开机启动
+    systemctl enable frps
+    systemctl start frps
+
+备注
+    frps.service的目的是通过systemd管理服务，如开机启动，进程关闭自动重启等。
+    如果遇到无法启动，可查看/var/log/frps.log文件的输出内容，如端口占用等。
+    配置文件和启动文件依个人习惯也可分别移动到/etc/和/usr/local/bin/目录。
+</code></pre><h2 id="内网机器配置"><a href="#内网机器配置" class="headerlink" title="内网机器配置"></a>内网机器配置</h2><pre><code>下载
+    wget .../frp_0.8.1_linux_amd64.tar.gz
+
+解压
+    tar -zxvf frp_0.8.1_linux_amd64.tar.gz
+
+移动到/usr/local/
+    mv frp_0.8.1_linux_amd64/ /usr/local/opt/frp 
+
+编辑 frpc.ini
+    [common]
+    server_addr = x.x.x.x
+    server_port = 7000
+    log_file = /var/log/frpc.log
+    log_level = info
+    log_max_days = 3
+    auth_token = 123
+    [ssh]
+    local_port = 22
+
+创建systemd service
+    vi /etc/systemd/system/frpc.service
+
+配置文件内容
+    [Unit]
+    Description=Start or stop the frps
+    After=network.target
+    Wants=network.target
+    [Service]
+    ExecStart=/usr/local/opt/frp/frpc -c /usr/local/opt/frp/frpc.ini
+    Restart=1
+    [Install]
+    WantedBy=multi-user.target
+
+启动并设置开机启动
+    systemctl enable frpc
+    systemctl start frpc
+</code></pre><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><pre><code>SSH通过外网主机连接到内网主机
+    ssh root@xx.xx.xx.xx -p 6000
+
+查看内网主机日志
+    tail -f /var/log/frpc.log
+
+查看外网主机日志
+    tail -f /var/log/frps.log
+
+查看内网服务状态
+    systemctl status frpc
+
+查看外网服务状态
+    systemctl status frps
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/21/iOS-UI框架-笔记/" rel="next" title="iOS-UI框架-笔记">
+                <i class="fa fa-chevron-left"></i> iOS-UI框架-笔记
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/20/iOS-多线程网络/" rel="prev" title="iOS-多线程网络">
+                iOS-多线程网络 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Cao Zheng" />
+          <p class="site-author-name" itemprop="name">Cao Zheng</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#声明"><span class="nav-number">1.</span> <span class="nav-text">声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#官方资料"><span class="nav-number">2.</span> <span class="nav-text">官方资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#外网安装"><span class="nav-number">3.</span> <span class="nav-text">外网安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内网机器配置"><span class="nav-number">4.</span> <span class="nav-text">内网机器配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">5.</span> <span class="nav-text">使用</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cao Zheng</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
