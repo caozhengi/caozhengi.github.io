@@ -94,7 +94,7 @@
 <meta property="og:description" content="声明最近电信分配的IP变成了内网IP，导致之前在家里树莓派上开放的服务在外网无法连接。偶然看到frp项目，配置和使用非常简单，只需要一个外网的vps作为代理即可。虽然这样绕了一大圈速度比之前慢了很多，总算可以使用。
 官方资料[文档](https://github.com/fatedier/frp/blob/master/README_zh.md)
 [下载地址](https://github.com">
-<meta property="og:updated_time" content="2016-11-08T08:40:28.000Z">
+<meta property="og:updated_time" content="2016-11-18T05:19:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="frp-内网穿透">
 <meta name="twitter:description" content="声明最近电信分配的IP变成了内网IP，导致之前在家里树莓派上开放的服务在外网无法连接。偶然看到frp项目，配置和使用非常简单，只需要一个外网的vps作为代理即可。虽然这样绕了一大圈速度比之前慢了很多，总算可以使用。
@@ -306,8 +306,8 @@
     [ssh]
     listen_port = 6000
     auth_token = 123
-
-创建systemd service
+</code></pre><a id="more"></a>
+<pre><code>创建systemd service
     vi /etc/systemd/system/frps.service
 
 配置文件内容

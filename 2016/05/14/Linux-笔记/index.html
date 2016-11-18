@@ -96,7 +96,7 @@ chgrp    改变文件所属群">
 文件操作命令touch    修改文件的访问时间和修改时间  也可用来创建文件
 chown    改变文件拥有者和所在用户组
 chgrp    改变文件所属群">
-<meta property="og:updated_time" content="2016-11-08T08:28:48.000Z">
+<meta property="og:updated_time" content="2016-11-18T05:18:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux-笔记">
 <meta name="twitter:description" content="声明本文为学习Linux的笔记，主要内容来自鸟哥的Linux私房菜，也有一些视频和各处零零碎碎的文章，随着学习和使用内容也会慢慢的更新，笔记里面的内容主要是对学到知识点的梳理和备忘，建议大家查看原版，这样会对Linux有个更清晰完整的认识。
@@ -302,7 +302,8 @@ dd       转换和复制文件命令  可用来复制iso到U盘
     count  多少个 bs 的意思
     dd if=input_file of=output_file bs=block_size count=number
     time dd if=/dev/zero of=test.dbf bs=1M count=100 oflag=direct  测试IO写入速度
-</code></pre><h2 id="文件查看命令"><a href="#文件查看命令" class="headerlink" title="文件查看命令"></a>文件查看命令</h2><pre><code>file      查看文件类型
+</code></pre><a id="more"></a>
+<h2 id="文件查看命令"><a href="#文件查看命令" class="headerlink" title="文件查看命令"></a>文件查看命令</h2><pre><code>file      查看文件类型
 cat       由第一行开始显示文件内容
 tac       从最后一行开始显示，可以看出 tac 是 cat 的倒著写！
 nl        显示的时候，顺道输出行号！

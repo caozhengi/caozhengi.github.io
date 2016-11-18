@@ -114,7 +114,7 @@
 
 线程的串行
     说明">
-<meta property="og:updated_time" content="2016-11-08T07:24:25.000Z">
+<meta property="og:updated_time" content="2016-11-18T05:17:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS-多线程网络">
 <meta name="twitter:description" content="进程和线程的概念进程
@@ -377,7 +377,8 @@
     进程是CPU分配资源和调度的单位
     一个程序可以对应多个线程，一个进程中可以有多个线程，但至少有一个线程
     同一个进程内的线程共享进程的资源
-</code></pre><h2 id="线程在iOS中的使用"><a href="#线程在iOS中的使用" class="headerlink" title="线程在iOS中的使用"></a>线程在iOS中的使用</h2><pre><code>iOS中多线程实现方案
+</code></pre><a id="more"></a>
+<h2 id="线程在iOS中的使用"><a href="#线程在iOS中的使用" class="headerlink" title="线程在iOS中的使用"></a>线程在iOS中的使用</h2><pre><code>iOS中多线程实现方案
     pthread
         C语言API，由程序员管理生命周期
         通用的多线程API
@@ -491,7 +492,7 @@ GCD
             可以让多个任务并发执行，自动开启多个线程同时执行任务
             多个任务时，并非每个任务都开启一个线程
             并发功能只有在异步函数(dispatch_async)下才有效
-            创建队列时候参数为:DISPATCH_QUEUE_SERIAL
+            创建队列时候参数为:DISPATCH_QUEUE_CONCURRENT
         串行队列 (Serial Dispatch Queue)
             让任务一个一个接着执行，一个任务执行完毕才执行下一个
             创建队列时候参数为:DISPATCH_QUEUE_SERIAL
